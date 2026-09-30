@@ -15,17 +15,13 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);font-
 .hidden{display:none!important}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 input,select,textarea{font-family:inherit;color:var(--text)}
-
-/* ============ LOGIN PAGE ============ */
 #loginScreen{min-height:100vh;background:linear-gradient(135deg,#0a2a4a 0%,#0d3b66 50%,#164a7a 100%);padding:20px;position:relative;overflow-x:hidden}
 #loginScreen::before{content:'';position:absolute;top:-50%;inset-inline-end:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(212,175,55,.15),transparent 70%);border-radius:50%;pointer-events:none}
 .login-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;min-height:100vh;padding:20px 0;position:relative;z-index:2}
 @media(max-width:900px){.login-container{grid-template-columns:1fr;gap:20px;padding:10px 0}}
-
-/* Hero Section */
 .hero-section{color:#fff;padding:20px}
 .hero-logo{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.hero-logo-icon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00;display:grid;place-items:center;font-size:32px;font-weight:900;box-shadow:0 10px 30px rgba(212,175,55,.3);transition:transform .15s}
+.hero-logo-icon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00;display:grid;place-items:center;font-size:32px;font-weight:900;box-shadow:0 10px 30px rgba(212,175,55,.3);transition:transform .15s;cursor:pointer;user-select:none}
 .hero-logo-icon:active{transform:scale(.92)}
 .hero-logo-text{font-size:32px;font-weight:900;letter-spacing:-1px}
 .hero-logo-sub{font-size:13px;color:#8fb0cd;margin-top:2px}
@@ -43,8 +39,6 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .hero-stat-num{font-size:26px;font-weight:900;color:var(--gold);line-height:1}
 .hero-stat-lbl{font-size:11px;color:#8fb0cd;margin-top:6px}
 @media(max-width:900px){.hero-title{font-size:26px}.hero-desc{font-size:13.5px}.hero-logo-text{font-size:24px}.hero-features{grid-template-columns:1fr 1fr}.hero-stats{margin-top:14px;padding-top:14px}}
-
-/* Login Card */
 .login-card{width:100%;max-width:440px;background:#fff;border-radius:24px;padding:30px 26px;box-shadow:0 30px 80px rgba(0,0,0,.4);margin:0 auto}
 .login-card h2{font-size:22px;color:var(--primary);margin-bottom:6px;font-weight:800;text-align:center}
 .login-card .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:22px}
@@ -66,8 +60,6 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .hint b{color:var(--primary)}
 .footer-credit{text-align:center;color:#8fb0cd;font-size:11.5px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:900px){.footer-credit{color:var(--muted)}}
-
-/* ============ APP (same as before) ============ */
 .app{display:flex;min-height:100vh}
 .sidebar{width:262px;flex-shrink:0;background:linear-gradient(180deg,#0a2a4a,#0d3b66 60%,#0e3f6e);color:#dbe6f2;display:flex;flex-direction:column;padding:16px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
 .brand{display:flex;align-items:center;gap:11px;padding:6px 8px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -296,99 +288,61 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 </head>
 <body>
 
-<!-- ==================== LOGIN ==================== -->
 <div id="loginScreen">
   <div class="login-container">
-    
-    <!-- Hero Section (Marketing) -->
     <div class="hero-section">
       <div class="hero-logo">
         <div class="hero-logo-icon" id="heroLogo" onclick="countLogoClick()">ث</div>
         <div>
           <div class="hero-logo-text">شركة ثقة</div>
-          <div class="hero-logo-sub" id="versionText">النظام التعليمي الشامل v4.4</div>
+          <div class="hero-logo-sub">النظام التعليمي الشامل v4.5</div>
         </div>
       </div>
-      
       <h1 class="hero-title">منصة <span>ثقة</span> لإدارة<br>المدارس الخاصة</h1>
       <p class="hero-desc">نظام واحد يدير كل شيء: الطلاب، الدرجات، الحضور، الرسوم، المحاسبة، وأولياء الأمور — من أي جهاز في العالم.</p>
-      
       <div class="hero-features">
-        <div class="hero-feature">
-          <span class="hero-feature-ic">🎓</span>
-          <div class="hero-feature-title">4 بوابات متكاملة</div>
-          <div class="hero-feature-desc">إدارة • مدرسة • معلم • طالب</div>
-        </div>
-        <div class="hero-feature">
-          <span class="hero-feature-ic">🎫</span>
-          <div class="hero-feature-title">QR لكل طالب</div>
-          <div class="hero-feature-desc">ولي الأمر يتابع ابنه بمسح واحد</div>
-        </div>
-        <div class="hero-feature">
-          <span class="hero-feature-ic">🧮</span>
-          <div class="hero-feature-title">محاسبة كاملة</div>
-          <div class="hero-feature-desc">قيود • ميزان • ميزانية تلقائية</div>
-        </div>
-        <div class="hero-feature">
-          <span class="hero-feature-ic">☁️</span>
-          <div class="hero-feature-title">سحابي محمي</div>
-          <div class="hero-feature-desc">بيانات مشفّرة على Firebase</div>
-        </div>
-        <div class="hero-feature">
-          <span class="hero-feature-ic">📊</span>
-          <div class="hero-feature-title">تقارير لحظية</div>
-          <div class="hero-feature-desc">تصفية + تصدير Excel</div>
-        </div>
-        <div class="hero-feature">
-          <span class="hero-feature-ic">👥</span>
-          <div class="hero-feature-title">صلاحيات دقيقة</div>
-          <div class="hero-feature-desc">كل موظف يرى ما يخصه فقط</div>
-        </div>
+        <div class="hero-feature"><span class="hero-feature-ic">🎓</span><div class="hero-feature-title">4 بوابات متكاملة</div><div class="hero-feature-desc">إدارة • مدرسة • معلم • طالب</div></div>
+        <div class="hero-feature"><span class="hero-feature-ic">🎫</span><div class="hero-feature-title">QR لكل طالب</div><div class="hero-feature-desc">ولي الأمر يتابع ابنه بمسح واحد</div></div>
+        <div class="hero-feature"><span class="hero-feature-ic">🧮</span><div class="hero-feature-title">محاسبة كاملة</div><div class="hero-feature-desc">قيود • ميزان • ميزانية تلقائية</div></div>
+        <div class="hero-feature"><span class="hero-feature-ic">☁️</span><div class="hero-feature-title">سحابي محمي</div><div class="hero-feature-desc">بيانات مشفّرة على Firebase</div></div>
+        <div class="hero-feature"><span class="hero-feature-ic">📊</span><div class="hero-feature-title">تقارير لحظية</div><div class="hero-feature-desc">تصفية + تصدير Excel</div></div>
+        <div class="hero-feature"><span class="hero-feature-ic">👥</span><div class="hero-feature-title">صلاحيات دقيقة</div><div class="hero-feature-desc">كل موظف يرى ما يخصه فقط</div></div>
       </div>
-      
       <div class="hero-stats">
         <div class="hero-stat"><div class="hero-stat-num">🔒</div><div class="hero-stat-lbl">مشفّر بالكامل</div></div>
         <div class="hero-stat"><div class="hero-stat-num">☁️</div><div class="hero-stat-lbl">مزامنة سحابية</div></div>
         <div class="hero-stat"><div class="hero-stat-num">📱</div><div class="hero-stat-lbl">يعمل من الجوال</div></div>
       </div>
     </div>
-    
-    <!-- Login Card -->
     <div>
       <div class="login-card">
         <h2>تسجيل الدخول</h2>
         <p class="sub">أهلاً بك — اختر البوابة المناسبة</p>
-        
         <span class="cloud-status" id="cloudStatus">☁️ جارٍ الاتصال...</span>
-        
         <div class="login-tabs" id="loginTabs">
           <button type="button" class="login-tab active" data-tab="school">🏫 مدرسة</button>
           <button type="button" class="login-tab" data-tab="teacher">👨‍🏫 معلم</button>
           <button type="button" class="login-tab" data-tab="student">🎓 طالب</button>
           <button type="button" class="login-tab hidden" data-tab="admin" id="adminTab">👔 الإدارة</button>
         </div>
-        
         <div id="adminLogin" class="hidden">
           <div class="field"><label>اسم المستخدم</label><input id="adminUser" value="admin"></div>
           <div class="field"><label>كلمة المرور</label><input id="adminPass" type="password" value="1234"></div>
           <button class="btn btn-primary" onclick="login('admin', event)">دخول لوحة الإدارة</button>
           <p class="hint">🔑 <b>admin</b> / <b>1234</b></p>
         </div>
-        
         <div id="schoolLogin">
           <div class="field"><label>اسم المستخدم</label><input id="schoolUser" placeholder="nour"></div>
           <div class="field"><label>كلمة المرور</label><input id="schoolPass" type="password" placeholder="nour123"></div>
           <button class="btn btn-primary" onclick="login('school', event)">دخول لوحة المدرسة</button>
           <p class="hint">🔑 مدير: <b>nour / nour123</b><br>محاسب: <b>noor_acc / acc123</b></p>
         </div>
-        
         <div id="teacherLogin" class="hidden">
           <div class="field"><label>اسم المستخدم</label><input id="teacherUser" placeholder="teacher1"></div>
           <div class="field"><label>كلمة المرور</label><input id="teacherPass" type="password" placeholder="teach123"></div>
           <button class="btn btn-primary" onclick="login('teacher', event)">دخول بوابة المعلم</button>
           <p class="hint">👨‍🏫 <b>teacher1 / teach123</b></p>
         </div>
-        
         <div id="studentLogin" class="hidden">
           <div class="field"><label>رقم الطالب أو اسم المستخدم</label><input id="studentUser" placeholder="100"></div>
           <div class="field"><label>كلمة المرور <span style="font-weight:400;opacity:.6">(اختياري)</span></label><input id="studentPass" type="text" placeholder="100"></div>
@@ -396,16 +350,11 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
           <p class="hint">🎓 <b>100</b> / <b>100</b></p>
         </div>
       </div>
-      
-      <div class="footer-credit">
-        ثقة © 2026 — جميع الحقوق محفوظة
-      </div>
+      <div class="footer-credit">ثقة © 2026 — جميع الحقوق محفوظة</div>
     </div>
-    
   </div>
 </div>
 
-<!-- ==================== APP ==================== -->
 <div id="app" class="app hidden">
   <aside class="sidebar" id="sidebar">
     <div class="brand">
@@ -463,21 +412,16 @@ try {
   auth = firebase.auth();
   firebaseReady = true;
   console.log('✅ Firebase متصل');
-  
   auth.onAuthStateChanged(function(user){
     currentAuthUser = user;
     if (user){
       authReady = true;
       console.log('✅ Auth:', user.isAnonymous ? 'زائر' : (user.email || user.uid));
       updateCloudStatus();
-      if (!user.isAnonymous){
-        setTimeout(function(){ syncFromCloud(); }, 200);
-      }
+      if (!user.isAnonymous){ setTimeout(function(){ syncFromCloud(); }, 200); }
     } else {
       authReady = false;
-      auth.signInAnonymously().catch(function(e){
-        console.warn('⚠️ Auth anonymous فشل:', e.message);
-      });
+      auth.signInAnonymously().catch(function(e){ console.warn('⚠️ Auth anonymous:', e.message); });
     }
   });
 } catch(e) {
@@ -488,6 +432,11 @@ try {
 function usernameToEmail(username){
   var clean = username.toLowerCase().replace(/[^a-z0-9]/g, '_');
   return clean + '@thiqa.local';
+}
+
+/* ✅ إصلاح: نضيف لاحقة ثابتة لجعل كلمة المرور 6+ أحرف */
+function padPassword(password){
+  return (password + '_thiqa2026!').slice(0, 128);
 }
 
 function findUserByUsername(username){
@@ -516,13 +465,14 @@ function doAuthLogin(username, password){
     var found = findUserByUsername(username);
     if (!found){ reject(new Error('المستخدم غير موجود في النظام')); return; }
     var storedPass = found.user.password;
-    auth.signInWithEmailAndPassword(email, password)
+    var finalPass = padPassword(password);
+    auth.signInWithEmailAndPassword(email, finalPass)
       .then(function(cred){ resolve(cred.user); })
       .catch(function(err){
         var isNotFound = (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential' || err.code === 'auth/invalid-login-credentials');
         if (isNotFound){
           if (storedPass && password === storedPass){
-            auth.createUserWithEmailAndPassword(email, password)
+            auth.createUserWithEmailAndPassword(email, finalPass)
               .then(function(cred){ resolve(cred.user); })
               .catch(function(e){
                 if (e.code === 'auth/email-already-in-use') reject(new Error('كلمة المرور غير صحيحة'));
@@ -531,6 +481,8 @@ function doAuthLogin(username, password){
           } else {
             reject(new Error('كلمة المرور غير صحيحة'));
           }
+        } else if (err.code === 'auth/wrong-password'){
+          reject(new Error('كلمة المرور غير صحيحة'));
         } else {
           reject(err);
         }
@@ -539,7 +491,7 @@ function doAuthLogin(username, password){
 }
 
 /* ==================== CORE ==================== */
-var LS_KEY = 'thiqa_v44';
+var LS_KEY = 'thiqa_v45';
 function $(id){return document.getElementById(id);}
 function fmt(n){return (Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:0});}
 function money(n){return fmt(n)+' ل.س';}
@@ -551,9 +503,7 @@ function genPassword(){var c='abcdefghjkmnpqrstuvwxyz23456789',p='';for(var i=0;
 var AR_MAP={'ا':'a','ب':'b','ت':'t','ث':'th','ج':'j','ح':'h','خ':'kh','د':'d','ذ':'dh','ر':'r','ز':'z','س':'s','ش':'sh','ص':'s','ض':'d','ط':'t','ظ':'z','ع':'a','غ':'gh','ف':'f','ق':'q','ك':'k','ل':'l','م':'m','ن':'n','ه':'h','و':'w','ي':'y','أ':'a','إ':'e','آ':'a','ة':'h','ى':'a','ئ':'y','ؤ':'w','ء':'',' ':'_'};
 function genUsername(name){var out='';for(var i=0;i<name.length;i++){var ch=name[i];out+=(AR_MAP[ch]!==undefined)?AR_MAP[ch]:ch.toLowerCase();}return out.replace(/[^a-z0-9_]/g,'').replace(/_+/g,'_').replace(/^_+|_+$/g,'').slice(0,15)||'user';}
 
-/* ==================== LOGO CLICK (5x reveals admin) ==================== */
-var logoClicks = 0;
-var logoClickTimer = null;
+var logoClicks = 0, logoClickTimer = null;
 function countLogoClick(){
   logoClicks++;
   if (logoClickTimer) clearTimeout(logoClickTimer);
@@ -690,7 +640,7 @@ var PAY_METHODS=['نقدي','بنكي','شيك','تحويل'];
 function accName(c){for(var i=0;i<COA.length;i++)if(COA[i].code===c)return COA[i].name;return c;}
 function accType(c){for(var i=0;i<COA.length;i++)if(COA[i].code===c)return COA[i].type;return '';}
 
-/* ==================== SEED (نفس v4.3) ==================== */
+/* ==================== SEED ==================== */
 function seedState(){
   var schools=[
     {id:'THQ-001',name:'مدرسة النور الخاصة',stage:'جميع المراحل',city:'دمشق',phone:'011-2233445',status:'active',username:'nour',password:'nour123',createdAt:'2026-01-15',
@@ -747,11 +697,11 @@ function saveState(){
   if(firebaseReady&&db&&authReady){
     var dataToSave=JSON.parse(JSON.stringify(state));
     delete dataToSave.user;delete dataToSave.userType;delete dataToSave.currentStaff;delete dataToSave.currentStudent;delete dataToSave.currentSchool;delete dataToSave.context;delete dataToSave.page;
-    db.collection('data').doc('thiqa-main').set(dataToSave).then(function(){console.log('☁️ حفظ سحابي');}).catch(function(err){console.error('❌ حفظ:',err.message);});
+    db.collection('data').doc('thiqa-main').set(dataToSave).then(function(){console.log('☁️ حفظ');}).catch(function(err){console.error('❌ حفظ:',err.message);});
   }
 }
 function syncFromCloud(){
-  if(!firebaseReady||!db||!authReady){console.log('⚠️ غير جاهز');updateCloudStatus();return;}
+  if(!firebaseReady||!db||!authReady){updateCloudStatus();return;}
   db.collection('data').doc('thiqa-main').get().then(function(doc){
     if(doc.exists){
       var cloudData=doc.data();
@@ -803,8 +753,6 @@ function computeBalances(filter){
   for(var i=0;i<entries.length;i++)for(var j=0;j<entries[i].lines.length;j++){var l=entries[i].lines[j];if(!bal[l.code])bal[l.code]={debit:0,credit:0};bal[l.code].debit+=l.debit;bal[l.code].credit+=l.credit;}
   return {entries:entries,balances:bal};
 }
-
-/* ==================== ACTIVITY ==================== */
 function logAct(action,detail){
   var name='نظام';
   if(state.userType==='admin')name='المدير العام';
@@ -831,7 +779,6 @@ var NAV_TEACHER=[
 ];
 var NAV_STUDENT=[{group:'دراستي',items:[{id:'s-dashboard',label:'لوحتي',ic:'📊'},{id:'s-grades',label:'درجاتي',ic:'📝'},{id:'s-attendance',label:'حضوري',ic:'✅'},{id:'s-behavior',label:'سلوكي',ic:'⭐'},{id:'s-fees',label:'رسومي',ic:'💵'}]}];
 function currentNav(){if(isAdmin()&&state.context==='group')return NAV_ADMIN;if(isTeacher())return NAV_TEACHER;if(isStudent())return NAV_STUDENT;return NAV_SCHOOL;}
-
 var PAGE_META={
   dashboard:{title:'لوحة التحكم',sub:'نظرة شاملة'},schools:{title:'المدارس',sub:'إدارة الكيانات'},
   'all-reports':{title:'التقارير المجمعة',sub:'تحليل كل المدارس'},students:{title:'الطلاب',sub:'قوائم الطلاب'},
@@ -880,7 +827,7 @@ function render(){
   if(window.innerWidth<=820)$('menuBtn').style.display='grid';else $('menuBtn').style.display='none';
 }
 
-/* ==================== ALL OTHER FUNCTIONS (من v4.3 - لم تتغير) ==================== */
+/* ==================== EXPORT ROUTER ==================== */
 function exportPage(page){
   var schoolFilter=(isAdmin()&&state.context==='group')?null:state.currentSchool;var school=currentSchool();var scopeName=school?school.name:'كل المدارس';
   if(page==='students'){var list=applyF(scoped(state.students),'students');exportExcel('students',['الرقم','الاسم','الصف','ولي الأمر','الهاتف','الرسوم','الحالة'],list.map(function(s){return[s.id,s.name,s.grade,s.guardian,s.phone,s.fee,s.status];}),'الطلاب — '+scopeName);}
@@ -896,14 +843,15 @@ function exportPage(page){
   else if(page==='schools'){exportExcel('schools',['الاسم','المدينة','المرحلة','المستخدم','الطلاب','الموظفون'],state.schools.map(function(s){var st=0;for(var i3=0;i3<state.students.length;i3++)if(state.students[i3].schoolId===s.id)st++;return[s.name,s.city,s.stage,s.username,st,(s.staff||[]).length];}),'المدارس');}
 }
 function getStudent(id){for(var i=0;i<state.students.length;i++)if(state.students[i].id===id)return state.students[i];return null;}
+
+/* ==================== DASHBOARDS ==================== */
 function renderDashboard(){if(isAdmin()&&state.context==='group')return renderGroupDash();return renderSchoolDash();}
 function computeKPIs(filter){var inv=state.invoices,exp=state.expenses;if(filter){inv=inv.filter(function(i){return i.schoolId===filter;});exp=exp.filter(function(e){return e.schoolId===filter;});}var tI=0,tC=0,tE=0;for(var i=0;i<inv.length;i++){tI+=inv[i].amount;tC+=inv[i].paid;}for(var j=0;j<exp.length;j++)tE+=exp[j].amount;return {invoiced:tI,collected:tC,expenses:tE,outstanding:tI-tC,rate:tI?Math.round(tC/tI*100):0,profit:tC-tE};}
 function renderGroupDash(){
   var k=computeKPIs();var maxRev=1;
   for(var i=0;i<state.schools.length;i++){var r=0;for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].schoolId===state.schools[i].id)r+=state.invoices[j].paid;if(r>maxRev)maxRev=r;}
   var bars='';for(var s=0;s<state.schools.length;s++){var r2=0;for(var jj=0;jj<state.invoices.length;jj++)if(state.invoices[jj].schoolId===state.schools[s].id)r2+=state.invoices[jj].paid;var pct=Math.round(r2/maxRev*100);bars+='<div class="bar-row"><span class="bar-label">'+state.schools[s].name+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><span class="bar-value">'+fmt(r2)+'</span></div>';}
-  var donutColor=k.rate>=70?'#2e8b57':k.rate>=40?'#e67e22':'#c0392b';
-  var rows='';
+  var donutColor=k.rate>=70?'#2e8b57':k.rate>=40?'#e67e22':'#c0392b';var rows='';
   for(var t=0;t<state.schools.length;t++){var sc=state.schools[t];var stCount=0,col=0,sp=0,due=0;for(var a=0;a<state.students.length;a++)if(state.students[a].schoolId===sc.id)stCount++;for(var b=0;b<state.invoices.length;b++)if(state.invoices[b].schoolId===sc.id){col+=state.invoices[b].paid;due+=state.invoices[b].amount-state.invoices[b].paid;}for(var c=0;c<state.expenses.length;c++)if(state.expenses[c].schoolId===sc.id)sp+=state.expenses[c].amount;rows+='<tr><td><b>'+sc.name+'</b><div style="font-size:10.5px;color:var(--muted)">'+sc.city+' • @'+sc.username+'</div></td><td class="num">'+stCount+'</td><td class="num">'+fmt(col)+'</td><td class="num">'+fmt(sp)+'</td><td class="num" style="color:'+(col-sp>=0?'var(--success)':'var(--danger)')+'">'+fmt(col-sp)+'</td><td class="num" style="color:'+(due>0?'var(--danger)':'var(--success)')+'">'+fmt(due)+'</td><td><button class="mini" onclick="enterSchool(\''+sc.id+'\')">↗</button></td></tr>';}
   return '<div class="alert info">👔 <b>لوحة المجموعة</b></div><div class="grid-kpi"><div class="kpi"><div class="kpi-label">🏫 المدارس</div><div class="kpi-value">'+state.schools.length+'</div></div><div class="kpi"><div class="kpi-label">💼 المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div><div class="kpi gold"><div class="kpi-label">⏳ المتأخرات</div><div class="kpi-value">'+money(k.outstanding)+'</div></div><div class="kpi info"><div class="kpi-label">👨‍🎓 الطلاب</div><div class="kpi-value">'+state.students.length+'</div></div></div><div class="grid-2"><div class="card"><div class="card-head"><h2>📈 إيرادات المدارس</h2></div><div class="bars">'+bars+'</div></div><div class="card"><div class="card-head"><h2>نسبة التحصيل</h2></div><div class="donut-wrap"><div class="donut" style="background:conic-gradient('+donutColor+' 0 '+k.rate+'%, #eef2f7 '+k.rate+'% 100%)"><div class="val"><b>'+k.rate+'%</b><span>محصّل</span></div></div></div></div></div><div class="table-wrap"><div class="table-head"><h2>ملخص المدارس</h2><button class="btn btn-gold btn-sm" onclick="exportPage(\'schools\')">⬇️ تصدير</button></div><table><thead><tr><th>المدرسة</th><th>الطلاب</th><th>التحصيلات</th><th>المصروفات</th><th>الربح</th><th>المتأخرات</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
@@ -922,8 +870,8 @@ function renderSchoolDash(){
   qa+='<div class="quick-btn" onclick="navigate(\'qr-cards\')"><span class="ic">🎫</span><span class="lbl">بطاقات QR</span></div><div class="quick-btn" onclick="navigate(\'trial-balance\')"><span class="ic">⚖️</span><span class="lbl">الميزان</span></div><div class="quick-btn" onclick="navigate(\'students\')"><span class="ic">📋</span><span class="lbl">الطلاب</span></div>';
   return banner+'<div class="grid-kpi"><div class="kpi"><div class="kpi-label">💼 المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div><div class="kpi gold"><div class="kpi-label">⏳ المتأخرات</div><div class="kpi-value">'+money(k.outstanding)+'</div></div><div class="kpi info"><div class="kpi-label">👨‍🎓 الطلاب</div><div class="kpi-value">'+studentCount+'</div></div><div class="kpi purple"><div class="kpi-label">✅ الحضور اليوم</div><div class="kpi-value">'+attRate+'%</div></div></div><div class="quick-actions">'+qa+'</div>';
 }
-/* باقي الدوال (students, invoices, etc.) - نستخدمها كما هي من v4.3 */
 
+/* ==================== STUDENTS / INVOICES / etc ==================== */
 function renderStudents(){
   if(!can('students','view'))return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.students);var schoolsList=state.schools.map(function(s){return {value:s.id,label:s.name};});
@@ -1093,7 +1041,7 @@ function logout(){
 function enterSchool(id){if(!isAdmin())return;state.context='school';state.currentSchool=id;state.page='dashboard';saveState();render();}
 function exitToGroup(){if(!isAdmin())return;state.context='group';state.currentSchool=null;state.page='dashboard';saveState();render();}
 
-/* ==================== CRUD (same as v4.3) ==================== */
+/* ==================== CRUD ==================== */
 function openAddSchool(){var body='<div class="field"><label>اسم المدرسة *</label><input id="ns_name"></div><div class="field"><label>المرحلة</label><input id="ns_stage"></div><div class="field"><label>المدينة</label><input id="ns_city"></div><div class="field"><label>الهاتف</label><input id="ns_phone"></div>';openModal('🏫 إضافة مدرسة',body,function(){var name=$('ns_name').value.trim();if(!name){alert('الاسم مطلوب');return false;}var num=String(state.schools.length+1).padStart(3,'0');var username=genUsername(name);var base=username,n=1,ex=true;while(ex){ex=false;for(var i=0;i<state.schools.length;i++)if(state.schools[i].username===username){ex=true;break;}if(ex)username=base+(n++);}var newS={id:'THQ-'+num,name:name,stage:$('ns_stage').value||'جميع المراحل',city:$('ns_city').value||'—',phone:$('ns_phone').value||'',status:'active',username:username,password:genPassword(),createdAt:today(),staff:[]};state.schools.push(newS);logAct('إضافة مدرسة',name);saveState();setTimeout(function(){showSchoolCred(newS.id,true);},150);},'حفظ');}
 function showSchoolCred(id,isNew){var s=null;for(var i=0;i<state.schools.length;i++)if(state.schools[i].id===id){s=state.schools[i];break;}if(!s)return;var intro=isNew?'<div class="alert success">✅ تم الإنشاء</div>':'';var body=intro+'<div class="credentials-box"><h4>🔐 '+s.name+'</h4><div class="cred-row"><div class="lbl">المستخدم</div><div class="val"><span>'+s.username+'</span><button onclick="copyText(\''+s.username+'\')">📋</button></div></div><div class="cred-row"><div class="lbl">كلمة المرور</div><div class="val"><span>'+s.password+'</span><button onclick="copyText(\''+s.password+'\')">📋</button></div></div></div>';openModal('🔑 بيانات المدرسة',body,function(){return true;},isNew?'تم':'إغلاق');}
 function deleteSchool(id){var s=null;for(var i=0;i<state.schools.length;i++)if(state.schools[i].id===id){s=state.schools[i];break;}if(!s)return;if(!confirm('حذف "'+s.name+'"؟'))return;state.schools=state.schools.filter(function(x){return x.id!==id;});state.students=state.students.filter(function(x){return x.schoolId!==id;});state.invoices=state.invoices.filter(function(x){return x.schoolId!==id;});state.payments=state.payments.filter(function(x){return x.schoolId!==id;});state.expenses=state.expenses.filter(function(x){return x.schoolId!==id;});state.attendance=state.attendance.filter(function(x){return x.schoolId!==id;});state.grades=state.grades.filter(function(x){return x.schoolId!==id;});state.behavior=state.behavior.filter(function(x){return x.schoolId!==id;});if(state.currentSchool===id){state.context='group';state.currentSchool=null;}logAct('حذف مدرسة',s.name);saveState();render();}
@@ -1106,7 +1054,7 @@ function openAddPayment(){var pending=scoped(state.invoices).filter(function(i){
 function deletePayment(id){if(!confirm('حذف السند؟'))return;var p=null;for(var i=0;i<state.payments.length;i++)if(state.payments[i].id===id){p=state.payments[i];break;}if(p){for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].id===p.invoiceId){state.invoices[j].paid=Math.max(0,state.invoices[j].paid-p.amount);state.invoices[j].status=state.invoices[j].paid>=state.invoices[j].amount?'paid':(state.invoices[j].paid>0?'partial':'unpaid');break;}}state.payments=state.payments.filter(function(x){return x.id!==id;});logAct('حذف سند',id);saveState();render();}
 function openAddExpense(){var body='<div class="field"><label>التصنيف</label><select id="ns_cat">'+EXP_CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select></div><div class="field"><label>المبلغ *</label><input id="ns_amt" type="number" min="1"></div><div class="field"><label>التاريخ</label><input id="ns_dt" type="date" value="'+today()+'"></div><div class="field"><label>ملاحظات</label><input id="ns_note"></div>';openModal('📉 مصروف',body,function(){var amt=+$('ns_amt').value;if(amt<=0){alert('المبلغ مطلوب');return false;}state.expenses.push({id:uid('EXP'),schoolId:state.currentSchool,cat:$('ns_cat').value,amount:amt,date:$('ns_dt').value,note:$('ns_note').value||''});logAct('مصروف',$('ns_cat').value);saveState();});}
 function deleteExpense(id){if(!confirm('حذف المصروف؟'))return;state.expenses=state.expenses.filter(function(x){return x.id!==id;});logAct('حذف مصروف',id);saveState();render();}
-function openAddStaff(){var rolesHTML='';for(var r in ROLES){if(r==='manager')continue;rolesHTML+='<div class="role-opt" data-role="'+r+'" onclick="pickRole(this, \''+r+'\')"><div class="ri">'+ROLES[r].icon+'</div><div class="rn">'+ROLES[r].name+'</div><div class="rd">'+ROLES[r].desc+'</div></div>';}var body='<div class="field"><label>اسم الموظف *</label><input id="st_name"></div><div class="field"><label>الدور *</label></div><div class="role-picker">'+rolesHTML+'</div><div id="teacherFields" class="hidden"><div class="field"><label>المواد (Ctrl للاختيار المتعدد)</label><select id="st_subjects" multiple size="4" style="height:auto">'+SUBJECTS.map(function(s){return '<option>'+s+'</option>';}).join('')+'</select></div><div class="field"><label>الصفوف</label><select id="st_grades" multiple size="4" style="height:auto">'+GRADE_LEVELS.map(function(g){return '<option>'+g+'</option>';}).join('')+'</select></div></div><div id="permEditorWrap"></div>';openModal('👥 إضافة موظف',body,function(){var name=$('st_name').value.trim();if(!name){alert('الاسم مطلوب');return false;}var role=window._pickedRole;if(!role){alert('اختر الدور');return false;}var school=currentSchool();var username=genUsername(name);var base=username,n=1,ex=true;while(ex){ex=false;for(var i=0;i<school.staff.length;i++)if(school.staff[i].username===username){ex=true;break;}if(ex)username=base+(n++);}var staff={id:uid('STF'),name:name,role:role,username:username,password:genPassword(),active:true,createdAt:today(),permissions:collectPerms()};if(role==='teacher'){var subs=[],grds=[];var selS=$('st_subjects');for(var si=0;si<selS.options.length;si++)if(selS.options[si].selected)subs.push(selS.options[si].value);var selG=$('st_grades');for(var gi=0;gi<selG.options.length;gi++)if(selG.options[gi].selected)grds.push(selG.options[gi].value);if(!subs.length||!grds.length){alert('اختر مواداً وصفوفاً');return false;}staff.subjects=subs;staff.grades=grds;}school.staff.push(staff);logAct('إضافة موظف',name);saveState();setTimeout(function(){showStaffCred(staff.id,true);},150);},'حفظ');}
+function openAddStaff(){var rolesHTML='';for(var r in ROLES){if(r==='manager')continue;rolesHTML+='<div class="role-opt" data-role="'+r+'" onclick="pickRole(this, \''+r+'\')"><div class="ri">'+ROLES[r].icon+'</div><div class="rn">'+ROLES[r].name+'</div><div class="rd">'+ROLES[r].desc+'</div></div>';}var body='<div class="field"><label>اسم الموظف *</label><input id="st_name"></div><div class="field"><label>الدور *</label></div><div class="role-picker">'+rolesHTML+'</div><div id="teacherFields" class="hidden"><div class="field"><label>المواد</label><select id="st_subjects" multiple size="4" style="height:auto">'+SUBJECTS.map(function(s){return '<option>'+s+'</option>';}).join('')+'</select></div><div class="field"><label>الصفوف</label><select id="st_grades" multiple size="4" style="height:auto">'+GRADE_LEVELS.map(function(g){return '<option>'+g+'</option>';}).join('')+'</select></div></div><div id="permEditorWrap"></div>';openModal('👥 إضافة موظف',body,function(){var name=$('st_name').value.trim();if(!name){alert('الاسم مطلوب');return false;}var role=window._pickedRole;if(!role){alert('اختر الدور');return false;}var school=currentSchool();var username=genUsername(name);var base=username,n=1,ex=true;while(ex){ex=false;for(var i=0;i<school.staff.length;i++)if(school.staff[i].username===username){ex=true;break;}if(ex)username=base+(n++);}var staff={id:uid('STF'),name:name,role:role,username:username,password:genPassword(),active:true,createdAt:today(),permissions:collectPerms()};if(role==='teacher'){var subs=[],grds=[];var selS=$('st_subjects');for(var si=0;si<selS.options.length;si++)if(selS.options[si].selected)subs.push(selS.options[si].value);var selG=$('st_grades');for(var gi=0;gi<selG.options.length;gi++)if(selG.options[gi].selected)grds.push(selG.options[gi].value);if(!subs.length||!grds.length){alert('اختر مواداً وصفوفاً');return false;}staff.subjects=subs;staff.grades=grds;}school.staff.push(staff);logAct('إضافة موظف',name);saveState();setTimeout(function(){showStaffCred(staff.id,true);},150);},'حفظ');}
 function pickRole(el,role){var all=document.querySelectorAll('.role-opt');for(var i=0;i<all.length;i++)all[i].classList.remove('active');el.classList.add('active');window._pickedRole=role;if(role==='teacher')$('teacherFields').classList.remove('hidden');else $('teacherFields').classList.add('hidden');renderPermEditor(PERM_TEMPLATES[role]);}
 function renderPermEditor(template){var html='<div style="margin-top:14px"><div style="font-size:12.5px;font-weight:700;color:var(--primary);margin-bottom:9px">🔐 الصلاحيات</div><div class="perm-grid"><div class="perm-row head"><div>الوحدة</div><div>عرض</div><div>إضافة</div><div>تعديل</div><div>حذف</div></div>';for(var i=0;i<PERM_MODULES.length;i++){var m=PERM_MODULES[i];var p=(template&&template!=='all')?(template[m.key]||{}):{};html+='<div class="perm-row"><div class="perm-module">'+m.icon+' '+m.name+'</div>';for(var a=0;a<4;a++){var action=m.actions[a]||null;if(!action)html+='<div></div>';else{var checked=p[action]?'checked':'';html+='<div class="perm-toggle"><input type="checkbox" data-module="'+m.key+'" data-action="'+action+'" '+checked+'></div>';}}html+='</div>';}html+='</div></div>';$('permEditorWrap').innerHTML=html;}
 function collectPerms(){var perms={};var inputs=document.querySelectorAll('#permEditorWrap input[type=checkbox]');for(var i=0;i<inputs.length;i++){var inp=inputs[i];if(inp.checked){var m=inp.getAttribute('data-module'),a=inp.getAttribute('data-action');if(!perms[m])perms[m]={};perms[m][a]=true;}}return perms;}
@@ -1117,7 +1065,6 @@ function toggleStaff(id){var school=currentSchool();for(var i=0;i<school.staff.l
 function deleteStaff(id){var school=currentSchool();var st=null;for(var i=0;i<school.staff.length;i++)if(school.staff[i].id===id){st=school.staff[i];break;}if(!st)return;if(!confirm('حذف "'+st.name+'"؟'))return;school.staff=school.staff.filter(function(x){return x.id!==id;});logAct('حذف موظف',st.name);saveState();render();}
 function openModal(title,body,onSave,saveBtnText){var ov=document.createElement('div');ov.className='modal-overlay';var isLg=body.indexOf('perm-grid')>=0?' modal-lg':'';ov.innerHTML='<div class="modal'+isLg+'"><div class="modal-head"><h3>'+title+'</h3><button class="mini" onclick="this.closest(\'.modal-overlay\').remove()">✕</button></div><div class="modal-body">'+body+'</div><div class="modal-foot"><button class="btn btn-primary" id="modalSaveBtn" style="width:auto">'+(saveBtnText||'حفظ')+'</button><button class="btn btn-ghost" onclick="this.closest(\'.modal-overlay\').remove()">إغلاق</button></div></div>';document.body.appendChild(ov);ov.addEventListener('click',function(e){if(e.target===ov)ov.remove();});$('modalSaveBtn').onclick=function(){try{var res=onSave();if(res!==false){ov.remove();render();}}catch(err){alert('خطأ: '+err.message);}};}
 
-/* ==================== INIT ==================== */
 document.addEventListener('DOMContentLoaded',function(){
   var tabs=document.querySelectorAll('.login-tab');
   for(var i=0;i<tabs.length;i++)tabs[i].addEventListener('click',function(){switchTab(this.getAttribute('data-tab'));});
