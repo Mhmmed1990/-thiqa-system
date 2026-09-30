@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ثقة v4.2 | مع Firebase</title>
+<title>ثقة v4.3 | مع Firebase Auth</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <style>
 :root{--primary:#0d3b66;--primary-3:#2874a6;--gold:#d4af37;--gold-2:#f4d35e;--success:#2e8b57;--danger:#c0392b;--warning:#e67e22;--info:#2980b9;--purple:#7c3aed;--bg:#eef2f7;--card:#fff;--text:#16222f;--muted:#6b7b8c;--border:#e1e7ef;--radius:14px;--shadow:0 4px 20px rgba(13,59,102,.08);--shadow-lg:0 20px 50px rgba(13,59,102,.15)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,7 +37,7 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .btn-sm{padding:6px 11px;font-size:12px}
 .hint{text-align:center;font-size:11.5px;color:var(--muted);margin-top:14px;padding:11px;background:#f7f9fc;border-radius:10px;line-height:1.7}
 .hint b{color:var(--primary)}
-.cloud-status{text-align:center;font-size:11px;padding:6px 12px;border-radius:20px;margin:10px auto;display:inline-block;width:auto}
+.cloud-status{text-align:center;font-size:11px;padding:6px 12px;border-radius:20px;margin:10px auto;display:inline-block}
 .cloud-status.online{background:#e3f5ea;color:#1e6b42}
 .cloud-status.offline{background:#fdf1e0;color:#a35a0e}
 .app{display:flex;min-height:100vh}
@@ -79,12 +80,7 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .kpi{background:var(--card);border-radius:var(--radius);padding:16px 18px;position:relative;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;transition:.2s}
 .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
 .kpi::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--primary-3)}
-.kpi.gold::before{background:var(--gold)}
-.kpi.success::before{background:var(--success)}
-.kpi.danger::before{background:var(--danger)}
-.kpi.warn::before{background:var(--warning)}
-.kpi.info::before{background:var(--info)}
-.kpi.purple::before{background:var(--purple)}
+.kpi.gold::before{background:var(--gold)}.kpi.success::before{background:var(--success)}.kpi.danger::before{background:var(--danger)}.kpi.warn::before{background:var(--warning)}.kpi.info::before{background:var(--info)}.kpi.purple::before{background:var(--purple)}
 .kpi-label{color:var(--muted);font-size:12px;font-weight:600;margin-bottom:6px}
 .kpi-value{font-size:21px;font-weight:800;color:var(--primary);letter-spacing:-.5px;line-height:1.2}
 .kpi-sub{font-size:11px;color:var(--muted);margin-top:5px}
@@ -263,7 +259,6 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 .behavior-cat{font-size:12.5px;font-weight:800;color:var(--primary)}
 .behavior-score{font-size:13px}
 .behavior-note{font-size:12px;color:var(--text);line-height:1.6;margin-top:4px}
-.behavior-meta{font-size:10.5px;color:var(--muted);margin-top:5px}
 @media(max-width:820px){.sidebar{position:fixed;z-index:100;transform:translateX(100%);transition:.25s;width:280px}[dir="rtl"] .sidebar{transform:translateX(-100%)}.sidebar.open,[dir="rtl"] .sidebar.open{transform:translateX(0)}.content{padding:14px}.topbar{padding:12px 14px}.schools-grid,.staff-grid,.qr-grid{grid-template-columns:1fr}.login-card{padding:26px 20px}.filter-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -273,7 +268,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
   <div class="login-card">
     <div class="login-logo">ث</div>
     <h1>شركة ثقة</h1>
-    <p>النظام التعليمي الشامل v4.2</p>
+    <p>النظام التعليمي v4.3</p>
     <div style="text-align:center"><span class="cloud-status" id="cloudStatus">☁️ جارٍ الاتصال...</span></div>
     <div class="login-tabs">
       <button type="button" class="login-tab active" data-tab="admin">👔 الإدارة</button>
@@ -354,18 +349,31 @@ var firebaseConfig = {
   appId: "1:252969707425:web:af74f49395c4f8a3ad4de0"
 };
 var db = null;
+var auth = null;
 var firebaseReady = false;
+var authReady = false;
+
 try {
   firebase.initializeApp(firebaseConfig);
   db = firebase.firestore();
+  auth = firebase.auth();
   firebaseReady = true;
   console.log('✅ Firebase متصل');
+  
+  auth.signInAnonymously().then(function(user){
+    authReady = true;
+    console.log('✅ Auth مجهول يعمل:', user.user.uid.slice(0,8) + '...');
+    setTimeout(function(){ syncFromCloud(); }, 300);
+  }).catch(function(err){
+    console.warn('⚠️ Auth فشل:', err.message);
+    console.warn('💡 فعّل Anonymous في Firebase Console');
+  });
 } catch(e) {
   console.warn('⚠️ Firebase غير متصل:', e.message);
 }
 
 /* ==================== CORE ==================== */
-var LS_KEY = 'thiqa_v42';
+var LS_KEY = 'thiqa_v43';
 function $(id){return document.getElementById(id);}
 function fmt(n){return (Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:0});}
 function money(n){return fmt(n)+' ل.س';}
@@ -427,16 +435,13 @@ function filterBar(page,fields,countText){
   return html;
 }
 
-/* ==================== EXCEL EXPORT ==================== */
+/* ==================== EXCEL ==================== */
 function exportExcel(filename,headers,rows,sheetTitle){
   var csv='\uFEFF';
   if(sheetTitle)csv+=sheetTitle+'\n';
   csv+=headers.map(function(h){return '"'+String(h).replace(/"/g,'""')+'"';}).join(',')+'\n';
   for(var i=0;i<rows.length;i++){
-    var row=rows[i].map(function(cell){
-      var s=String(cell===null||cell===undefined?'':cell);
-      return '"'+s.replace(/"/g,'""')+'"';
-    });
+    var row=rows[i].map(function(cell){var s=String(cell===null||cell===undefined?'':cell);return '"'+s.replace(/"/g,'""')+'"';});
     csv+=row.join(',')+'\n';
   }
   var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
@@ -448,7 +453,7 @@ function exportExcel(filename,headers,rows,sheetTitle){
   if(typeof logAct==='function')logAct('تصدير',filename);
   saveState();
 }
-function exportBtn(page,label){return '<button class="btn btn-gold btn-sm" onclick="exportPage(\''+page+'\')">⬇️ تصدير Excel</button>';}
+function exportBtn(page){return '<button class="btn btn-gold btn-sm" onclick="exportPage(\''+page+'\')">⬇️ تصدير Excel</button>';}
 
 /* ==================== CONSTANTS ==================== */
 var SUBJECTS=['رياضيات','لغة عربية','علوم','إنجليزي','اجتماعيات','تربية إسلامية','فنية','رياضة'];
@@ -463,7 +468,7 @@ var BEHAVIOR_CATS=[
 var ROLES={
   manager:{name:'مدير',icon:'👔',color:'#0d3b66',desc:'كامل'},
   teacher:{name:'معلم',icon:'👨‍🏫',color:'#2980b9',desc:'درجات وسلوك'},
-  accountant:{name:'محاسب',icon:'🧮',color:'#2e8b57',desc:'فواتير ومدفوعات'},
+  accountant:{name:'محاسب',icon:'🧮',color:'#2e8b57',desc:'فواتير'},
   cashier:{name:'أمين صندوق',icon:'💵',color:'#d4af37',desc:'تحصيل'},
   registrar:{name:'موظف تسجيل',icon:'📋',color:'#7c3aed',desc:'طلاب'},
   supervisor:{name:'مشرف مالي',icon:'📊',color:'#c0392b',desc:'تقارير'}
@@ -541,15 +546,7 @@ function seedState(){
   for(var si=0;si<schools.length;si++){
     for(var i=0;i<10;i++){
       var num=String(100+i);var shortId=schools[si].id.slice(-3);
-      students.push({
-        id:'ST-'+shortId+'-'+num,schoolId:schools[si].id,
-        name:first[(si*5+i)%first.length]+' '+last[(si*3+i)%last.length],
-        grade:grades[(i+si)%grades.length],
-        guardian:'والد '+first[(si*5+i)%first.length],
-        phone:'09'+String(10000000+((si*7+i)*1234567)%89000000),
-        fee:(1500+(i%5)*250)*1000,status:'active',token:genToken(),
-        username:'std'+shortId+num,password:'std'+num
-      });
+      students.push({id:'ST-'+shortId+'-'+num,schoolId:schools[si].id,name:first[(si*5+i)%first.length]+' '+last[(si*3+i)%last.length],grade:grades[(i+si)%grades.length],guardian:'والد '+first[(si*5+i)%first.length],phone:'09'+String(10000000+((si*7+i)*1234567)%89000000),fee:(1500+(i%5)*250)*1000,status:'active',token:genToken(),username:'std'+shortId+num,password:'std'+num});
     }
   }
   var invoices=[];
@@ -591,15 +588,10 @@ function seedState(){
       behavior.push({id:'BH-'+students[b].id+'-'+BEHAVIOR_CATS[bc].key,studentId:students[b].id,schoolId:students[b].schoolId,category:BEHAVIOR_CATS[bc].key,score:Math.min(100,baseScore+((bc*2)%15)-5),note:'',date:today(),updatedAt:new Date().toISOString()});
     }
   }
-  return {
-    schools:schools,students:students,invoices:invoices,payments:payments,expenses:expenses,
-    attendance:attendance,grades:gradesData,behavior:behavior,activityLog:[],
-    user:null,userType:null,context:'group',currentSchool:null,currentStaff:null,currentStudent:null,
-    page:'dashboard',settings:{currency:'ل.س',fiscalYear:'2026'}
-  };
+  return {schools:schools,students:students,invoices:invoices,payments:payments,expenses:expenses,attendance:attendance,grades:gradesData,behavior:behavior,activityLog:[],user:null,userType:null,context:'group',currentSchool:null,currentStaff:null,currentStudent:null,page:'dashboard',settings:{currency:'ل.س',fiscalYear:'2026'}};
 }
 
-/* ==================== STATE + FIREBASE SYNC ==================== */
+/* ==================== STATE + SYNC ==================== */
 var state;
 function loadState(){
   var s=null;
@@ -623,7 +615,7 @@ function loadState(){
 function saveState(){
   localStorage.setItem(LS_KEY,JSON.stringify(state));
   updateCloudStatus();
-  if(firebaseReady&&db){
+  if(firebaseReady&&db&&authReady){
     var dataToSave=JSON.parse(JSON.stringify(state));
     delete dataToSave.user;
     delete dataToSave.userType;
@@ -640,19 +632,15 @@ function saveState(){
   }
 }
 function syncFromCloud(){
-  if(!firebaseReady||!db){
-    console.log('⚠️ Firebase غير جاهز');
+  if(!firebaseReady||!db||!authReady){
+    console.log('⚠️ Firebase/Auth غير جاهز');
     updateCloudStatus();
     return;
   }
   db.collection('data').doc('thiqa-main').get().then(function(doc){
     if(doc.exists){
       var cloudData=doc.data();
-      var session={
-        user:state.user,userType:state.userType,currentStaff:state.currentStaff,
-        currentStudent:state.currentStudent,currentSchool:state.currentSchool,
-        context:state.context,page:state.page
-      };
+      var session={user:state.user,userType:state.userType,currentStaff:state.currentStaff,currentStudent:state.currentStudent,currentSchool:state.currentSchool,context:state.context,page:state.page};
       for(var key in cloudData)state[key]=cloudData[key];
       for(var k in session)state[k]=session[k];
       localStorage.setItem(LS_KEY,JSON.stringify(state));
@@ -671,15 +659,18 @@ function syncFromCloud(){
 function updateCloudStatus(){
   var el=$('cloudStatus');
   if(!el)return;
-  if(firebaseReady){
-    el.textContent='☁️ متصل بالسحابة';
+  if(firebaseReady&&authReady){
+    el.textContent='🔒 محمي ☁️ متزامن';
     el.className='cloud-status online';
+  } else if(firebaseReady&&!authReady){
+    el.textContent='☁️ متصل (بدون حماية)';
+    el.className='cloud-status offline';
   } else {
     el.textContent='📱 وضع محلي';
     el.className='cloud-status offline';
   }
 }
-setInterval(function(){if(firebaseReady)syncFromCloud();},30000);
+setInterval(function(){if(firebaseReady&&authReady)syncFromCloud();},30000);
 state=loadState();
 
 /* ==================== PERMISSIONS ==================== */
@@ -757,7 +748,6 @@ var PAGE_META={
   's-grades':{title:'درجاتي',sub:'نتائجي'},'s-attendance':{title:'حضوري',sub:'سجل الحضور'},
   's-behavior':{title:'سلوكي',sub:'تقييمي'},'s-fees':{title:'رسومي',sub:'فواتيري'}
 };
-
 function canSeePage(page){
   if(isStudent())return['s-dashboard','s-grades','s-attendance','s-behavior','s-fees'].indexOf(page)>=0;
   if(isAdmin())return true;
@@ -831,13 +821,12 @@ function render(){
 /* ==================== EXPORT ROUTER ==================== */
 function exportPage(page){
   var schoolFilter=(isAdmin()&&state.context==='group')?null:state.currentSchool;
-  var school=currentSchool();
-  var scopeName=school?school.name:'كل المدارس';
-  if(page==='students'){var list=applyF(scoped(state.students),'students');exportExcel('students',['الرقم','الاسم','الصف','ولي الأمر','الهاتف','الرسوم','الحالة'],list.map(function(s){return[s.id,s.name,s.grade,s.guardian,s.phone,s.fee,s.status];}),'قائمة الطلاب — '+scopeName);}
+  var school=currentSchool();var scopeName=school?school.name:'كل المدارس';
+  if(page==='students'){var list=applyF(scoped(state.students),'students');exportExcel('students',['الرقم','الاسم','الصف','ولي الأمر','الهاتف','الرسوم','الحالة'],list.map(function(s){return[s.id,s.name,s.grade,s.guardian,s.phone,s.fee,s.status];}),'الطلاب — '+scopeName);}
   else if(page==='invoices'){var list2=applyF(scoped(state.invoices),'invoices');exportExcel('invoices',['الرقم','الطالب','الصف','المبلغ','المدفوع','المتبقي','التاريخ','الاستحقاق','الحالة'],list2.map(function(i){return[i.id,i.studentName,i.grade,i.amount,i.paid,i.amount-i.paid,i.date,i.due,i.status==='paid'?'مدفوع':i.status==='partial'?'جزئي':'غير مدفوع'];}),'الفواتير — '+scopeName);}
   else if(page==='payments'){var list3=applyF(scoped(state.payments),'payments');exportExcel('payments',['الرقم','الفاتورة','الطالب','المبلغ','الطريقة','التاريخ'],list3.map(function(p){return[p.id,p.invoiceId,p.studentName,p.amount,p.method,p.date];}),'المدفوعات — '+scopeName);}
   else if(page==='expenses'){var list4=applyF(scoped(state.expenses),'expenses');exportExcel('expenses',['الرقم','التصنيف','المبلغ','التاريخ','ملاحظات'],list4.map(function(e){return[e.id,e.cat,e.amount,e.date,e.note||''];}),'المصروفات — '+scopeName);}
-  else if(page==='grades'){var list5=applyF(scoped(state.grades),'grades');var rows5=list5.map(function(g){var st=getStudent(g.studentId);return[st?st.name:'',st?st.grade:'',g.subject,g.term===1?'الفصل الأول':'الفصل الثاني',g.score];});exportExcel('grades',['الطالب','الصف','المادة','الفصل','الدرجة'],rows5,'الدرجات — '+scopeName);}
+  else if(page==='grades'){var list5=applyF(scoped(state.grades),'grades');var rows5=list5.map(function(g){var st=getStudent(g.studentId);return[st?st.name:'',st?st.grade:'',g.subject,g.term===1?'الأول':'الثاني',g.score];});exportExcel('grades',['الطالب','الصف','المادة','الفصل','الدرجة'],rows5,'الدرجات — '+scopeName);}
   else if(page==='behavior'){var list6=applyF(scoped(state.behavior),'behavior');var rows6=list6.map(function(b){var st=getStudent(b.studentId);var cat=BEHAVIOR_CATS.filter(function(c){return c.key===b.category;})[0];return[st?st.name:'',st?st.grade:'',cat?cat.name:b.category,b.score,b.note||'',b.date||''];});exportExcel('behavior',['الطالب','الصف','المعيار','الدرجة','ملاحظة','التاريخ'],rows6,'السلوك — '+scopeName);}
   else if(page==='staff'){var school2=currentSchool();var staff=(school2&&school2.staff)||[];exportExcel('staff',['الاسم','الدور','المستخدم','الحالة','المواد','الصفوف'],staff.map(function(s){return[s.name,ROLES[s.role].name,s.username,s.active?'نشط':'موقوف',(s.subjects||[]).join('، '),(s.grades||[]).join('، ')];}),'الموظفون — '+scopeName);}
   else if(page==='attendance'){var list7=applyF(scoped(state.attendance),'attendance');var rows7=list7.map(function(a){var st=getStudent(a.studentId);return[st?st.name:'',st?st.grade:'',a.date,a.status==='present'?'حاضر':a.status==='late'?'متأخر':'غائب'];});exportExcel('attendance',['الطالب','الصف','التاريخ','الحالة'],rows7,'الحضور — '+scopeName);}
@@ -890,8 +879,8 @@ function renderGroupDash(){
 function renderSchoolDash(){
   var school=currentSchool();if(!school)return '<div class="empty">لا مدرسة</div>';
   var banner='';
-  if(isAdmin()&&state.context==='school')banner='<div class="banner-gold"><span>🎯</span><span>أنت الآن داخل <b>'+school.name+'</b></span><button class="back-btn" onclick="exitToGroup()">🔙 عودة للمجموعة</button></div>';
-  else if(isTeacher())banner='<div class="banner-blue">👨‍🏫 <b>'+state.currentStaff.name+'</b> — تخصصك: '+(state.currentStaff.subjects||[]).join('، ')+'</div>';
+  if(isAdmin()&&state.context==='school')banner='<div class="banner-gold"><span>🎯</span><span>أنت الآن داخل <b>'+school.name+'</b></span><button class="back-btn" onclick="exitToGroup()">🔙 عودة</button></div>';
+  else if(isTeacher())banner='<div class="banner-blue">👨‍🏫 <b>'+state.currentStaff.name+'</b> — '+(state.currentStaff.subjects||[]).join('، ')+'</div>';
   else if(isStaff()&&state.currentStaff)banner='<div class="banner-blue">👋 <b>'+state.currentStaff.name+'</b> — '+ROLES[state.currentStaff.role].name+'</div>';
   var k=computeKPIs(school.id);
   var studentCount=0;for(var i=0;i<state.students.length;i++)if(state.students[i].schoolId===school.id)studentCount++;
@@ -907,8 +896,8 @@ function renderSchoolDash(){
   for(var cn2 in byCat){var pct=totalExp?Math.round(byCat[cn2]/totalExp*100):0;catBars+='<div class="bar-row"><span class="bar-label">'+cn2+'</span><div class="bar-track"><div class="bar-fill gold" style="width:'+pct+'%"></div></div><span class="bar-value">'+fmt(byCat[cn2])+'</span></div>';}
   var qa='';
   if(can('students','create'))qa+='<div class="quick-btn" onclick="openAddStudent()"><span class="ic">👨‍🎓</span><span class="lbl">إضافة طالب</span></div>';
-  if(can('invoices','create'))qa+='<div class="quick-btn" onclick="openAddInvoice()"><span class="ic">🧾</span><span class="lbl">إصدار فاتورة</span></div>';
-  if(can('payments','create'))qa+='<div class="quick-btn" onclick="openAddPayment()"><span class="ic">💵</span><span class="lbl">تسجيل دفعة</span></div>';
+  if(can('invoices','create'))qa+='<div class="quick-btn" onclick="openAddInvoice()"><span class="ic">🧾</span><span class="lbl">فاتورة</span></div>';
+  if(can('payments','create'))qa+='<div class="quick-btn" onclick="openAddPayment()"><span class="ic">💵</span><span class="lbl">دفعة</span></div>';
   qa+='<div class="quick-btn" onclick="navigate(\'qr-cards\')"><span class="ic">🎫</span><span class="lbl">بطاقات QR</span></div>';
   qa+='<div class="quick-btn" onclick="navigate(\'trial-balance\')"><span class="ic">⚖️</span><span class="lbl">ميزان المراجعة</span></div>';
   qa+='<div class="quick-btn" onclick="navigate(\'students\')"><span class="ic">📋</span><span class="lbl">قائمة الطلاب</span></div>';
@@ -933,7 +922,7 @@ function renderStudents(){
   if(!can('students','view'))return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.students);
   var schoolsList=state.schools.map(function(s){return {value:s.id,label:s.name};});
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الاسم / الهاتف / الرقم'},{key:'grade',label:'الصف',type:'select',options:GRADE_LEVELS},{key:'status',label:'الحالة',type:'select',options:[{value:'active',label:'نشط'},{value:'inactive',label:'موقوف'}]}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الاسم / الهاتف'},{key:'grade',label:'الصف',type:'select',options:GRADE_LEVELS},{key:'status',label:'الحالة',type:'select',options:[{value:'active',label:'نشط'},{value:'inactive',label:'موقوف'}]}];
   if(isAdmin()&&state.context==='group')fields.push({key:'schoolId',label:'المدرسة',type:'select',options:schoolsList});
   var filtered=applyF(list,'students');
   var rows='';
@@ -948,10 +937,8 @@ function renderStudents(){
   var addBtn=can('students','create')?'<button class="btn btn-primary" style="width:auto" onclick="openAddStudent()">+ إضافة</button>':'';
   return filterBar('students',fields,'عرض '+filtered.length+' من '+list.length)+
     '<div class="toolbar">'+addBtn+exportBtn('students')+'</div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الطالب</th>'+(isGroup?'<th>المدرسة</th>':'')+'<th>الصف</th><th>ولي الأمر</th><th>الهاتف</th><th>الرسوم</th><th>المتأخر</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="8" class="empty">لا طلاب مطابقون</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>الطالب</th>'+(isGroup?'<th>المدرسة</th>':'')+'<th>الصف</th><th>ولي الأمر</th><th>الهاتف</th><th>الرسوم</th><th>المتأخر</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="8" class="empty">لا طلاب</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== INVOICES ==================== */
 function renderInvoices(){
   if(!can('invoices','view'))return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.invoices);
@@ -969,17 +956,15 @@ function renderInvoices(){
     rows+='<tr><td><b>'+inv.id+'</b></td><td>'+inv.studentName+(isGroup?'<div style="font-size:10.5px;color:var(--muted)">'+schoolName(inv.schoolId)+'</div>':'')+'</td><td class="num">'+fmt(inv.amount)+'</td><td class="num" style="color:var(--success)">'+fmt(inv.paid)+'</td><td class="num" style="color:'+((inv.amount-inv.paid)>0?'var(--danger)':'var(--success)')+'">'+fmt(inv.amount-inv.paid)+'</td><td>'+inv.date+'</td><td>'+statusBadge(inv.status)+'</td><td>'+actions+'</td></tr>';
   }
   var addBtn=can('invoices','create')?'<button class="btn btn-primary" style="width:auto" onclick="openAddInvoice()">+ فاتورة</button>':'';
-  return filterBar('invoices',fields,'عرض '+filtered.length+' — إجمالي: '+fmt(tI))+
+  return filterBar('invoices',fields,'عرض '+filtered.length+' — '+fmt(tI))+
     '<div class="toolbar">'+addBtn+exportBtn('invoices')+'<span class="grow"></span><span class="badge ok">محصّل: '+fmt(tP)+'</span><span class="badge bad">متبقي: '+fmt(tI-tP)+'</span></div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الرقم</th><th>الطالب</th><th>المبلغ</th><th>المدفوع</th><th>المتبقي</th><th>التاريخ</th><th>الحالة</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="8" class="empty">لا فواتير مطابقة</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>الرقم</th><th>الطالب</th><th>المبلغ</th><th>المدفوع</th><th>المتبقي</th><th>التاريخ</th><th>الحالة</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="8" class="empty">لا فواتير</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== PAYMENTS ==================== */
 function renderPayments(){
   if(!can('payments','view'))return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.payments);
   var schoolsList=state.schools.map(function(s){return {value:s.id,label:s.name};});
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الاسم / الرقم'},{key:'method',label:'الطريقة',type:'select',options:PAY_METHODS},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الاسم'},{key:'method',label:'الطريقة',type:'select',options:PAY_METHODS},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
   if(isAdmin()&&state.context==='group')fields.push({key:'schoolId',label:'المدرسة',type:'select',options:schoolsList});
   var filtered=applyF(list,'payments');
   var rows='',total=0;
@@ -990,15 +975,13 @@ function renderPayments(){
   }
   return filterBar('payments',fields,'عرض '+filtered.length+' — '+fmt(total)+' ل.س')+
     '<div class="toolbar">'+exportBtn('payments')+'</div>'+
-    '<div class="table-wrap"><table><thead><tr><th>السند</th><th>الفاتورة</th><th>الطالب</th><th>المبلغ</th><th>الطريقة</th><th>التاريخ</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="7" class="empty">لا مدفوعات مطابقة</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>السند</th><th>الفاتورة</th><th>الطالب</th><th>المبلغ</th><th>الطريقة</th><th>التاريخ</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="7" class="empty">لا مدفوعات</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== EXPENSES ==================== */
 function renderExpenses(){
   if(!can('expenses','view'))return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.expenses);
   var schoolsList=state.schools.map(function(s){return {value:s.id,label:s.name};});
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'التصنيف / الملاحظات'},{key:'cat',label:'التصنيف',type:'select',options:EXP_CATS},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'التصنيف'},{key:'cat',label:'التصنيف',type:'select',options:EXP_CATS},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
   if(isAdmin()&&state.context==='group')fields.push({key:'schoolId',label:'المدرسة',type:'select',options:schoolsList});
   var filtered=applyF(list,'expenses');
   var rows='',total=0;
@@ -1011,21 +994,15 @@ function renderExpenses(){
   var addBtn=can('expenses','create')?'<button class="btn btn-primary" style="width:auto" onclick="openAddExpense()">+ مصروف</button>':'';
   return filterBar('expenses',fields,'عرض '+filtered.length+' — '+fmt(total)+' ل.س')+
     '<div class="toolbar">'+addBtn+exportBtn('expenses')+'</div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الرقم</th>'+(isGroup?'<th>المدرسة</th>':'')+'<th>التصنيف</th><th>المبلغ</th><th>التاريخ</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" class="empty">لا مصروفات مطابقة</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>الرقم</th>'+(isGroup?'<th>المدرسة</th>':'')+'<th>التصنيف</th><th>المبلغ</th><th>التاريخ</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" class="empty">لا مصروفات</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== GRADES ==================== */
 function renderGrades(){
   if(!can('grades','view')&&!isManager()&&!isAdmin())return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.grades);
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'اسم الطالب'},{key:'subject',label:'المادة',type:'select',options:SUBJECTS},{key:'term',label:'الفصل',type:'select',options:[{value:'1',label:'الأول'},{value:'2',label:'الثاني'}]},{key:'scoreMin',label:'من درجة',type:'number',placeholder:'0'},{key:'scoreMax',label:'إلى درجة',type:'number',placeholder:'100'}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الطالب'},{key:'subject',label:'المادة',type:'select',options:SUBJECTS},{key:'term',label:'الفصل',type:'select',options:[{value:'1',label:'الأول'},{value:'2',label:'الثاني'}]},{key:'scoreMin',label:'من',type:'number'},{key:'scoreMax',label:'إلى',type:'number'}];
   var filtered=applyF(list,'grades');
   var byStudent={};
-  for(var i=0;i<filtered.length;i++){
-    var g=filtered[i];
-    if(!byStudent[g.studentId])byStudent[g.studentId]=[];
-    byStudent[g.studentId].push(g);
-  }
+  for(var i=0;i<filtered.length;i++){var g=filtered[i];if(!byStudent[g.studentId])byStudent[g.studentId]=[];byStudent[g.studentId].push(g);}
   var rows='';
   for(var sid in byStudent){
     var st=getStudent(sid);if(!st)continue;
@@ -1033,18 +1010,16 @@ function renderGrades(){
     for(var m=0;m<grs.length;m++)sum+=grs[m].score;
     var avg=Math.round(sum/grs.length);
     var subsList=grs.map(function(x){return x.subject+': '+x.score;}).join(' | ');
-    rows+='<tr><td><b>'+st.name+'</b><div style="font-size:10.5px;color:var(--muted)">'+st.grade+'</div></td><td style="font-size:11.5px">'+subsList+'</td><td class="num" style="color:'+(avg>=85?'var(--success)':avg>=60?'var(--primary)':'var(--danger)')+'">'+avg+'</td><td>'+grs.length+' مادة</td></tr>';
+    rows+='<tr><td><b>'+st.name+'</b><div style="font-size:10.5px;color:var(--muted)">'+st.grade+'</div></td><td style="font-size:11.5px">'+subsList+'</td><td class="num" style="color:'+(avg>=85?'var(--success)':avg>=60?'var(--primary)':'var(--danger)')+'">'+avg+'</td><td>'+grs.length+'</td></tr>';
   }
-  return filterBar('grades',fields,'عرض '+filtered.length+' درجة — '+Object.keys(byStudent).length+' طالب')+
+  return filterBar('grades',fields,'عرض '+filtered.length+' — '+Object.keys(byStudent).length+' طالب')+
     '<div class="toolbar">'+exportBtn('grades')+'</div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الدرجات</th><th>المعدل</th><th>عدد المواد</th></tr></thead><tbody>'+(rows||'<tr><td colspan="4" class="empty">لا درجات مطابقة</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الدرجات</th><th>المعدل</th><th>المواد</th></tr></thead><tbody>'+(rows||'<tr><td colspan="4" class="empty">لا درجات</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== BEHAVIOR ==================== */
 function renderBehavior(){
   if(!can('behavior','view')&&!isManager()&&!isAdmin())return '<div class="alert warn">⛔ لا صلاحية</div>';
   var list=scoped(state.behavior);
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'اسم الطالب'},{key:'category',label:'المعيار',type:'select',options:BEHAVIOR_CATS.map(function(c){return {value:c.key,label:c.name};})},{key:'scoreMin',label:'من درجة',type:'number',placeholder:'0'},{key:'scoreMax',label:'إلى درجة',type:'number',placeholder:'100'}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الطالب'},{key:'category',label:'المعيار',type:'select',options:BEHAVIOR_CATS.map(function(c){return {value:c.key,label:c.name};})},{key:'scoreMin',label:'من',type:'number'},{key:'scoreMax',label:'إلى',type:'number'}];
   var filtered=applyF(list,'behavior');
   var rows='';
   for(var i=0;i<filtered.length;i++){
@@ -1053,12 +1028,10 @@ function renderBehavior(){
     var cat=BEHAVIOR_CATS.filter(function(c){return c.key===b.category;})[0];
     rows+='<tr><td><b>'+(st?st.name:'—')+'</b><div style="font-size:10.5px;color:var(--muted)">'+(st?st.grade:'')+'</div></td><td style="font-size:11.5px">'+(cat?cat.name:b.category)+'</td><td class="num">'+b.score+'</td><td style="font-size:11.5px">'+(b.note||'—')+'</td><td style="font-size:10.5px;color:var(--muted)">'+(b.date||'—')+'</td><td><button class="mini" onclick="openBehaviorForm(\''+b.studentId+'\')">⭐</button></td></tr>';
   }
-  return filterBar('behavior',fields,'عرض '+filtered.length+' تقييم')+
+  return filterBar('behavior',fields,'عرض '+filtered.length)+
     '<div class="toolbar">'+exportBtn('behavior')+'</div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>المعيار</th><th>الدرجة</th><th>ملاحظة</th><th>التاريخ</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" class="empty">لا تقييمات مطابقة</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>المعيار</th><th>الدرجة</th><th>ملاحظة</th><th>التاريخ</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" class="empty">لا تقييمات</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== ATTENDANCE ==================== */
 function renderAttendance(){
   var students=scoped(state.students);
   var date=state._attDate||today();
@@ -1071,7 +1044,7 @@ function renderAttendance(){
     cards+='<div class="qr-card" style="text-align:right;padding:12px"><div style="font-weight:800;color:var(--primary);font-size:13px;margin-bottom:2px">'+s.name+'</div><div style="font-size:10.5px;color:var(--muted);margin-bottom:8px">'+s.grade+'</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px"><button class="btn btn-sm" style="background:'+(status==='present'?'var(--success)':'#f2f5f9')+';color:'+(status==='present'?'#fff':'var(--text)')+';padding:6px;font-size:11px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'present\')">حاضر</button><button class="btn btn-sm" style="background:'+(status==='late'?'var(--warning)':'#f2f5f9')+';color:'+(status==='late'?'#fff':'var(--text)')+';padding:6px;font-size:11px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'late\')">متأخر</button><button class="btn btn-sm" style="background:'+(status==='absent'?'var(--danger)':'#f2f5f9')+';color:'+(status==='absent'?'#fff':'var(--text)')+';padding:6px;font-size:11px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'absent\')">غائب</button></div></div>';
   }
   var sList=state.schools.map(function(x){return {value:x.id,label:x.name};});
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'اسم الطالب'},{key:'status',label:'الحالة',type:'select',options:[{value:'present',label:'حاضر'},{value:'late',label:'متأخر'},{value:'absent',label:'غائب'}]},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الطالب'},{key:'status',label:'الحالة',type:'select',options:[{value:'present',label:'حاضر'},{value:'late',label:'متأخر'},{value:'absent',label:'غائب'}]},{key:'dateFrom',label:'من',type:'date'},{key:'dateTo',label:'إلى',type:'date'}];
   if(isAdmin()&&state.context==='group')fields.push({key:'schoolId',label:'المدرسة',type:'select',options:sList});
   var attList=scoped(state.attendance);
   var filtered=applyF(attList,'attendance');
@@ -1083,12 +1056,12 @@ function renderAttendance(){
     var txt=a.status==='present'?'حاضر':a.status==='late'?'متأخر':'غائب';
     attRows+='<tr><td>'+(st2?st2.name:'—')+'</td><td>'+(st2?st2.grade:'')+'</td><td>'+a.date+'</td><td><span class="badge '+badge+'">'+txt+'</span></td></tr>';
   }
-  return '<div class="alert info">✅ تسجيل سريع — أو استخدم الفلاتر أدناه للبحث</div>'+
+  return '<div class="alert info">✅ تسجيل سريع</div>'+
     '<div class="toolbar"><input type="date" value="'+date+'" onchange="state._attDate=this.value;render()"><span class="grow"></span><span class="badge info">'+students.length+' طالب</span></div>'+
     '<div class="qr-grid" style="margin-bottom:20px">'+(cards||'<div class="empty">لا طلاب</div>')+'</div>'+
-    filterBar('attendance',fields,'عرض '+filtered.length+' سجل')+
+    filterBar('attendance',fields,'عرض '+filtered.length)+
     '<div class="toolbar">'+exportBtn('attendance')+'</div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الصف</th><th>التاريخ</th><th>الحالة</th></tr></thead><tbody>'+(attRows||'<tr><td colspan="4" class="empty">لا سجلات مطابقة</td></tr>')+'</tbody></table></div>';
+    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الصف</th><th>التاريخ</th><th>الحالة</th></tr></thead><tbody>'+(attRows||'<tr><td colspan="4" class="empty">لا سجلات</td></tr>')+'</tbody></table></div>';
 }
 function markAtt(studentId,date,status){
   var existing=null;
@@ -1098,14 +1071,12 @@ function markAtt(studentId,date,status){
   else state.attendance.push({id:uid('ATT'),studentId:studentId,schoolId:st.schoolId,date:date,status:status});
   saveState();render();
 }
-
-/* ==================== STAFF ==================== */
 function renderStaff(){
   if(!(isManager()||isAdmin()))return '<div class="alert warn">⛔ لمدير المدرسة فقط</div>';
   var school=currentSchool();if(!school)return '<div class="empty">—</div>';
   var staff=school.staff||[];
   var rolesList=Object.keys(ROLES).filter(function(r){return r!=='manager';}).map(function(r){return {value:r,label:ROLES[r].name};});
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الاسم / المستخدم'},{key:'role',label:'الدور',type:'select',options:rolesList},{key:'active',label:'الحالة',type:'select',options:[{value:'1',label:'نشط'},{value:'0',label:'موقوف'}]}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الاسم'},{key:'role',label:'الدور',type:'select',options:rolesList},{key:'active',label:'الحالة',type:'select',options:[{value:'1',label:'نشط'},{value:'0',label:'موقوف'}]}];
   var f=getF('staff');
   var filtered=staff.filter(function(s){
     if(f.search){var text=(s.name+' '+s.username).toLowerCase();if(text.indexOf(f.search.toLowerCase())<0)return false;}
@@ -1114,24 +1085,22 @@ function renderStaff(){
     if(f.active==='0'&&s.active)return false;
     return true;
   });
-  var cards='<div class="staff-card role-manager"><div class="staff-card-head"><div class="staff-avatar" style="background:linear-gradient(135deg,#0d3b66,#2874a6)">👔</div><div><div class="staff-name">'+school.name+'</div><span class="staff-role" style="background:#e3eef7;color:#0d3b66">مدير</span></div></div><div style="font-size:11px;color:var(--muted);font-family:monospace;margin-bottom:11px">@'+school.username+'</div><div class="staff-card-actions"><button class="btn btn-ghost btn-sm" onclick="showSchoolCred()">🔑 البيانات</button></div></div>';
+  var cards='<div class="staff-card role-manager"><div class="staff-card-head"><div class="staff-avatar" style="background:linear-gradient(135deg,#0d3b66,#2874a6)">👔</div><div><div class="staff-name">'+school.name+'</div><span class="staff-role" style="background:#e3eef7;color:#0d3b66">مدير</span></div></div><div style="font-size:11px;color:var(--muted);font-family:monospace;margin-bottom:11px">@'+school.username+'</div><div class="staff-card-actions"><button class="btn btn-ghost btn-sm" onclick="showSchoolCred()">🔑</button></div></div>';
   for(var i=0;i<filtered.length;i++){
     var s=filtered[i];
     var role=ROLES[s.role]||{name:'—',icon:'👤',color:'#666'};
     var extra='';
-    if(s.role==='teacher')extra='<div style="font-size:11px;color:var(--muted);margin:8px 0;line-height:1.6">📚 '+(s.subjects||[]).join('، ')+'<br>🎓 '+(s.grades||[]).join('، ')+'</div>';
+    if(s.role==='teacher')extra='<div style="font-size:11px;color:var(--muted);margin:8px 0">📚 '+(s.subjects||[]).join('، ')+'<br>🎓 '+(s.grades||[]).join('، ')+'</div>';
     cards+='<div class="staff-card role-'+s.role+'"><div class="staff-card-head"><div class="staff-avatar" style="background:'+role.color+'">'+role.icon+'</div><div style="flex:1;min-width:0"><div class="staff-name">'+s.name+'</div><span class="staff-role" style="background:'+role.color+'22;color:'+role.color+'">'+role.name+'</span></div><span class="badge '+(s.active?'ok':'bad')+'">'+(s.active?'نشط':'موقوف')+'</span></div><div style="font-size:11px;color:var(--muted);font-family:monospace">@'+s.username+'</div>'+extra+'<div class="staff-card-actions"><button class="btn btn-primary btn-sm" onclick="editStaff(\''+s.id+'\')">✏️</button><button class="btn btn-ghost btn-sm" onclick="showStaffCred(\''+s.id+'\')">🔑</button><button class="btn btn-ghost btn-sm" onclick="toggleStaff(\''+s.id+'\')">'+(s.active?'⏸':'▶️')+'</button><button class="btn btn-danger btn-sm" onclick="deleteStaff(\''+s.id+'\')">🗑</button></div></div>';
   }
   return filterBar('staff',fields,'عرض '+filtered.length+' من '+staff.length)+
-    '<div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openAddStaff()">+ إضافة موظف</button>'+exportBtn('staff')+'</div>'+
+    '<div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openAddStaff()">+ موظف</button>'+exportBtn('staff')+'</div>'+
     '<div class="staff-grid">'+cards+'<div class="add-card" onclick="openAddStaff()"><div class="plus">+</div><div class="txt">إضافة موظف</div></div></div>';
 }
-
-/* ==================== JOURNAL ==================== */
 function renderJournal(){
   var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;
   var entries=generateJournalEntries(filter);
-  var fields=[{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'},{key:'search',label:'🔍 بحث',placeholder:'الرقم / البيان'}];
+  var fields=[{key:'dateFrom',label:'من',type:'date'},{key:'dateTo',label:'إلى',type:'date'},{key:'search',label:'🔍 بحث',placeholder:'الرقم'}];
   var f=getF('journal');
   var filtered=entries.filter(function(e){
     if(f.dateFrom&&e.date<f.dateFrom)return false;
@@ -1140,19 +1109,17 @@ function renderJournal(){
     return true;
   });
   filtered.reverse();
-  if(!filtered.length)return filterBar('journal',fields,'0 قيد')+'<div class="alert info">📓 لا قيود مطابقة</div>';
+  if(!filtered.length)return filterBar('journal',fields,'0')+'<div class="alert info">📓 لا قيود</div>';
   var html='';
   for(var i=0;i<filtered.length;i++){
     var e=filtered[i],lines='',td=0,tc=0;
     for(var j=0;j<e.lines.length;j++){var l=e.lines[j];td+=l.debit;tc+=l.credit;lines+='<tr style="background:#fff"><td style="padding:7px 14px;font-size:11.5px;color:var(--muted)">'+l.code+'</td><td style="padding:7px 14px;font-size:12.5px">'+accName(l.code)+'</td><td style="padding:7px 14px;text-align:left" class="num">'+(l.debit?fmt(l.debit):'')+'</td><td style="padding:7px 14px;text-align:left" class="num">'+(l.credit?fmt(l.credit):'')+'</td></tr>';}
     html+='<tr style="background:#f7f9fc;border-top:2px solid var(--primary)"><td colspan="4" style="padding:10px 14px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><div><b style="color:var(--primary)">📓 '+e.id+'</b><span style="margin-inline-start:10px;font-size:11px;color:var(--muted)">📅 '+e.date+'</span></div><div style="font-weight:700;color:var(--primary);font-size:12.5px">'+e.desc+'</div></div></td></tr><tr><th style="background:#eef2f7;font-size:11px;padding:7px 14px">الرمز</th><th style="background:#eef2f7;font-size:11px;padding:7px 14px">الحساب</th><th style="background:#eef2f7;font-size:11px;padding:7px 14px;text-align:left">مدين</th><th style="background:#eef2f7;font-size:11px;padding:7px 14px;text-align:left">دائن</th></tr>'+lines+'<tr style="background:#f9fbfd"><td colspan="2" style="padding:7px 14px;text-align:left;font-size:11px;color:var(--muted)"><b>الإجمالي</b></td><td style="padding:7px 14px;text-align:left" class="num"><b>'+fmt(td)+'</b></td><td style="padding:7px 14px;text-align:left" class="num"><b>'+fmt(tc)+'</b></td></tr><tr><td colspan="4" style="padding:5px"></td></tr>';
   }
-  return filterBar('journal',fields,'عرض '+filtered.length+' من '+entries.length)+
+  return filterBar('journal',fields,'عرض '+filtered.length)+
     '<div class="toolbar">'+exportBtn('journal')+'</div>'+
     '<div class="table-wrap"><table style="min-width:auto"><tbody>'+html+'</tbody></table></div>';
 }
-
-/* ==================== TRIAL BALANCE ==================== */
 function renderTrialBalance(){
   var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;
   var result=computeBalances(filter);
@@ -1183,12 +1150,10 @@ function renderTrialBalance(){
     tD+=rD;tC+=rC;
   }
   var isBal=Math.abs(tD-tC)<0.5;
-  return '<div class="alert '+(isBal?'success':'warn')+'">'+(isBal?'✅ الميزان متوازن':'⚠️ الميزان غير متوازن')+' — مدين: <b>'+money(tD)+'</b> • دائن: <b>'+money(tC)+'</b></div>'+
-    '<div class="toolbar">'+exportBtn('trial-balance')+'<button class="btn btn-ghost" onclick="window.print()">🖨️ طباعة</button></div>'+
-    '<div class="table-wrap"><table><thead><tr><th>الرمز</th><th>الحساب</th><th>مدين</th><th>دائن</th><th>الرصيد</th></tr></thead><tbody>'+rows+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:800"><td colspan="2" style="padding:12px"><b>الإجمالي</b></td><td class="num" style="color:#fff"><b>'+fmt(tD)+'</b></td><td class="num" style="color:#fff"><b>'+fmt(tC)+'</b></td><td style="text-align:center"><b>'+(isBal?'✅ متوازن':'❌')+'</b></td></tr></tbody></table></div>';
+  return '<div class="alert '+(isBal?'success':'warn')+'">'+(isBal?'✅ متوازن':'⚠️ غير متوازن')+' — مدين: <b>'+money(tD)+'</b> • دائن: <b>'+money(tC)+'</b></div>'+
+    '<div class="toolbar">'+exportBtn('trial-balance')+'</div>'+
+    '<div class="table-wrap"><table><thead><tr><th>الرمز</th><th>الحساب</th><th>مدين</th><th>دائن</th><th>الرصيد</th></tr></thead><tbody>'+rows+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:800"><td colspan="2" style="padding:12px"><b>الإجمالي</b></td><td class="num" style="color:#fff"><b>'+fmt(tD)+'</b></td><td class="num" style="color:#fff"><b>'+fmt(tC)+'</b></td><td style="text-align:center"><b>'+(isBal?'✅':'❌')+'</b></td></tr></tbody></table></div>';
 }
-
-/* ==================== INCOME STATEMENT ==================== */
 function renderIncomeStatement(){
   var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;
   var result=computeBalances(filter);
@@ -1202,11 +1167,8 @@ function renderIncomeStatement(){
   }
   var profit=totalR-totalE,margin=totalR?Math.round(profit/totalR*100):0;
   return '<div class="grid-kpi"><div class="kpi success"><div class="kpi-label">💵 الإيرادات</div><div class="kpi-value">'+money(totalR)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(totalE)+'</div></div><div class="kpi '+(profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(profit)+'</div></div><div class="kpi info"><div class="kpi-label">📊 الهامش</div><div class="kpi-value">'+margin+'%</div></div></div>'+
-    '<div class="toolbar">'+exportBtn('income-statement')+'<button class="btn btn-ghost" onclick="window.print()">🖨️ طباعة</button></div>'+
     '<div class="card"><div class="card-head"><h2>📄 قائمة الدخل</h2></div><table style="min-width:auto"><tbody><tr style="background:#e3f5ea;font-weight:800;color:#1e6b42"><td style="padding:12px;font-size:13.5px">💵 الإيرادات</td><td style="padding:12px;text-align:left;font-size:13.5px">'+fmt(totalR)+' ل.س</td></tr>'+(revRows||'<tr><td colspan="2" style="padding:8px;color:var(--muted);font-size:11.5px">لا إيرادات</td></tr>')+'<tr style="background:#fbe6e4;font-weight:800;color:#a5261a"><td style="padding:12px;font-size:13.5px">📉 المصروفات</td><td style="padding:12px;text-align:left;font-size:13.5px">('+fmt(totalE)+') ل.س</td></tr>'+(expRows||'<tr><td colspan="2" style="padding:8px;color:var(--muted);font-size:11.5px">لا مصروفات</td></tr>')+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:900"><td style="padding:16px;font-size:15px">صافي الربح</td><td style="padding:16px;text-align:left;font-size:16px">'+fmt(profit)+' ل.س</td></tr></tbody></table></div>';
 }
-
-/* ==================== BALANCE SHEET ==================== */
 function renderBalanceSheet(){
   var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;
   var result=computeBalances(filter);
@@ -1222,14 +1184,11 @@ function renderBalanceSheet(){
   var rev=0,exp=0;
   for(var c in bal){if(accType(c)==='revenue')rev+=bal[c].credit-bal[c].debit;if(accType(c)==='expense')exp+=bal[c].debit-bal[c].credit;}
   var net=rev-exp;
-  if(net){tE+=net;eRows+='<tr><td>صافي ربح الفترة</td><td class="num" style="color:var(--success)">'+fmt(net)+'</td></tr>';}
+  if(net){tE+=net;eRows+='<tr><td>صافي الربح</td><td class="num" style="color:var(--success)">'+fmt(net)+'</td></tr>';}
   var diff=tA-(tL+tE),isBal=Math.abs(diff)<0.5;
-  return '<div class="alert '+(isBal?'success':'warn')+'">'+(isBal?'✅ الميزانية متوازنة':'⚠️ فرق: '+money(diff))+'</div>'+
-    '<div class="toolbar">'+exportBtn('balance-sheet')+'<button class="btn btn-ghost" onclick="window.print()">🖨️ طباعة</button></div>'+
-    '<div class="grid-2"><div class="card"><div class="card-head"><h2>🏛️ الأصول</h2><span class="badge ok">'+fmt(tA)+' ل.س</span></div><table style="min-width:auto"><tbody>'+(aRows||'<tr><td colspan="2" style="padding:18px;text-align:center;color:var(--muted)">لا أصول</td></tr>')+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:800"><td style="padding:12px">إجمالي الأصول</td><td style="padding:12px;text-align:left">'+fmt(tA)+'</td></tr></tbody></table></div><div class="card"><div class="card-head"><h2>💰 الخصوم + الملكية</h2><span class="badge warn">'+fmt(tL+tE)+' ل.س</span></div><table style="min-width:auto"><tbody><tr style="background:#fdf1e0;font-weight:800;color:#a35a0e"><td colspan="2" style="padding:9px 12px;font-size:12.5px">الخصوم</td></tr>'+(lRows||'<tr><td colspan="2" style="padding:9px 12px;color:var(--muted);font-size:11.5px">لا خصوم</td></tr>')+'<tr style="background:#e3f5ea;font-weight:800;color:#1e6b42"><td colspan="2" style="padding:9px 12px;font-size:12.5px">حقوق الملكية</td></tr>'+(eRows||'<tr><td colspan="2" style="padding:9px 12px;color:var(--muted);font-size:11.5px">—</td></tr>')+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:800"><td style="padding:12px">الإجمالي</td><td style="padding:12px;text-align:left">'+fmt(tL+tE)+'</td></tr></tbody></table></div></div>';
+  return '<div class="alert '+(isBal?'success':'warn')+'">'+(isBal?'✅ متوازنة':'⚠️ فرق: '+money(diff))+'</div>'+
+    '<div class="grid-2"><div class="card"><div class="card-head"><h2>🏛️ الأصول</h2><span class="badge ok">'+fmt(tA)+'</span></div><table style="min-width:auto"><tbody>'+(aRows||'<tr><td colspan="2" style="padding:18px;text-align:center;color:var(--muted)">لا أصول</td></tr>')+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:800"><td style="padding:12px">الإجمالي</td><td style="padding:12px;text-align:left">'+fmt(tA)+'</td></tr></tbody></table></div><div class="card"><div class="card-head"><h2>💰 الخصوم + الملكية</h2><span class="badge warn">'+fmt(tL+tE)+'</span></div><table style="min-width:auto"><tbody><tr style="background:#fdf1e0;font-weight:800;color:#a35a0e"><td colspan="2" style="padding:9px 12px;font-size:12.5px">الخصوم</td></tr>'+(lRows||'<tr><td colspan="2" style="padding:9px 12px;color:var(--muted);font-size:11.5px">—</td></tr>')+'<tr style="background:#e3f5ea;font-weight:800;color:#1e6b42"><td colspan="2" style="padding:9px 12px;font-size:12.5px">حقوق الملكية</td></tr>'+(eRows||'<tr><td colspan="2" style="padding:9px 12px;color:var(--muted);font-size:11.5px">—</td></tr>')+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;font-weight:800"><td style="padding:12px">الإجمالي</td><td style="padding:12px;text-align:left">'+fmt(tL+tE)+'</td></tr></tbody></table></div></div>';
 }
-
-/* ==================== TEACHER PORTAL ==================== */
 function myStudents(){
   var s=state.currentStaff;
   if(!s||!s.grades)return [];
@@ -1238,7 +1197,6 @@ function myStudents(){
 function renderTeacherDashboard(){
   var t=state.currentStaff;
   var students=myStudents();
-  var subs=(t.subjects||[]).join('، '),grades=(t.grades||[]).join('، ');
   var todayStr=today();
   var todayAtt=state.attendance.filter(function(a){return a.date===todayStr&&students.some(function(s){return s.id===a.studentId;});});
   var present=todayAtt.filter(function(a){return a.status==='present';}).length;
@@ -1246,9 +1204,9 @@ function renderTeacherDashboard(){
   var late=todayAtt.filter(function(a){return a.status==='late';}).length;
   var mySubjs=t.subjects||[],pendingGrades=0;
   for(var i=0;i<students.length;i++)for(var j=0;j<mySubjs.length;j++){var found=state.grades.some(function(g){return g.studentId===students[i].id&&g.subject===mySubjs[j]&&g.term===1;});if(!found)pendingGrades++;}
-  return '<div class="banner-green">👋 أهلاً <b>'+t.name+'</b> — <b>'+subs+'</b> • صفوفك: <b>'+grades+'</b></div>'+
-    '<div class="grid-kpi"><div class="kpi info"><div class="kpi-label">👨‍🎓 طلابي</div><div class="kpi-value">'+students.length+'</div></div><div class="kpi success"><div class="kpi-label">✅ حاضر</div><div class="kpi-value">'+present+'</div></div><div class="kpi warn"><div class="kpi-label">⏰ متأخر</div><div class="kpi-value">'+late+'</div></div><div class="kpi danger"><div class="kpi-label">❌ غائب</div><div class="kpi-value">'+absent+'</div></div><div class="kpi gold"><div class="kpi-label">📝 درجات ناقصة</div><div class="kpi-value">'+pendingGrades+'</div></div></div>'+
-    '<div class="quick-actions"><div class="quick-btn" onclick="navigate(\'t-attendance\')"><span class="ic">✅</span><span class="lbl">تسجيل الحضور</span></div><div class="quick-btn" onclick="navigate(\'t-grades\')"><span class="ic">📝</span><span class="lbl">إدخال الدرجات</span></div><div class="quick-btn" onclick="navigate(\'t-behavior\')"><span class="ic">⭐</span><span class="lbl">تقييم السلوك</span></div><div class="quick-btn" onclick="navigate(\'t-students\')"><span class="ic">👨‍🎓</span><span class="lbl">طلابي</span></div></div>';
+  return '<div class="banner-green">👋 أهلاً <b>'+t.name+'</b> — <b>'+(t.subjects||[]).join('، ')+'</b> • صفوفك: <b>'+(t.grades||[]).join('، ')+'</b></div>'+
+    '<div class="grid-kpi"><div class="kpi info"><div class="kpi-label">👨‍🎓 طلابي</div><div class="kpi-value">'+students.length+'</div></div><div class="kpi success"><div class="kpi-label">✅ حاضر</div><div class="kpi-value">'+present+'</div></div><div class="kpi warn"><div class="kpi-label">⏰ متأخر</div><div class="kpi-value">'+late+'</div></div><div class="kpi danger"><div class="kpi-label">❌ غائب</div><div class="kpi-value">'+absent+'</div></div><div class="kpi gold"><div class="kpi-label">📝 ناقصة</div><div class="kpi-value">'+pendingGrades+'</div></div></div>'+
+    '<div class="quick-actions"><div class="quick-btn" onclick="navigate(\'t-attendance\')"><span class="ic">✅</span><span class="lbl">الحضور</span></div><div class="quick-btn" onclick="navigate(\'t-grades\')"><span class="ic">📝</span><span class="lbl">الدرجات</span></div><div class="quick-btn" onclick="navigate(\'t-behavior\')"><span class="ic">⭐</span><span class="lbl">السلوك</span></div><div class="quick-btn" onclick="navigate(\'t-students\')"><span class="ic">👨‍🎓</span><span class="lbl">طلابي</span></div></div>';
 }
 function renderTeacherAttendance(){
   var students=myStudents();
@@ -1259,9 +1217,9 @@ function renderTeacherAttendance(){
     var s=students[i];
     var rec=att.filter(function(a){return a.studentId===s.id;})[0];
     var status=rec?rec.status:'';
-    cards+='<div class="qr-card" style="text-align:right;padding:14px"><div style="font-weight:800;color:var(--primary);font-size:13.5px;margin-bottom:3px">'+s.name+'</div><div style="font-size:11px;color:var(--muted);margin-bottom:10px">'+s.grade+' • '+s.id+'</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"><button class="btn btn-sm" style="background:'+(status==='present'?'var(--success)':'#f2f5f9')+';color:'+(status==='present'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'present\')">✅ حاضر</button><button class="btn btn-sm" style="background:'+(status==='late'?'var(--warning)':'#f2f5f9')+';color:'+(status==='late'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'late\')">⏰ متأخر</button><button class="btn btn-sm" style="background:'+(status==='absent'?'var(--danger)':'#f2f5f9')+';color:'+(status==='absent'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'absent\')">❌ غائب</button></div></div>';
+    cards+='<div class="qr-card" style="text-align:right;padding:14px"><div style="font-weight:800;color:var(--primary);font-size:13.5px;margin-bottom:3px">'+s.name+'</div><div style="font-size:11px;color:var(--muted);margin-bottom:10px">'+s.grade+'</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"><button class="btn btn-sm" style="background:'+(status==='present'?'var(--success)':'#f2f5f9')+';color:'+(status==='present'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'present\')">✅</button><button class="btn btn-sm" style="background:'+(status==='late'?'var(--warning)':'#f2f5f9')+';color:'+(status==='late'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'late\')">⏰</button><button class="btn btn-sm" style="background:'+(status==='absent'?'var(--danger)':'#f2f5f9')+';color:'+(status==='absent'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+s.id+'\',\''+date+'\',\'absent\')">❌</button></div></div>';
   }
-  return '<div class="alert info">✅ سجّل حضور طلابك — اضغط الزر لكل طالب</div>'+
+  return '<div class="alert info">✅ سجّل حضور طلابك</div>'+
     '<div class="toolbar"><input type="date" value="'+date+'" onchange="state._attDate=this.value;render()"><span class="grow"></span><button class="btn btn-success btn-sm" onclick="markAllPresent(\''+date+'\')">✅ الكل حاضر</button></div>'+
     '<div class="qr-grid">'+(cards||'<div class="empty">لا طلاب</div>')+'</div>';
 }
@@ -1279,11 +1237,11 @@ function renderTeacherGrades(){
   var t=state.currentStaff;
   var students=myStudents();
   var subs=t.subjects||[];
-  if(!subs.length)return '<div class="alert warn">لم يتم تعيين مواد لك</div>';
+  if(!subs.length)return '<div class="alert warn">لم يتم تعيين مواد</div>';
   var html='';
   for(var si=0;si<subs.length;si++){
     var subj=subs[si];
-    html+='<div class="table-wrap" style="margin-bottom:16px"><div class="table-head"><h2>📝 '+subj+'</h2><button class="btn btn-success btn-sm" onclick="saveSubjectGrades(\''+subj+'\')">💾 حفظ</button></div><table><thead><tr><th>الطالب</th><th>الصف</th><th>الفصل ١</th><th>الفصل ٢</th></tr></thead><tbody>';
+    html+='<div class="table-wrap" style="margin-bottom:16px"><div class="table-head"><h2>📝 '+subj+'</h2><button class="btn btn-success btn-sm" onclick="saveSubjectGrades(\''+subj+'\')">💾 حفظ</button></div><table><thead><tr><th>الطالب</th><th>الصف</th><th>ف١</th><th>ف٢</th></tr></thead><tbody>';
     for(var i=0;i<students.length;i++){
       var s=students[i];
       var g1=null,g2=null;
@@ -1292,11 +1250,11 @@ function renderTeacherGrades(){
         if(g.studentId===s.id&&g.subject===subj&&g.term===1)g1=g;
         if(g.studentId===s.id&&g.subject===subj&&g.term===2)g2=g;
       }
-      html+='<tr><td><b>'+s.name+'</b><div style="font-size:10.5px;color:var(--muted)">'+s.id+'</div></td><td>'+s.grade+'</td><td><input type="number" min="0" max="100" value="'+(g1?g1.score:'')+'" data-grade-student="'+s.id+'" data-grade-subject="'+subj+'" data-grade-term="1" style="width:80px;padding:6px;border-radius:6px;border:1px solid var(--border);text-align:center;font-weight:700"></td><td><input type="number" min="0" max="100" value="'+(g2?g2.score:'')+'" data-grade-student="'+s.id+'" data-grade-subject="'+subj+'" data-grade-term="2" style="width:80px;padding:6px;border-radius:6px;border:1px solid var(--border);text-align:center;font-weight:700"></td></tr>';
+      html+='<tr><td><b>'+s.name+'</b></td><td>'+s.grade+'</td><td><input type="number" min="0" max="100" value="'+(g1?g1.score:'')+'" data-grade-student="'+s.id+'" data-grade-subject="'+subj+'" data-grade-term="1" style="width:70px;padding:6px;border-radius:6px;border:1px solid var(--border);text-align:center;font-weight:700"></td><td><input type="number" min="0" max="100" value="'+(g2?g2.score:'')+'" data-grade-student="'+s.id+'" data-grade-subject="'+subj+'" data-grade-term="2" style="width:70px;padding:6px;border-radius:6px;border:1px solid var(--border);text-align:center;font-weight:700"></td></tr>';
     }
     html+='</tbody></table></div>';
   }
-  return '<div class="alert info">📝 أدخل درجات طلابك — اضغط <b>حفظ</b> لكل مادة</div>'+html;
+  return '<div class="alert info">📝 أدخل درجات ثم اضغط حفظ</div>'+html;
 }
 function saveSubjectGrades(subject){
   var inputs=document.querySelectorAll('[data-grade-subject="'+subject+'"]');
@@ -1312,8 +1270,8 @@ function saveSubjectGrades(subject){
     else state.grades.push({id:uid('GR'),studentId:sid,schoolId:st.schoolId,subject:subject,term:term,score:score,updatedAt:new Date().toISOString()});
     count++;
   }
-  logAct('حفظ درجات',subject+' — '+count+' درجة');
-  saveState();alert('✅ تم حفظ '+count+' درجة في '+subject);render();
+  logAct('حفظ درجات',subject+' — '+count);
+  saveState();alert('✅ تم حفظ '+count+' درجة');render();
 }
 function renderTeacherBehavior(){
   var students=myStudents();
@@ -1321,8 +1279,8 @@ function renderTeacherBehavior(){
   for(var i=0;i<students.length;i++){
     var s=students[i];
     var b=state.behavior.filter(function(x){return x.studentId===s.id;});
-    html+='<div class="card"><div class="card-head"><h2>⭐ '+s.name+' — '+s.grade+'</h2><button class="btn btn-primary btn-sm" onclick="openBehaviorForm(\''+s.id+'\')">+ تقييم</button></div>';
-    if(!b.length)html+='<div class="empty" style="padding:20px">لا تقييمات بعد</div>';
+    html+='<div class="card"><div class="card-head"><h2>⭐ '+s.name+'</h2><button class="btn btn-primary btn-sm" onclick="openBehaviorForm(\''+s.id+'\')">+ تقييم</button></div>';
+    if(!b.length)html+='<div class="empty" style="padding:20px">لا تقييمات</div>';
     else{
       for(var k=0;k<BEHAVIOR_CATS.length;k++){
         var cat=BEHAVIOR_CATS[k];
@@ -1339,7 +1297,7 @@ function renderTeacherBehavior(){
 }
 function openBehaviorForm(studentId){
   var s=getStudent(studentId);if(!s)return;
-  var html='<div class="alert info">🎓 '+s.name+' — '+s.grade+'</div>';
+  var html='<div class="alert info">🎓 '+s.name+'</div>';
   for(var i=0;i<BEHAVIOR_CATS.length;i++){
     var cat=BEHAVIOR_CATS[i];
     var existing=null;
@@ -1347,7 +1305,7 @@ function openBehaviorForm(studentId){
     var currentScore=existing?existing.score:80;
     html+='<div class="field" style="margin-bottom:14px"><label style="color:var(--primary);font-weight:800;font-size:13px">'+cat.name+'</label><div class="stars-input" data-stars-for="'+cat.key+'">';
     for(var st=1;st<=5;st++){var filled=st*20<=currentScore;html+='<button type="button" onclick="setStar(\''+cat.key+'\','+(st*20)+')" data-score="'+(st*20)+'">'+(filled?'⭐':'☆')+'</button>';}
-    html+='</div><input type="hidden" id="score_'+cat.key+'" value="'+currentScore+'"><input type="text" id="note_'+cat.key+'" placeholder="ملاحظة (اختياري)" value="'+(existing?existing.note:'')+'" style="margin-top:7px;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:12.5px"></div>';
+    html+='</div><input type="hidden" id="score_'+cat.key+'" value="'+currentScore+'"><input type="text" id="note_'+cat.key+'" placeholder="ملاحظة" value="'+(existing?existing.note:'')+'" style="margin-top:7px;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:12.5px;width:100%"></div>';
   }
   openModal('⭐ تقييم — '+s.name,html,function(){
     for(var i=0;i<BEHAVIOR_CATS.length;i++){
@@ -1369,7 +1327,7 @@ function setStar(catKey,score){
 }
 function renderTeacherStudents(){
   var students=myStudents();
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'اسم الطالب'},{key:'grade',label:'الصف',type:'select',options:(state.currentStaff.grades||[])}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الطالب'},{key:'grade',label:'الصف',type:'select',options:(state.currentStaff.grades||[])}];
   var filtered=applyF(students,'t-students');
   var rows='';
   for(var i=0;i<filtered.length;i++){
@@ -1379,17 +1337,15 @@ function renderTeacherStudents(){
     var avg=gc?Math.round(gs/gc):0;
     var att=state.attendance.filter(function(a){return a.studentId===s.id;});
     var pRate=att.length?Math.round(att.filter(function(a){return a.status==='present';}).length/att.length*100):0;
-    rows+='<tr><td><b>'+s.name+'</b><div style="font-size:10.5px;color:var(--muted)">'+s.id+'</div></td><td>'+s.grade+'</td><td>'+s.guardian+'</td><td>'+s.phone+'</td><td class="num" style="color:'+(avg>=85?'var(--success)':avg>=60?'var(--primary)':'var(--danger)')+'">'+avg+'</td><td class="num">'+pRate+'%</td><td><button class="mini" onclick="openBehaviorForm(\''+s.id+'\')">⭐</button></td></tr>';
+    rows+='<tr><td><b>'+s.name+'</b></td><td>'+s.grade+'</td><td>'+s.phone+'</td><td class="num">'+avg+'</td><td class="num">'+pRate+'%</td><td><button class="mini" onclick="openBehaviorForm(\''+s.id+'\')">⭐</button></td></tr>';
   }
-  return filterBar('t-students',fields,'عرض '+filtered.length+' من '+students.length)+
-    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الصف</th><th>ولي الأمر</th><th>الهاتف</th><th>المعدل</th><th>الحضور</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="7" class="empty">لا طلاب مطابقون</td></tr>')+'</tbody></table></div>';
+  return filterBar('t-students',fields,'عرض '+filtered.length)+
+    '<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الصف</th><th>الهاتف</th><th>المعدل</th><th>الحضور</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" class="empty">لا طلاب</td></tr>')+'</tbody></table></div>';
 }
 function renderTeacherProfile(){
   var t=state.currentStaff,school=currentSchool();
   return '<div class="card" style="max-width:600px"><div class="card-head"><h2>👤 ملفي</h2></div><div style="display:flex;align-items:center;gap:15px;margin-bottom:18px"><div class="avatar" style="width:64px;height:64px;font-size:24px">'+t.name.charAt(0)+'</div><div><div style="font-size:18px;font-weight:800;color:var(--primary)">'+t.name+'</div><div style="font-size:12.5px;color:var(--muted)">معلم — '+(school?school.name:'')+'</div></div></div><div class="field"><label>المواد</label><input value="'+(t.subjects||[]).join('، ')+'" disabled></div><div class="field"><label>الصفوف</label><input value="'+(t.grades||[]).join('، ')+'" disabled></div><div class="field"><label>المستخدم</label><input value="'+t.username+'" disabled></div></div>';
 }
-
-/* ==================== STUDENT PORTAL ==================== */
 function renderStudentDashboard(){
   var s=state.currentStudent;if(!s)return '<div class="alert warn">—</div>';
   var school=currentSchool();
@@ -1414,7 +1370,7 @@ function renderStudentDashboard(){
 function renderStudentGrades(){
   var s=state.currentStudent;
   var grades=state.grades.filter(function(g){return g.studentId===s.id;});
-  if(!grades.length)return '<div class="empty">لا درجات بعد</div>';
+  if(!grades.length)return '<div class="empty">لا درجات</div>';
   var fields=[{key:'subject',label:'المادة',type:'select',options:SUBJECTS},{key:'term',label:'الفصل',type:'select',options:[{value:'1',label:'الأول'},{value:'2',label:'الثاني'}]}];
   var filtered=applyF(grades,'s-grades');
   var rows='';
@@ -1423,8 +1379,8 @@ function renderStudentGrades(){
     var cls=g.score>=85?'excellent':g.score>=60?'good':'poor';
     rows+='<tr><td><b>'+g.subject+'</b></td><td>الفصل '+(g.term===1?'الأول':'الثاني')+'</td><td><span class="public-score '+cls+'">'+g.score+'</span></td></tr>';
   }
-  return filterBar('s-grades',fields,'عرض '+filtered.length+' من '+grades.length)+
-    '<div class="table-wrap"><table><thead><tr><th>المادة</th><th>الفصل</th><th>الدرجة</th></tr></thead><tbody>'+(rows||'<tr><td colspan="3" class="empty">لا درجات مطابقة</td></tr>')+'</tbody></table></div>';
+  return filterBar('s-grades',fields,'عرض '+filtered.length)+
+    '<div class="table-wrap"><table><thead><tr><th>المادة</th><th>الفصل</th><th>الدرجة</th></tr></thead><tbody>'+(rows||'<tr><td colspan="3" class="empty">لا درجات</td></tr>')+'</tbody></table></div>';
 }
 function renderStudentAttendance(){
   var s=state.currentStudent;
@@ -1434,7 +1390,7 @@ function renderStudentAttendance(){
   var late=att.filter(function(a){return a.status==='late';}).length;
   var absent=att.filter(function(a){return a.status==='absent';}).length;
   var rate=att.length?Math.round(present/att.length*100):0;
-  var fields=[{key:'status',label:'الحالة',type:'select',options:[{value:'present',label:'حاضر'},{value:'late',label:'متأخر'},{value:'absent',label:'غائب'}]},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
+  var fields=[{key:'status',label:'الحالة',type:'select',options:[{value:'present',label:'حاضر'},{value:'late',label:'متأخر'},{value:'absent',label:'غائب'}]},{key:'dateFrom',label:'من',type:'date'},{key:'dateTo',label:'إلى',type:'date'}];
   var filtered=applyF(att,'s-attendance');
   var rows='';
   for(var i=0;i<filtered.length;i++){
@@ -1444,13 +1400,13 @@ function renderStudentAttendance(){
     rows+='<tr><td>'+a.date+'</td><td><span class="badge '+st+'">'+txt+'</span></td></tr>';
   }
   return '<div class="grid-kpi"><div class="kpi success"><div class="kpi-label">✅ حاضر</div><div class="kpi-value">'+present+'</div></div><div class="kpi warn"><div class="kpi-label">⏰ متأخر</div><div class="kpi-value">'+late+'</div></div><div class="kpi danger"><div class="kpi-label">❌ غائب</div><div class="kpi-value">'+absent+'</div></div><div class="kpi info"><div class="kpi-label">📊 النسبة</div><div class="kpi-value">'+rate+'%</div></div></div>'+
-    filterBar('s-attendance',fields,'عرض '+filtered.length+' من '+att.length)+
+    filterBar('s-attendance',fields,'عرض '+filtered.length)+
     '<div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الحالة</th></tr></thead><tbody>'+(rows||'<tr><td colspan="2" class="empty">لا سجلات</td></tr>')+'</tbody></table></div>';
 }
 function renderStudentBehavior(){
   var s=state.currentStudent;
   var behav=state.behavior.filter(function(b){return b.studentId===s.id;});
-  if(!behav.length)return '<div class="empty">لا تقييمات بعد</div>';
+  if(!behav.length)return '<div class="empty">لا تقييمات</div>';
   var html='',total=0;
   for(var i=0;i<BEHAVIOR_CATS.length;i++){
     var cat=BEHAVIOR_CATS[i];
@@ -1479,11 +1435,9 @@ function renderStudentFees(){
     rows+='<tr><td><b>'+x.id+'</b></td><td>'+x.date+'</td><td class="num">'+fmt(x.amount)+'</td><td class="num" style="color:var(--success)">'+fmt(x.paid)+'</td><td class="num" style="color:'+((x.amount-x.paid)>0?'var(--danger)':'var(--success)')+'">'+fmt(x.amount-x.paid)+'</td></tr>';
   }
   return '<div class="grid-kpi"><div class="kpi"><div class="kpi-label">💵 الإجمالي</div><div class="kpi-value">'+money(total)+'</div></div><div class="kpi success"><div class="kpi-label">✅ المسدّد</div><div class="kpi-value">'+money(paid)+'</div></div><div class="kpi '+(due>0?'danger':'success')+'"><div class="kpi-label">⏳ المتبقي</div><div class="kpi-value">'+money(due)+'</div></div></div>'+
-    filterBar('s-fees',fields,'عرض '+filtered.length+' من '+inv.length)+
+    filterBar('s-fees',fields,'عرض '+filtered.length)+
     '<div class="table-wrap"><table><thead><tr><th>الفاتورة</th><th>التاريخ</th><th>المبلغ</th><th>المدفوع</th><th>المتبقي</th></tr></thead><tbody>'+(rows||'<tr><td colspan="5" class="empty">لا فواتير</td></tr>')+'</tbody></table></div>';
 }
-
-/* ==================== OTHER ==================== */
 function statusBadge(s){if(s==='paid')return '<span class="badge ok">مدفوع</span>';if(s==='partial')return '<span class="badge warn">جزئي</span>';return '<span class="badge bad">غير مدفوع</span>';}
 function renderSchools(){
   var cards='';
@@ -1494,14 +1448,14 @@ function renderSchools(){
     for(var k=0;k<state.invoices.length;k++)if(state.invoices[k].schoolId===s.id){col+=state.invoices[k].paid;due+=state.invoices[k].amount-state.invoices[k].paid;}
     cards+='<div class="school-card"><div class="school-card-head"><div class="school-card-logo">'+s.name.charAt(0)+'</div><div style="flex:1;min-width:0"><div class="school-card-title">'+s.name+'</div><div class="school-card-meta">'+s.city+' • '+s.stage+'</div></div></div><div style="display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap"><span class="badge ok">نشطة</span><span class="badge info">@'+s.username+'</span><span class="badge purple">'+(s.staff?s.staff.length:0)+' موظف</span></div><div class="school-card-stats"><div class="school-stat"><div class="lbl">الطلاب</div><div class="val">'+stCount+'</div></div><div class="school-stat"><div class="lbl">التحصيلات</div><div class="val">'+fmt(col)+'</div></div><div class="school-stat"><div class="lbl">المتأخرات</div><div class="val" style="color:'+(due>0?'var(--danger)':'var(--success)')+'">'+fmt(due)+'</div></div><div class="school-stat"><div class="lbl">الموظفون</div><div class="val">'+(s.staff?s.staff.length:0)+'</div></div></div><div class="school-card-actions"><button class="btn btn-primary" onclick="enterSchool(\''+s.id+'\')">↗ دخول</button><button class="btn btn-ghost" onclick="showSchoolCred(\''+s.id+'\')">🔑</button><button class="btn btn-danger" onclick="deleteSchool(\''+s.id+'\')">🗑</button></div></div>';
   }
-  return '<div class="alert info">💡 كل مدرسة مستقلة بحسابها وفريقها</div>'+
+  return '<div class="alert info">💡 كل مدرسة مستقلة</div>'+
     '<div class="toolbar" style="margin-bottom:16px"><button class="btn btn-primary" style="width:auto" onclick="openAddSchool()">+ إضافة مدرسة</button>'+exportBtn('schools')+'<span class="grow"></span><span class="badge info">'+state.schools.length+' مدرسة</span></div>'+
     '<div class="schools-grid">'+cards+'<div class="add-card" onclick="openAddSchool()"><div class="plus">+</div><div class="txt">إضافة مدرسة</div></div></div>';
 }
 function renderQRPage(){
   var students=scoped(state.students);
   if(!students.length)return '<div class="empty">لا طلاب</div>';
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'اسم الطالب'},{key:'grade',label:'الصف',type:'select',options:GRADE_LEVELS}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'الطالب'},{key:'grade',label:'الصف',type:'select',options:GRADE_LEVELS}];
   var filtered=applyF(students,'qr-cards');
   var cards='';
   for(var i=0;i<filtered.length;i++){
@@ -1513,8 +1467,8 @@ function renderQRPage(){
   }
   saveState();
   return '<div class="alert info">🎫 QR لكل طالب</div>'+
-    filterBar('qr-cards',fields,'عرض '+filtered.length+' من '+students.length)+
-    '<div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="printAllQR()">🖨️ طباعة كل البطاقات</button></div>'+
+    filterBar('qr-cards',fields,'عرض '+filtered.length)+
+    '<div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="printAllQR()">🖨️ طباعة الكل</button></div>'+
     '<div class="qr-grid">'+cards+'</div>';
 }
 function getPublicURL(token){return window.location.origin+window.location.pathname+'#/s/'+token;}
@@ -1561,31 +1515,22 @@ function renderPublicProfile(token){
   var behavAvg=0;if(behav.length){var bsum=0;for(var n=0;n<behav.length;n++)bsum+=behav[n].score;behavAvg=Math.round(bsum/behav.length);}
   var gradesHTML='',bySub={};
   for(var g=0;g<grades.length;g++){var gr=grades[g];if(!bySub[gr.subject])bySub[gr.subject]={};bySub[gr.subject][gr.term]=gr.score;}
-  for(var subj in bySub){
-    var t1=bySub[subj][1]||'—',t2=bySub[subj][2]||'—';
-    var sc=(t1!=='—'&&t2!=='—')?Math.round((t1+t2)/2):(t1!=='—'?t1:t2);
-    var cls=sc>=85?'excellent':sc>=60?'good':'poor';
-    gradesHTML+='<div class="public-row"><span class="name">'+subj+'</span><span class="public-score '+cls+'">'+sc+'</span></div>';
-  }
+  for(var subj in bySub){var t1=bySub[subj][1]||'—',t2=bySub[subj][2]||'—';var sc=(t1!=='—'&&t2!=='—')?Math.round((t1+t2)/2):(t1!=='—'?t1:t2);var cls=sc>=85?'excellent':sc>=60?'good':'poor';gradesHTML+='<div class="public-row"><span class="name">'+subj+'</span><span class="public-score '+cls+'">'+sc+'</span></div>';}
   if(!gradesHTML)gradesHTML='<div class="empty">لا درجات</div>';
   var attHTML='';
   for(var a=0;a<recent.length;a++){var at=recent[a];var badge=at.status==='present'?'ok':at.status==='late'?'warn':'bad';var txt=at.status==='present'?'حاضر ✅':at.status==='late'?'متأخر ⏰':'غائب ❌';attHTML+='<div class="public-row"><span class="name">'+at.date+'</span><span class="badge '+badge+'">'+txt+'</span></div>';}
   if(!attHTML)attHTML='<div class="empty">لا سجلات</div>';
   var behavHTML='';
-  for(var bc=0;bc<BEHAVIOR_CATS.length;bc++){
-    var cat=BEHAVIOR_CATS[bc];
-    var rec=behav.filter(function(x){return x.category===cat.key;})[0];
-    if(rec){var st='';var n2=Math.round(rec.score/20);if(n2>5)n2=5;if(n2<1)n2=1;for(var stc=0;stc<5;stc++)st+=(stc<n2)?'⭐':'☆';behavHTML+='<div class="public-row"><span class="name">'+cat.name+'</span><span>'+st+' '+rec.score+'</span></div>';}
-  }
+  for(var bc=0;bc<BEHAVIOR_CATS.length;bc++){var cat=BEHAVIOR_CATS[bc];var rec=behav.filter(function(x){return x.category===cat.key;})[0];if(rec){var st='';var n2=Math.round(rec.score/20);if(n2>5)n2=5;if(n2<1)n2=1;for(var stc=0;stc<5;stc++)st+=(stc<n2)?'⭐':'☆';behavHTML+='<div class="public-row"><span class="name">'+cat.name+'</span><span>'+st+' '+rec.score+'</span></div>';}}
   if(!behavHTML)behavHTML='<div class="empty">لا تقييمات</div>';
   return '<div class="public-container"><div class="public-header"><div class="school-logo">'+(school?school.name.charAt(0):'ث')+'</div><h1>'+(school?school.name:'—')+'</h1><p>'+(school?school.city:'')+'</p></div>'+
-    '<div class="public-card"><h2>👨‍🎓 '+student.name+'</h2><div class="public-info-row"><div class="public-info-box"><div class="lbl">الصف</div><div class="val">'+student.grade+'</div></div><div class="public-info-box"><div class="lbl">ولي الأمر</div><div class="val" style="font-size:11px">'+student.guardian+'</div></div><div class="public-info-box"><div class="lbl">رقم الطالب</div><div class="val" style="font-size:10px;font-family:monospace">'+student.id+'</div></div></div></div>'+
+    '<div class="public-card"><h2>👨‍🎓 '+student.name+'</h2><div class="public-info-row"><div class="public-info-box"><div class="lbl">الصف</div><div class="val">'+student.grade+'</div></div><div class="public-info-box"><div class="lbl">ولي الأمر</div><div class="val" style="font-size:11px">'+student.guardian+'</div></div><div class="public-info-box"><div class="lbl">الرقم</div><div class="val" style="font-size:10px;font-family:monospace">'+student.id+'</div></div></div></div>'+
     '<div class="public-card"><h2>📊 الملخص</h2><div class="public-stats"><div class="public-stat green"><div class="n">'+rate+'%</div><div class="l">حضور</div></div><div class="public-stat blue"><div class="n">'+avg+'</div><div class="l">معدل</div></div><div class="public-stat orange"><div class="n">'+behavAvg+'</div><div class="l">سلوك</div></div><div class="public-stat red"><div class="n">'+absent+'</div><div class="l">غياب</div></div></div></div>'+
     '<div class="public-card"><h2>📝 الدرجات</h2>'+gradesHTML+'</div>'+
     '<div class="public-card"><h2>⭐ السلوك</h2>'+behavHTML+'</div>'+
     '<div class="public-card"><h2>✅ آخر أيام الحضور</h2>'+attHTML+'</div>'+
     '<div class="public-card"><h2>💵 الرسوم</h2><div class="public-info-row"><div class="public-info-box"><div class="lbl">الإجمالي</div><div class="val" style="font-size:12px">'+fmt(total)+'</div></div><div class="public-info-box"><div class="lbl">المسدَّد</div><div class="val" style="color:var(--success);font-size:12px">'+fmt(paid)+'</div></div><div class="public-info-box"><div class="lbl">المتبقي</div><div class="val" style="color:'+(due>0?'var(--danger)':'var(--success)')+';font-size:12px">'+fmt(due)+'</div></div></div></div>'+
-    '<div class="public-footnote">🔒 صفحة آمنة للقراءة فقط — مدعومة من ثقة 💙</div></div>';
+    '<div class="public-footnote">🔒 صفحة آمنة — ثقة 💙</div></div>';
 }
 function renderReports(){
   if(!can('reports','view'))return '<div class="alert warn">⛔ لا صلاحية</div>';
@@ -1602,7 +1547,7 @@ function renderActivity(){
     if(isAdmin()&&state.context==='group')log.push(state.activityLog[i]);
     else if(state.activityLog[i].schoolId===state.currentSchool)log.push(state.activityLog[i]);
   }
-  var fields=[{key:'search',label:'🔍 بحث',placeholder:'المستخدم / الإجراء'},{key:'dateFrom',label:'من تاريخ',type:'date'},{key:'dateTo',label:'إلى تاريخ',type:'date'}];
+  var fields=[{key:'search',label:'🔍 بحث',placeholder:'المستخدم'},{key:'dateFrom',label:'من',type:'date'},{key:'dateTo',label:'إلى',type:'date'}];
   var f=getF('activity');
   var filtered=log.filter(function(l){
     if(f.search){var t=(l.userName+' '+l.action+' '+(l.detail||'')).toLowerCase();if(t.indexOf(f.search.toLowerCase())<0)return false;}
@@ -1616,7 +1561,7 @@ function renderActivity(){
     var dt=d.toLocaleDateString('ar-EG')+' '+d.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
     rows+='<tr><td style="font-size:11px;color:var(--muted)">'+dt+'</td><td><b>'+l.userName+'</b></td><td><span class="badge info">'+l.action+'</span></td><td style="font-size:11.5px">'+(l.detail||'—')+'</td></tr>';
   }
-  return filterBar('activity',fields,'عرض '+filtered.length+' من '+log.length)+
+  return filterBar('activity',fields,'عرض '+filtered.length)+
     '<div class="toolbar">'+exportBtn('activity')+'</div>'+
     '<div class="table-wrap"><table><thead><tr><th>الوقت</th><th>المستخدم</th><th>الإجراء</th><th>التفاصيل</th></tr></thead><tbody>'+(rows||'<tr><td colspan="4" class="empty">لا عمليات</td></tr>')+'</tbody></table></div>';
 }
@@ -1637,8 +1582,6 @@ function renderAllReports(){
   }
   return '<div class="grid-kpi"><div class="kpi success"><div class="kpi-label">المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div></div><div class="table-wrap"><div class="table-head"><h2>مقارنة المدارس</h2></div><table><thead><tr><th>المدرسة</th><th>التحصيلات</th><th>المصروفات</th><th>الربح</th><th>المتأخرات</th><th>النسبة</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
-
-/* ==================== LOGIN ==================== */
 function switchTab(tab){
   var tabs=document.querySelectorAll('.login-tab');
   for(var i=0;i<tabs.length;i++)tabs[i].classList.toggle('active',tabs[i].getAttribute('data-tab')===tab);
@@ -1714,8 +1657,6 @@ function logout(){
 }
 function enterSchool(id){if(!isAdmin())return;state.context='school';state.currentSchool=id;state.page='dashboard';saveState();render();}
 function exitToGroup(){if(!isAdmin())return;state.context='group';state.currentSchool=null;state.page='dashboard';saveState();render();}
-
-/* ==================== CRUD ==================== */
 function openAddSchool(){
   var body='<div class="field"><label>اسم المدرسة *</label><input id="ns_name"></div><div class="field"><label>المرحلة</label><input id="ns_stage"></div><div class="field"><label>المدينة</label><input id="ns_city"></div><div class="field"><label>الهاتف</label><input id="ns_phone"></div>';
   openModal('🏫 إضافة مدرسة',body,function(){
@@ -1850,9 +1791,9 @@ function openAddStaff(){
       if(!subs.length||!grds.length){alert('اختر مواداً وصفوفاً');return false;}
       staff.subjects=subs;staff.grades=grds;
     }
-    school.staff.push(staff);logAct('إضافة موظف',name+' ('+ROLES[role].name+')');saveState();
+    school.staff.push(staff);logAct('إضافة موظف',name);saveState();
     setTimeout(function(){showStaffCred(staff.id,true);},150);
-  },'حفظ وإنشاء');
+  },'حفظ');
 }
 function pickRole(el,role){
   var all=document.querySelectorAll('.role-opt');for(var i=0;i<all.length;i++)all[i].classList.remove('active');
@@ -1927,8 +1868,6 @@ function openModal(title,body,onSave,saveBtnText){
     try{var res=onSave();if(res!==false){ov.remove();render();}}catch(err){alert('خطأ: '+err.message);}
   };
 }
-
-/* ==================== INIT ==================== */
 document.addEventListener('DOMContentLoaded',function(){
   var tabs=document.querySelectorAll('.login-tab');
   for(var i=0;i<tabs.length;i++)tabs[i].addEventListener('click',function(){switchTab(this.getAttribute('data-tab'));});
