@@ -24,10 +24,8 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 #loginScreen::after{content:'';position:absolute;bottom:-25%;inset-inline-start:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(40,116,166,.22),transparent 65%);border-radius:50%;pointer-events:none;animation:float2 22s ease-in-out infinite}
 @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}}
 @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-40px)}}
-
 .login-container{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.15fr 1fr;gap:50px;align-items:center;min-height:100vh;padding:20px 0;position:relative;z-index:2}
 @media(max-width:960px){.login-container{grid-template-columns:1fr;gap:24px;padding:10px 0}}
-
 .hero-section{color:#fff;padding:20px}
 .hero-logo{display:flex;align-items:center;gap:14px;margin-bottom:26px}
 .hero-logo-icon{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00;display:grid;place-items:center;font-size:34px;font-weight:900;box-shadow:0 12px 36px rgba(212,175,55,.4),inset 0 -3px 0 rgba(0,0,0,.1);transition:transform .2s;cursor:pointer;user-select:none;position:relative}
@@ -43,8 +41,8 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .hero-title span{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-desc{font-size:15px;color:#b6cfe5;line-height:1.85;margin-bottom:26px;max-width:540px}
 .hero-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:22px}
-.hero-feature{background:rgba(255,255,255,.05);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.09);border-radius:15px;padding:15px;transition:.25s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-.hero-feature:hover{background:rgba(255,255,255,.09);transform:translateY(-3px);border-color:rgba(212,175,55,.3);box-shadow:0 15px 40px rgba(0,0,0,.25)}
+.hero-feature{background:rgba(255,255,255,.05);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.09);border-radius:15px;padding:15px;transition:.25s;position:relative;overflow:hidden}
+.hero-feature:hover{background:rgba(255,255,255,.09);transform:translateY(-3px);border-color:rgba(212,175,55,.3)}
 .hero-feature-ic{font-size:26px;margin-bottom:9px;display:block}
 .hero-feature-title{font-size:13.5px;font-weight:800;color:#fff;margin-bottom:3px}
 .hero-feature-desc{font-size:11.5px;color:#8fb0cd;line-height:1.5}
@@ -54,46 +52,45 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .hero-stat-lbl{font-size:11px;color:#8fb0cd;margin-top:6px}
 @media(max-width:960px){.hero-title{font-size:28px}.hero-desc{font-size:13.5px;margin-bottom:18px}.hero-logo-text{font-size:26px}.hero-logo-icon{width:56px;height:56px;font-size:28px}.hero-features{grid-template-columns:1fr 1fr;gap:9px}.hero-feature{padding:12px}.hero-feature-ic{font-size:22px;margin-bottom:6px}.hero-stats{margin-top:16px;padding-top:16px}.hero-stat-num{font-size:19px}}
 
-.login-card{width:100%;max-width:480px;background:#fff;border-radius:26px;padding:32px 28px;box-shadow:0 40px 100px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05);margin:0 auto;position:relative;overflow:hidden}
+.login-card{width:100%;max-width:480px;background:#fff;border-radius:26px;padding:32px 28px;box-shadow:0 40px 100px rgba(0,0,0,.45);margin:0 auto;position:relative;overflow:hidden}
 .login-card::before{content:'';position:absolute;top:0;inset-inline-start:0;width:100%;height:5px;background:linear-gradient(90deg,var(--primary),var(--gold),var(--primary));background-size:200% 100%;animation:slideGradient 4s linear infinite}
 @keyframes slideGradient{0%{background-position:0 0}100%{background-position:200% 0}}
 .login-card h2{font-size:23px;color:var(--primary);margin-bottom:6px;font-weight:800;text-align:center}
 .login-card .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:22px}
-.cloud-status{text-align:center;font-size:11px;padding:7px 14px;border-radius:22px;margin:0 auto 20px;display:table;font-weight:700;transition:.3s}
+.cloud-status{text-align:center;font-size:11px;padding:7px 14px;border-radius:22px;margin:0 auto 20px;display:table;font-weight:700}
 .cloud-status.online{background:#e3f5ea;color:#1e6b42}
 .cloud-status.offline{background:#fdf1e0;color:#a35a0e}
 .login-tabs{display:flex;gap:5px;background:#f2f5f9;padding:6px;border-radius:13px;margin-bottom:22px;flex-wrap:wrap}
 .login-tab{flex:1;min-width:70px;padding:11px 6px;border-radius:10px;font-size:12.5px;font-weight:700;color:var(--muted);text-align:center;transition:.2s}
-.login-tab.active{background:#fff;color:var(--primary);box-shadow:0 2px 10px rgba(13,59,102,.12);transform:translateY(-1px)}
+.login-tab.active{background:#fff;color:var(--primary);box-shadow:0 2px 10px rgba(13,59,102,.12)}
 .field{margin-bottom:13px}
 .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:700}
 .field input,.field select,.field textarea{width:100%;padding:12px 15px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;background:#fbfcfe;outline:none;transition:.2s}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary-3);background:#fff;box-shadow:0 0 0 4px rgba(40,116,166,.12)}
 .btn{padding:12px 18px;border-radius:12px;font-weight:700;font-size:13.5px;transition:.2s;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-3));color:#fff;box-shadow:0 8px 22px rgba(13,59,102,.3);width:100%;position:relative;overflow:hidden}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(13,59,102,.4)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-3));color:#fff;box-shadow:0 8px 22px rgba(13,59,102,.3);width:100%}
+.btn-primary:hover{transform:translateY(-2px)}
 .btn-ghost{background:#f2f5f9;border:1px solid var(--border);color:var(--text)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00;width:100%;font-weight:800;box-shadow:0 8px 22px rgba(212,175,55,.4)}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(212,175,55,.5)}
+.btn-gold:hover{transform:translateY(-2px)}
 .btn-danger{background:#fbe6e4;border:1px solid #e3b0ab;color:#a5261a}
 .btn-success{background:#e3f5ea;border:1px solid #a7dcbe;color:#1e6b42}
 .btn-sm{padding:6px 11px;font-size:12px}
 .hint{text-align:center;font-size:11.5px;color:var(--muted);margin-top:14px;padding:11px;background:#f7f9fc;border-radius:10px;line-height:1.7}
 .hint b{color:var(--primary)}
 
-.reg-card{margin-top:22px;background:radial-gradient(120% 100% at 0% 0%,rgba(212,175,55,.12) 0%,transparent 60%),linear-gradient(135deg,#fffbf0 0%,#fef6de 100%);border:1.5px solid rgba(212,175,55,.5);border-radius:20px;padding:22px 20px;position:relative;overflow:hidden}
+.reg-card{margin-top:22px;background:radial-gradient(120% 100% at 0% 0%,rgba(212,175,55,.12) 0%,transparent 60%),linear-gradient(135deg,#fffbf0 0%,#fef6de 100%);border:1.5px solid rgba(212,175,55,.5);border-radius:20px;padding:22px 20px;position:relative}
 .reg-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.reg-header-icon{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:grid;place-items:center;font-size:22px;box-shadow:0 6px 18px rgba(212,175,55,.35);flex-shrink:0}
+.reg-header-icon{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:grid;place-items:center;font-size:22px;flex-shrink:0}
 .reg-header-text h3{font-size:15.5px;color:var(--primary);font-weight:800;margin-bottom:2px}
 .reg-header-text p{font-size:11.5px;color:#7a6010}
-.reg-price{display:flex;align-items:baseline;gap:6px;background:#fff;border:1.5px dashed rgba(212,175,55,.6);border-radius:13px;padding:12px 16px;margin-bottom:14px;position:relative;flex-wrap:wrap}
+.reg-price{display:flex;align-items:baseline;gap:6px;background:#fff;border:1.5px dashed rgba(212,175,55,.6);border-radius:13px;padding:12px 16px;margin-bottom:14px;flex-wrap:wrap}
 .reg-price .amount{font-size:32px;font-weight:900;color:var(--primary);letter-spacing:-1.5px;line-height:1}
 .reg-price .currency{font-size:14px;font-weight:800;color:var(--primary)}
 .reg-price .per{font-size:12px;color:var(--muted);font-weight:600}
-.reg-price .badge-save{margin-inline-start:auto;background:linear-gradient(135deg,var(--success),#48b878);color:#fff;font-size:10.5px;font-weight:800;padding:5px 10px;border-radius:20px;box-shadow:0 4px 12px rgba(46,139,87,.3);align-self:center}
+.reg-price .badge-save{margin-inline-start:auto;background:linear-gradient(135deg,var(--success),#48b878);color:#fff;font-size:10.5px;font-weight:800;padding:5px 10px;border-radius:20px;align-self:center}
 .reg-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.reg-feat{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:9px 11px;font-size:11.5px;font-weight:700;color:var(--primary);transition:.2s}
-.reg-feat:hover{border-color:var(--gold);transform:translateY(-1px)}
+.reg-feat{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:9px 11px;font-size:11.5px;font-weight:700;color:var(--primary)}
 .reg-feat .check{width:18px;height:18px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--success),#48b878);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:900}
 .reg-feat .txt{line-height:1.3}
 .reg-note{text-align:center;font-size:10.5px;color:#7a6010;margin-top:11px;line-height:1.6;display:flex;align-items:center;justify-content:center;gap:5px}
@@ -101,7 +98,8 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 @media(max-width:960px){.footer-credit{color:var(--muted)}}
 
 .app{display:flex;min-height:100vh}
-.sidebar{width:262px;flex-shrink:0;background:linear-gradient(180deg,#0a2a4a,#0d3b66 60%,#0e3f6e);color:#dbe6f2;display:flex;flex-direction:column;padding:16px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar{width:262px;flex-shrink:0;background:linear-gradient(180deg,#0a2a4a,#0d3b66 60%,#0e3f6e);color:#dbe6f2;display:flex;flex-direction:column;padding:16px 12px;position:sticky;top:0;height:100vh;overflow-y:auto;transition:transform .28s cubic-bezier(.4,0,.2,1)}
+.sidebar-close{display:none;position:absolute;top:12px;inset-inline-start:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:16px;font-weight:800;z-index:5;place-items:center}
 .brand{display:flex;align-items:center;gap:11px;padding:6px 8px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
 .brand-logo{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00;font-weight:900;font-size:20px}
 .brand-name{font-size:16px;font-weight:800;color:#fff}
@@ -111,7 +109,7 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .context-badge-inner .lbl{font-size:9.5px;color:#8fb0cd;font-weight:700;letter-spacing:.5px}
 .context-badge-inner .val{font-size:12.5px;font-weight:700;color:#fff;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nav-group{margin-top:9px}
-.nav-group-title{font-size:10px;color:#6d8aa8;font-weight:700;padding:7px 11px 3px;letter-spacing:.5px}
+.nav-group-title{font-size:10px;color:#6d8aa8;font-weight:700;padding:7px 11px 3px}
 .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;color:#c7d8e8;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;margin-bottom:2px;width:100%;text-align:right}
 .nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
 .nav-item.active{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00}
@@ -127,7 +125,7 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .topbar h1{font-size:17px;color:var(--primary);font-weight:800}
 .topbar p{font-size:11.5px;color:var(--muted);margin-top:2px}
 .topbar-actions{display:flex;gap:8px;align-items:center}
-.icon-btn{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:#fff;display:grid;place-items:center;font-size:14px;transition:.2s}
+.icon-btn{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:#fff;display:grid;place-items:center;font-size:14px}
 .back-btn{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2b00;padding:8px 13px;border-radius:9px;font-weight:700;font-size:12px;display:inline-flex;align-items:center;gap:6px}
 .content{padding:20px 24px 60px;flex:1}
 .banner-gold{background:linear-gradient(135deg,#fff9e6,#fdf1c4);border:1px solid var(--gold);border-radius:12px;padding:11px 16px;margin-bottom:18px;display:flex;align-items:center;gap:11px;font-size:12.5px;color:#7a6010;flex-wrap:wrap}
@@ -135,8 +133,7 @@ input,select,textarea{font-family:inherit;color:var(--text)}
 .banner-blue{background:linear-gradient(135deg,#e3eef7,#eaf3fa);border:1px solid #b3d3ea;border-radius:12px;padding:11px 16px;margin-bottom:18px;font-size:12.5px;color:#1a5276}
 .banner-green{background:linear-gradient(135deg,#e3f5ea,#f4fbf7);border:1px solid #a7dcbe;border-radius:12px;padding:11px 16px;margin-bottom:18px;font-size:12.5px;color:#1e6b42}
 .grid-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:20px}
-.kpi{background:var(--card);border-radius:var(--radius);padding:16px 18px;position:relative;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;transition:.2s}
-.kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.kpi{background:var(--card);border-radius:var(--radius);padding:16px 18px;position:relative;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
 .kpi::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--primary-3)}
 .kpi.gold::before{background:var(--gold)}.kpi.success::before{background:var(--success)}.kpi.danger::before{background:var(--danger)}.kpi.warn::before{background:var(--warning)}.kpi.info::before{background:var(--info)}.kpi.purple::before{background:var(--purple)}
 .kpi-label{color:var(--muted);font-size:12px;font-weight:600;margin-bottom:6px}
@@ -156,7 +153,7 @@ th{background:#f7f9fc;color:var(--muted);font-weight:700;font-size:11.5px;border
 tbody tr{border-top:1px solid var(--border);transition:.15s}
 tbody tr:hover{background:#fafbfd}
 td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
-.mini{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:#fff;display:inline-grid;place-items:center;font-size:12px;transition:.15s;cursor:pointer}
+.mini{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:#fff;display:inline-grid;place-items:center;font-size:12px;cursor:pointer}
 .mini:hover{background:#f2f5f9}
 .mini.danger:hover{background:#fbe6e4}
 .filter-bar{background:linear-gradient(135deg,#f7f9fc,#fff);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:16px}
@@ -197,7 +194,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 .cred-row .val{background:#fff;padding:6px 11px;border-radius:7px;font-family:monospace;font-weight:700;color:var(--primary);border:1px solid #a7dcbe;display:flex;justify-content:space-between;align-items:center;gap:7px}
 .cred-row .val button{background:none;border:none;color:var(--primary-3);font-size:11.5px;font-weight:700;cursor:pointer}
 .schools-grid,.staff-grid,.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:20px}
-.school-card,.staff-card,.qr-card{background:#fff;border-radius:16px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden;transition:.2s}
+.school-card,.staff-card,.qr-card{background:#fff;border-radius:16px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
 .school-card::before{content:'';position:absolute;top:0;inset-inline-start:0;width:100%;height:5px;background:linear-gradient(90deg,var(--primary),var(--primary-3))}
 .staff-card::before{content:'';position:absolute;top:0;inset-inline-start:0;width:100%;height:4px;background:var(--primary-3)}
 .staff-card.role-manager::before{background:var(--primary)}
@@ -206,7 +203,6 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 .staff-card.role-cashier::before{background:var(--gold)}
 .staff-card.role-registrar::before{background:var(--purple)}
 .staff-card.role-supervisor::before{background:var(--danger)}
-.school-card:hover,.staff-card:hover,.qr-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--primary-3)}
 .school-card-head,.staff-card-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
 .school-card-logo,.staff-avatar{width:48px;height:48px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,var(--primary),var(--primary-3));color:#fff;display:grid;place-items:center;font-size:20px;font-weight:800}
 .school-card-title,.staff-name{font-size:14.5px;color:var(--primary);font-weight:800;margin-bottom:2px}
@@ -274,9 +270,9 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 #publicPage{min-height:100vh;background:linear-gradient(135deg,#f7f9fc,#eef2f7);padding:22px 14px}
 .public-container{max-width:800px;margin:0 auto}
 .public-header{background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff;border-radius:20px;padding:26px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden}
-.public-header .school-logo{width:64px;height:64px;background:linear-gradient(135deg,#d4af37,#f4d35e);border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;font-size:30px;color:#3a2b00;font-weight:900;position:relative;z-index:2}
-.public-header h1{font-size:20px;font-weight:800;margin-bottom:5px;position:relative;z-index:2}
-.public-header p{font-size:12.5px;opacity:.9;position:relative;z-index:2}
+.public-header .school-logo{width:64px;height:64px;background:linear-gradient(135deg,#d4af37,#f4d35e);border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;font-size:30px;color:#3a2b00;font-weight:900}
+.public-header h1{font-size:20px;font-weight:800;margin-bottom:5px}
+.public-header p{font-size:12.5px;opacity:.9}
 .public-card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(13,59,102,.1);margin-bottom:16px}
 .public-card h2{font-size:16px;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:9px}
 .public-info-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
@@ -301,11 +297,11 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 .public-footnote{text-align:center;font-size:11.5px;color:var(--muted);margin-top:22px;padding-top:18px;border-top:1px dashed var(--border);line-height:1.8}
 .quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-top:12px}
 .quick-btn{background:#f7f9fc;border:1.5px solid var(--border);border-radius:11px;padding:13px;text-align:center;cursor:pointer;transition:.2s}
-.quick-btn:hover{background:#fff;border-color:var(--primary-3);transform:translateY(-2px)}
+.quick-btn:hover{background:#fff;border-color:var(--primary-3)}
 .quick-btn .ic{font-size:22px;margin-bottom:5px;display:block}
 .quick-btn .lbl{font-size:11.5px;font-weight:700;color:var(--primary)}
 .stars-input{display:flex;gap:5px;margin-top:6px}
-.stars-input button{background:none;border:none;font-size:22px;cursor:pointer;padding:2px;transition:.15s}
+.stars-input button{background:none;border:none;font-size:22px;cursor:pointer;padding:2px}
 .behavior-row{padding:12px;background:#f7f9fc;border-radius:10px;margin-bottom:9px;border:1px solid var(--border)}
 .behavior-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px}
 .behavior-cat{font-size:12.5px;font-weight:800;color:var(--primary)}
@@ -314,7 +310,26 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 .tt-table th{background:#f7f9fc;font-weight:800;color:var(--primary)}
 .tt-cell{transition:.15s;vertical-align:middle}
 .tt-cell.break{background:#fdf1e0!important;border-color:#f0c78c!important}
-@media(max-width:820px){.sidebar{position:fixed;z-index:100;transform:translateX(100%);transition:.25s;width:280px}[dir="rtl"] .sidebar{transform:translateX(-100%)}.sidebar.open,[dir="rtl"] .sidebar.open{transform:translateX(0)}.content{padding:14px}.topbar{padding:12px 14px}.schools-grid,.staff-grid,.qr-grid{grid-template-columns:1fr}.filter-grid{grid-template-columns:1fr 1fr}}
+
+/* ========== FIX للجوال ========== */
+@media(max-width:820px){
+  .sidebar{position:fixed;top:0;bottom:0;inset-inline-start:0;z-index:100;width:270px;height:100vh;box-shadow:-8px 0 30px rgba(0,0,0,.25)}
+  [dir="rtl"] .sidebar{transform:translateX(100%)}
+  .sidebar.open{transform:translateX(0)!important}
+  .sidebar.open::before{content:'';position:fixed;inset:0;background:rgba(10,30,55,.5);z-index:-1}
+  .sidebar-close{display:grid}
+  .content{padding:14px}
+  .topbar{padding:12px 14px}
+  .topbar h1{font-size:15px}
+  .schools-grid,.staff-grid,.qr-grid{grid-template-columns:1fr}
+  .filter-grid{grid-template-columns:1fr 1fr}
+  .grid-kpi{grid-template-columns:1fr 1fr}
+  .modal{max-width:100%;border-radius:16px}
+  .modal-body{padding:14px}
+  .login-card{padding:24px 20px;border-radius:20px}
+  .hero-features{grid-template-columns:1fr 1fr}
+  .reg-features{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -326,7 +341,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
         <div class="hero-logo-icon" id="heroLogo" onclick="countLogoClick()">ث</div>
         <div>
           <div class="hero-logo-text">شركة ثقة</div>
-          <div class="hero-logo-sub">النظام التعليمي v4.9 — الحماية المتقدمة</div>
+          <div class="hero-logo-sub">النظام التعليمي v5.0</div>
         </div>
       </div>
       <div class="hero-badge"><span class="dot"></span><span>متاح الآن — انضم لمدارس ثقة</span></div>
@@ -412,6 +427,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 
 <div id="app" class="app hidden">
   <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" onclick="document.getElementById('sidebar').classList.remove('open')">✕</button>
     <div class="brand"><div class="brand-logo">ث</div><div><div class="brand-name">ثقة</div><div class="brand-sub" id="brandSub">الإدارة</div></div></div>
     <div class="context-badge"><div class="context-badge-inner"><div class="lbl">الكيان الحالي</div><div class="val" id="contextVal">—</div></div></div>
     <nav id="nav"></nav>
@@ -434,7 +450,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--primary)}
 
 <script>
 /* ============================================================
-   ثقة v4.9 — النسخة الكاملة مع الحماية + التسجيل
+   ثقة v5.0 — كل الإصلاحات مدمجة
    ============================================================ */
 var firebaseConfig={apiKey:"AIzaSyCa9N31oucmeHBwG1QaRzwFcfB9yOJM7SE",authDomain:"thiqa-system-20f74.firebaseapp.com",projectId:"thiqa-system-20f74",storageBucket:"thiqa-system-20f74.firebasestorage.app",messagingSenderId:"252969707425",appId:"1:252969707425:web:af74f49395c4f8a3ad4de0"};
 var db=null,auth=null,firebaseReady=false,authReady=false;
@@ -443,7 +459,7 @@ var syncUnsubscribers=[];
 try{
   firebase.initializeApp(firebaseConfig);
   db=firebase.firestore();auth=firebase.auth();firebaseReady=true;
-  console.log('✅ Firebase');
+  console.log('✅ Firebase init');
   auth.signInAnonymously().then(function(u){
     currentUid=u.user.uid;authReady=true;
     console.log('✅ Auth:',currentUid.slice(0,8));
@@ -451,14 +467,11 @@ try{
   }).then(function(doc){
     if(doc.exists){var d=doc.data();currentUserRole=d.role||'guest';currentUserSchool=d.schoolId||null;}
     else currentUserRole='guest';
-    setTimeout(startRealtimeSync,300);
+    setTimeout(startRealtimeSync,400);
   }).catch(function(e){console.warn('⚠️ Auth:',e.message);updateCloudStatus();});
 }catch(e){console.warn('⚠️ Firebase:',e.message);}
 
-/* ============================================================
-   Helpers
-   ============================================================ */
-var LS_KEY='thiqa_v49';
+var LS_KEY='thiqa_v50';
 function $(id){return document.getElementById(id);}
 function fmt(n){return(Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:0});}
 function money(n){return fmt(n)+' ل.س';}
@@ -472,74 +485,61 @@ function copyText(t){if(navigator.clipboard)navigator.clipboard.writeText(t).the
 var AR_MAP={'ا':'a','ب':'b','ت':'t','ث':'th','ج':'j','ح':'h','خ':'kh','د':'d','ذ':'dh','ر':'r','ز':'z','س':'s','ش':'sh','ص':'s','ض':'d','ط':'t','ظ':'z','ع':'a','غ':'gh','ف':'f','ق':'q','ك':'k','ل':'l','م':'m','ن':'n','ه':'h','و':'w','ي':'y','أ':'a','إ':'e','آ':'a','ة':'h','ى':'a','ئ':'y','ؤ':'w','ء':'',' ':'_'};
 function genUsername(name){var out='';for(var i=0;i<name.length;i++){var ch=name[i];out+=(AR_MAP[ch]!==undefined)?AR_MAP[ch]:ch.toLowerCase();}return out.replace(/[^a-z0-9_]/g,'').replace(/_+/g,'_').replace(/^_+|_+$/g,'').slice(0,15)||'user';}
 
-/* ============================================================
-   User registry
-   ============================================================ */
 function registerUserDoc(role,schoolId,displayName){
   if(!firebaseReady||!authReady||!currentUid)return;
   db.collection('users').doc(currentUid).set({role:role,schoolId:schoolId||null,displayName:displayName||'',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}).then(function(){currentUserRole=role;currentUserSchool=schoolId;}).catch(function(e){console.warn('users doc:',e.message);});
 }
 
-/* ============================================================
-   Logo clicks for admin
-   ============================================================ */
 var logoClicks=0,logoTimer=null;
 function countLogoClick(){logoClicks++;if(logoTimer)clearTimeout(logoTimer);logoTimer=setTimeout(function(){logoClicks=0;},2000);if(logoClicks>=5){logoClicks=0;$('adminTab').classList.remove('hidden');alert('✅ تم فتح بوابة الإدارة');}}
 
-/* ============================================================
-   Filters
-   ============================================================ */
 var filters={};
 function getF(p){if(!filters[p])filters[p]={};return filters[p];}
 function setF(p,k,v){if(!filters[p])filters[p]={};filters[p][k]=v;render();}
 function resetF(p){filters[p]={};render();}
-function applyF(arr,page,cm){
+function applyF(arr,page){
   var f=getF(page);
   return arr.filter(function(it){
-    for(var k in f){
-      var v=f[k];if(v===''||v==='all'||v===undefined||v===null)continue;
+    for(var k in f){var v=f[k];if(v===''||v==='all'||v===undefined||v===null)continue;
       if(k==='search'){var t=((it.name||'')+' '+(it.studentName||'')+' '+(it.id||'')+' '+(it.phone||'')+' '+(it.studentId||'')+' '+(it.guardian||'')+' '+(it.subject||'')).toLowerCase();if(t.indexOf(v.toLowerCase())<0)return false;}
       else if(k==='dateFrom'){if(it.date&&it.date<v)return false;}
       else if(k==='dateTo'){if(it.date&&it.date>v)return false;}
-      else if(k==='amountMin'){if((it.amount||0)<+v)return false;}
-      else if(k==='amountMax'){if((it.amount||0)>+v)return false;}
-      else if(cm&&cm[k]){if(!cm[k](it,v))return false;}
       else{if(it[k]!==v)return false;}
     }
     return true;
   });
 }
 function filterBar(page,fields,ct){
-  var f=getF(page);
-  var html='<div class="filter-bar"><div class="filter-grid">';
-  for(var i=0;i<fields.length;i++){
-    var fd=fields[i];var v=f[fd.key]||'';
+  var f=getF(page);var html='<div class="filter-bar"><div class="filter-grid">';
+  for(var i=0;i<fields.length;i++){var fd=fields[i];var v=f[fd.key]||'';
     html+='<div class="filter-field"><label>'+E(fd.label)+'</label>';
-    if(fd.type==='select'){
-      html+='<select onchange="setF(\''+page+'\',\''+fd.key+'\',this.value)"><option value="">— الكل —</option>';
+    if(fd.type==='select'){html+='<select onchange="setF(\''+page+'\',\''+fd.key+'\',this.value)"><option value="">— الكل —</option>';
       for(var j=0;j<fd.options.length;j++){var o=fd.options[j];var ov=(typeof o==='object')?o.value:o;var ot=(typeof o==='object')?o.label:o;html+='<option value="'+E(ov)+'"'+(f[fd.key]===ov?' selected':'')+'>'+E(ot)+'</option>';}
-      html+='</select>';
-    } else {html+='<input type="'+(fd.type||'text')+'" value="'+E(v)+'" placeholder="'+E(fd.placeholder||'')+'" onchange="setF(\''+page+'\',\''+fd.key+'\',this.value)">';}
+      html+='</select>';}
+    else{html+='<input type="'+(fd.type||'text')+'" value="'+E(v)+'" placeholder="'+E(fd.placeholder||'')+'" onchange="setF(\''+page+'\',\''+fd.key+'\',this.value)">';}
     html+='</div>';
   }
   html+='<div class="filter-actions"><button class="btn btn-ghost btn-sm" onclick="resetF(\''+page+'\')">✕ مسح</button>';
   if(ct)html+='<span class="filter-count">'+E(ct)+'</span>';
-  html+='</div></div></div>';
-  return html;
+  html+='</div></div></div>';return html;
 }
 function exportExcel(fn,headers,rows,title){
   var csv='\uFEFF';if(title)csv+=title+'\n';
   csv+=headers.map(function(h){return '"'+String(h).replace(/"/g,'""')+'"';}).join(',')+'\n';
   for(var i=0;i<rows.length;i++){var row=rows[i].map(function(c){var s=String(c===null||c===undefined?'':c);return '"'+s.replace(/"/g,'""')+'"';});csv+=row.join(',')+'\n';}
-  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  var url=URL.createObjectURL(blob);var a=document.createElement('a');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');
   a.href=url;a.download=(fn||'thiqa')+'_'+today()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1500);
 }
 function exportBtn(page){return '<button class="btn btn-gold btn-sm" onclick="exportPage(\''+page+'\')">⬇️ تصدير Excel</button>';}
+function exportPage(page){
+  var school=currentSchool();var sn=school?school.name:'كل المدارس';
+  if(page==='students'){var l=applyF(scoped(state.students),'students');exportExcel('students',['الرقم','الاسم','الصف','ولي الأمر','الهاتف','الرسوم'],l.map(function(s){return[s.id,s.name,s.grade,s.guardian,s.phone,s.fee];}),'الطلاب — '+sn);}
+  else if(page==='invoices'){var l2=applyF(scoped(state.invoices),'invoices');exportExcel('invoices',['الرقم','الطالب','المبلغ','المدفوع','المتبقي','التاريخ'],l2.map(function(i){return[i.id,i.studentName,i.amount,i.paid,i.amount-i.paid,i.date];}),'الفواتير');}
+  else if(page==='payments'){exportExcel('payments',['الرقم','الفاتورة','الطالب','المبلغ','الطريقة','التاريخ'],scoped(state.payments).map(function(p){return[p.id,p.invoiceId,p.studentName,p.amount,p.method,p.date];}),'المدفوعات');}
+  else if(page==='expenses'){exportExcel('expenses',['الرقم','التصنيف','المبلغ','التاريخ'],scoped(state.expenses).map(function(e){return[e.id,e.cat,e.amount,e.date];}),'المصروفات');}
+  else if(page==='schools'){exportExcel('schools',['الاسم','المدينة','المرحلة','المستخدم'],state.schools.map(function(s){return[s.name,s.city,s.stage,s.username];}),'المدارس');}
+}
 
-/* ============================================================
-   Constants
-   ============================================================ */
 var SUBJECTS=['رياضيات','لغة عربية','علوم','إنجليزي','اجتماعيات','تربية إسلامية','فنية','رياضة'];
 var GRADE_LEVELS=['الأول','الثاني','الثالث','الرابع','الخامس','السادس','السابع','الثامن','التاسع'];
 var BEHAVIOR_CATS=[{key:'discipline',name:'🎯 السلوك والانضباط'},{key:'participation',name:'🙋 المشاركة في الصف'},{key:'punctuality',name:'📏 الالتزام بالمواعيد'},{key:'homework',name:'📚 أداء الواجبات'},{key:'teamwork',name:'🤝 التعاون والعمل الجماعي'}];
@@ -555,67 +555,60 @@ function accType(c){for(var i=0;i<COA.length;i++)if(COA[i].code===c)return COA[i
 var TIMETABLE_DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
 var TIMETABLE_PERIODS=[{key:'p1',label:'الحصة ١',time:'08:00'},{key:'p2',label:'الحصة ٢',time:'09:00'},{key:'p3',label:'الحصة ٣',time:'10:00'},{key:'break',label:'استراحة',time:'10:45',isBreak:true},{key:'p4',label:'الحصة ٤',time:'11:00'},{key:'p5',label:'الحصة ٥',time:'12:00'}];
 
-/* ============================================================
-   Seed
-   ============================================================ */
 function seedState(){
-  var schools=[{id:'THQ-001',name:'مدرسة النور الخاصة',stage:'جميع المراحل',city:'دمشق',phone:'011-2233445',status:'active',username:'nour',password:'nour123',createdAt:'2026-01-15',staff:[{id:'STF-101',name:'أ. سامر العلي',role:'teacher',username:'teacher1',password:'teach123',active:true,subjects:['رياضيات','علوم'],grades:['الخامس','السادس'],permissions:PERM_TEMPLATES.teacher}],plan:'standard',planPrice:10,planCurrency:'USD',planStart:'2026-01-15',planStatus:'active'}];
-  return {schools:schools,students:[],invoices:[],payments:[],expenses:[],attendance:[],grades:[],behavior:[],timetable:[],activityLog:[],registrationRequests:[],user:null,userType:null,context:'group',currentSchool:null,currentStaff:null,currentStudent:null,page:'dashboard',settings:{currency:'ل.س',fiscalYear:'2026'}};
+  var schools=[
+    {id:'THQ-001',name:'مدرسة النور الخاصة',stage:'جميع المراحل',city:'دمشق',phone:'011-2233445',status:'active',username:'nour',password:'nour123',createdAt:'2026-01-15',staff:[
+      {id:'STF-101',name:'أ. سامر العلي',role:'teacher',username:'teacher1',password:'teach123',active:true,subjects:['رياضيات','علوم'],grades:['الخامس','السادس'],permissions:PERM_TEMPLATES.teacher},
+      {id:'STF-001',name:'سامر العلي',role:'accountant',username:'noor_acc',password:'acc123',active:true,permissions:PERM_TEMPLATES.accountant}
+    ],plan:'standard',planPrice:10,planCurrency:'USD',planStart:'2026-01-15',planStatus:'active'},
+    {id:'THQ-002',name:'مدرسة الأمل الخاصة',stage:'ابتدائي وإعدادي',city:'حلب',phone:'021-3344556',status:'active',username:'amal',password:'amal123',createdAt:'2026-02-20',staff:[],plan:'standard',planPrice:10,planCurrency:'USD',planStart:'2026-02-20',planStatus:'active'}
+  ];
+  var first=['أحمد','ليلى','سامر','نور','يوسف','مريم','عمر','هبة','خالد','رنا','زيد','سلمى'];
+  var last=['الحسن','العلي','الخطيب','منصور','حداد','قاسم','شاهين','درويش','ناصر','سعيد'];
+  var grades=['الأول','الثاني','الثالث','الرابع','الخامس','السادس'];
+  var students=[];
+  for(var si=0;si<schools.length;si++){for(var i=0;i<8;i++){var num=String(100+i);var shortId=schools[si].id.slice(-3);students.push({id:'ST-'+shortId+'-'+num,schoolId:schools[si].id,name:first[(si*5+i)%first.length]+' '+last[(si*3+i)%last.length],grade:grades[(i+si)%grades.length],guardian:'والد '+first[(si*5+i)%first.length],phone:'09'+String(10000000+((si*7+i)*1234567)%89000000),fee:(1500+(i%5)*250)*1000,status:'active',token:genToken(),username:'std'+shortId+num,password:'std'+num});}}
+  var invoices=[];for(var j=0;j<students.length;j++){var st=students[j];var r=(j*37)%100;var paid=r<55?st.fee:(r<80?Math.round(st.fee*0.5):0);invoices.push({id:'INV-'+String(2000+j),schoolId:st.schoolId,studentId:st.id,studentName:st.name,grade:st.grade,amount:st.fee,paid:paid,date:'2026-09-05',due:'2026-09-25',status:paid>=st.fee?'paid':(paid>0?'partial':'unpaid'),type:'single'});}
+  var payments=[];for(var k=0;k<invoices.length;k++){if(invoices[k].paid>0)payments.push({id:'PAY-'+String(5000+k),schoolId:invoices[k].schoolId,invoiceId:invoices[k].id,studentName:invoices[k].studentName,amount:invoices[k].paid,method:PAY_METHODS[k%4],date:invoices[k].date});}
+  var cats=['رواتب','صيانة','كهرباء وماء','مستلزمات','إيجار'];var expenses=[];for(var s=0;s<schools.length;s++){for(var m=0;m<5;m++){expenses.push({id:'EXP-'+schools[s].id.slice(-3)+'-'+String(300+m),schoolId:schools[s].id,cat:cats[(s+m)%cats.length],amount:(400+((m*7+s*13)%30)*100)*1000,date:'2026-0'+((m%9)+1)+'-12'});}}
+  return {schools:schools,students:students,invoices:invoices,payments:payments,expenses:expenses,attendance:[],grades:[],behavior:[],timetable:[],activityLog:[],registrationRequests:[],user:null,userType:null,context:'group',currentSchool:null,currentStaff:null,currentStudent:null,page:'dashboard',settings:{currency:'ل.س',fiscalYear:'2026'}};
 }
 var state;
 function loadState(){
   var s=null;
-  try{var raw=localStorage.getItem(LS_KEY);if(raw){s=JSON.parse(raw);if(!s.behavior)s.behavior=[];if(!s.attendance)s.attendance=[];if(!s.grades)s.grades=[];if(!s.timetable)s.timetable=[];if(!s.registrationRequests)s.registrationRequests=[];if(!s.students)s.students=[];for(var i=0;i<s.students.length;i++)if(!s.students[i].token)s.students[i].token=genToken();}}catch(e){}
+  try{var raw=localStorage.getItem(LS_KEY);if(raw){s=JSON.parse(raw);if(!s.behavior)s.behavior=[];if(!s.attendance)s.attendance=[];if(!s.grades)s.grades=[];if(!s.timetable)s.timetable=[];if(!s.registrationRequests)s.registrationRequests=[];if(!s.students)s.students=[];if(!s.schools)s.schools=[];for(var i=0;i<s.students.length;i++)if(!s.students[i].token)s.students[i].token=genToken();}}catch(e){}
   if(!s){s=seedState();localStorage.setItem(LS_KEY,JSON.stringify(s));}
   return s;
 }
 state=loadState();
 
-/* ============================================================
-   Dirty tracking + Firestore surgical writes
-   ============================================================ */
 var _dirtyMeta=false;
 var _dirtyRecords={};
 var FIRESTORE_COLLECTIONS=['students','invoices','payments','expenses','attendance','grades','behavior','timetable'];
 var _syncReady=false;
 var _renderPending=false;
+var _firstMetaSynced=false;
 
 function markMetaDirty(){_dirtyMeta=true;}
 function markRecordDirty(coll,id){if(!_dirtyRecords[coll])_dirtyRecords[coll]={};_dirtyRecords[coll][id]='SET';}
 function markRecordDeleted(coll,id){if(!_dirtyRecords[coll])_dirtyRecords[coll]={};_dirtyRecords[coll][id]='DELETE';}
-
-function scheduleRender(){
-  if(_renderPending)return;
-  _renderPending=true;
-  setTimeout(function(){_renderPending=false;if(state.user)render();},120);
-}
+function scheduleRender(){if(_renderPending)return;_renderPending=true;setTimeout(function(){_renderPending=false;if(state.user)render();},120);}
 
 function saveState(){
   localStorage.setItem(LS_KEY,JSON.stringify(state));
   updateCloudStatus();
   if(!firebaseReady||!db||!authReady)return;
-
   if(_dirtyMeta){
     _dirtyMeta=false;
-    db.collection('data').doc('main').set({
-      schools:state.schools,
-      settings:state.settings,
-      activityLog:(state.activityLog||[]).slice(0,200),
-      registrationRequests:(state.registrationRequests||[]).slice(0,100)
-    }).catch(function(e){console.error('meta write:',e.message);});
+    db.collection('data').doc('main').set({schools:state.schools,settings:state.settings,activityLog:(state.activityLog||[]).slice(0,200),registrationRequests:(state.registrationRequests||[]).slice(0,100)}).catch(function(e){console.error('meta write:',e.message);});
   }
-
   var batch=db.batch();var hasOps=false;
   for(var coll in _dirtyRecords){
     var ops=_dirtyRecords[coll];
     for(var id in ops){
       var ref=db.collection(coll).doc(id);
       if(ops[id]==='DELETE')batch.delete(ref);
-      else{
-        var rec=null;var arr=state[coll]||[];
-        for(var i=0;i<arr.length;i++)if(arr[i].id===id){rec=arr[i];break;}
-        if(rec)batch.set(ref,rec);
-      }
+      else{var rec=null;var arr=state[coll]||[];for(var i=0;i<arr.length;i++)if(arr[i].id===id){rec=arr[i];break;}if(rec)batch.set(ref,rec);}
       hasOps=true;
     }
   }
@@ -631,28 +624,52 @@ function startRealtimeSync(){
   syncUnsubscribers=[];
 
   var unsubMeta=db.collection('data').doc('main').onSnapshot(function(doc){
+    var ses={user:state.user,userType:state.userType,currentStaff:state.currentStaff,currentStudent:state.currentStudent,currentSchool:state.currentSchool,context:state.context,page:state.page};
     if(doc.exists){
-      var d=doc.data();
-      var ses={user:state.user,userType:state.userType,currentStaff:state.currentStaff,currentStudent:state.currentStudent,currentSchool:state.currentSchool,context:state.context,page:state.page};
-      state.schools=d.schools||[];
-      state.settings=d.settings||state.settings;
-      state.activityLog=d.activityLog||[];
-      state.registrationRequests=d.registrationRequests||[];
-      for(var k in ses)state[k]=ses[k];
-      localStorage.setItem(LS_KEY,JSON.stringify(state));
-      updateCloudStatus();
-      if(state.user)scheduleRender();
+      var d=doc.data()||{};
+      var hasCloudSchools=d.schools&&d.schools.length;
+      var hasLocalSchools=state.schools&&state.schools.length;
+      if(!_firstMetaSynced){
+        _firstMetaSynced=true;
+        if(!hasCloudSchools&&hasLocalSchools){
+          console.log('☁️ Cloud empty → uploading local seed');
+          markMetaDirty();
+          FIRESTORE_COLLECTIONS.forEach(function(c){(state[c]||[]).forEach(function(r){markRecordDirty(c,r.id);});});
+          saveState();
+          for(var k in ses)state[k]=ses[k];
+          updateCloudStatus();if(state.user)scheduleRender();
+          return;
+        }
+        if(hasCloudSchools){
+          state.schools=d.schools;
+          state.settings=d.settings||state.settings;
+          state.activityLog=d.activityLog||[];
+          state.registrationRequests=d.registrationRequests||[];
+        }
+      } else {
+        if(hasCloudSchools)state.schools=d.schools;
+        if(d.settings)state.settings=d.settings;
+        if(d.activityLog)state.activityLog=d.activityLog;
+        if(d.registrationRequests)state.registrationRequests=d.registrationRequests;
+      }
     } else {
+      _firstMetaSynced=true;
+      console.log('☁️ First run → uploading seed');
       markMetaDirty();
       FIRESTORE_COLLECTIONS.forEach(function(c){(state[c]||[]).forEach(function(r){markRecordDirty(c,r.id);});});
       saveState();
     }
+    for(var k2 in ses)state[k2]=ses[k2];
+    localStorage.setItem(LS_KEY,JSON.stringify(state));
+    updateCloudStatus();
+    if(state.user)scheduleRender();
   },function(err){console.warn('meta listener:',err.message);});
   syncUnsubscribers.push(unsubMeta);
 
   FIRESTORE_COLLECTIONS.forEach(function(coll){
     var unsub=db.collection(coll).onSnapshot(function(snap){
       var arr=[];snap.forEach(function(d){arr.push(d.data());});
+      if(arr.length===0&&(state[coll]||[]).length>0&&!_firstMetaSynced)return;
       state[coll]=arr;
       localStorage.setItem(LS_KEY,JSON.stringify(state));
       if(state.user)scheduleRender();
@@ -669,10 +686,7 @@ function updateCloudStatus(){
   else{el.textContent='📱 وضع محلي';el.className='cloud-status offline';}
 }
 
-/* ============================================================
-   Roles & permissions
-   ============================================================ */
-function currentRole(){if(state.userType==='admin')return 'admin';if(state.userType==='manager')return 'manager';if(state.userType==='staff'&&state.currentStaff)return state.currentStaff.role;if(state.userType==='student')return 'student';return null;}
+function currentRole(){if(state.userType==='admin')return'admin';if(state.userType==='manager')return'manager';if(state.userType==='staff'&&state.currentStaff)return state.currentStaff.role;if(state.userType==='student')return'student';return null;}
 function can(mod,act){if(state.userType==='admin'||state.userType==='manager')return true;if(state.userType!=='staff')return false;var s=state.currentStaff;if(!s)return false;if(s.role==='manager')return true;var p=s.permissions;if(!p||p==='all')return true;var m=p[mod];return m&&m[act]===true;}
 function isAdmin(){return state.userType==='admin';}
 function isManager(){return state.userType==='manager';}
@@ -680,15 +694,12 @@ function isTeacher(){return state.userType==='staff'&&state.currentStaff&&state.
 function isStaff(){return state.userType==='staff';}
 function isStudent(){return state.userType==='student';}
 function currentSchool(){if(!state.currentSchool)return null;for(var i=0;i<state.schools.length;i++)if(state.schools[i].id===state.currentSchool)return state.schools[i];return null;}
-function schoolName(id){for(var i=0;i<state.schools.length;i++)if(state.schools[i].id===id)return state.schools[i].name;return '—';}
+function schoolName(id){for(var i=0;i<state.schools.length;i++)if(state.schools[i].id===id)return state.schools[i].name;return'—';}
 function scoped(arr){if(!arr)return[];if(isAdmin()&&state.context==='group')return arr;if(state.currentSchool)return arr.filter(function(x){return x.schoolId===state.currentSchool;});return[];}
+function getStudent(id){for(var i=0;i<state.students.length;i++)if(state.students[i].id===id)return state.students[i];return null;}
 
-/* ============================================================
-   Accounting
-   ============================================================ */
 function generateJournalEntries(filter){
-  var entries=[];
-  var inv=filter?state.invoices.filter(function(i){return i.schoolId===filter;}):state.invoices;
+  var entries=[];var inv=filter?state.invoices.filter(function(i){return i.schoolId===filter;}):state.invoices;
   for(var i=0;i<inv.length;i++)entries.push({id:'JV-INV-'+inv[i].id,date:inv[i].date,desc:'فاتورة — '+inv[i].studentName,ref:inv[i].id,schoolId:inv[i].schoolId,lines:[{code:'1210',debit:inv[i].amount,credit:0},{code:'4100',debit:0,credit:inv[i].amount}]});
   var pay=filter?state.payments.filter(function(p){return p.schoolId===filter;}):state.payments;
   for(var j=0;j<pay.length;j++){var acc=(pay[j].method==='بنكي'||pay[j].method==='تحويل')?'1120':'1110';entries.push({id:'JV-PAY-'+pay[j].id,date:pay[j].date,desc:'تحصيل — '+pay[j].studentName,ref:pay[j].invoiceId,schoolId:pay[j].schoolId,lines:[{code:acc,debit:pay[j].amount,credit:0},{code:'1210',debit:0,credit:pay[j].amount}]});}
@@ -699,7 +710,7 @@ function generateJournalEntries(filter){
 function computeBalances(filter){
   var entries=generateJournalEntries(filter),bal={};
   for(var i=0;i<entries.length;i++)for(var j=0;j<entries[i].lines.length;j++){var l=entries[i].lines[j];if(!bal[l.code])bal[l.code]={debit:0,credit:0};bal[l.code].debit+=l.debit;bal[l.code].credit+=l.credit;}
-  return {entries:entries,balances:bal};
+  return{entries:entries,balances:bal};
 }
 function logAct(a,d){
   var n='نظام';
@@ -712,9 +723,6 @@ function logAct(a,d){
   markMetaDirty();
 }
 
-/* ============================================================
-   Navigation
-   ============================================================ */
 var NAV_ADMIN=[{group:'الإدارة العامة',items:[{id:'dashboard',label:'لوحة المجموعة',ic:'📊'},{id:'schools',label:'المدارس',ic:'🏫'},{id:'requests',label:'طلبات التسجيل',ic:'📋'},{id:'all-reports',label:'تقارير مجمعة',ic:'📈'}]}];
 var NAV_SCHOOL=[
   {group:'الرئيسية',items:[{id:'dashboard',label:'لوحة المدرسة',ic:'📊'}]},
@@ -736,17 +744,25 @@ function canSeePage(page){
   if(isStaff()){var s=state.currentStaff;if(s.role==='manager')return true;if(page==='school-info'||page==='subscription')return true;if(page==='qr-cards')return can('students','view');if(page==='activity')return s.role==='supervisor';if(page==='staff')return false;if(['trial-balance','journal','income-statement','balance-sheet'].indexOf(page)>=0)return s.role==='accountant'||s.role==='supervisor';return can(page,'view');}
   return false;
 }
-function navigate(page){if(!canSeePage(page)){alert('لا تملك صلاحية');return;}state.page=page;saveState();render();}
+function navigate(page){
+  if(!canSeePage(page)){alert('لا تملك صلاحية');return;}
+  var sb=document.getElementById('sidebar');
+  if(sb)sb.classList.remove('open');
+  state.page=page;saveState();render();
+}
 
-/* ============================================================
-   Render
-   ============================================================ */
 function render(){
+  try{_render();}catch(err){
+    console.error('❌ Render error:',err);
+    var c=$('content');
+    if(c)c.innerHTML='<div class="card" style="border-color:var(--danger);background:#fbe6e4"><h2 style="color:var(--danger);margin-bottom:10px">⚠️ خطأ في العرض</h2><div style="font-size:12px;font-family:monospace;background:#fff;padding:12px;border-radius:8px;overflow:auto;direction:ltr;text-align:left">'+esc(err.message)+'<br><br>'+esc((err.stack||'').split('\n').slice(0,5).join('\n'))+'</div><button class="btn btn-ghost" style="margin-top:12px" onclick="location.reload()">🔄 إعادة تحميل</button></div>';
+  }
+}
+function _render(){
   var hash=window.location.hash;
   if(hash&&hash.indexOf('#/s/')===0){
     var token=hash.substring(4);
-    $('loginScreen').classList.add('hidden');
-    $('app').classList.add('hidden');
+    $('loginScreen').classList.add('hidden');$('app').classList.add('hidden');
     var pub=$('publicPage');pub.classList.remove('hidden');
     pub.innerHTML='<div class="public-container"><div class="public-header"><div class="school-logo">ث</div><h1>جارٍ التحميل...</h1></div></div>';
     loadPublicProfile(token,function(student){
@@ -759,8 +775,7 @@ function render(){
         });
       });
     });
-    document.body.style.background='#f7f9fc';
-    return;
+    document.body.style.background='#f7f9fc';return;
   }else{var p=$('publicPage');if(p)p.classList.add('hidden');document.body.style.background='';}
 
   if(!state.user){$('loginScreen').classList.remove('hidden');$('app').classList.add('hidden');updateCloudStatus();return;}
@@ -780,19 +795,11 @@ function render(){
 }
 
 function loadPublicProfile(token,callback){
-  if(!firebaseReady||!db){
-    var local=null;for(var i=0;i<state.students.length;i++)if(state.students[i].token===token){local=state.students[i];break;}
-    callback(local);return;
-  }
-  db.collection('students').where('token','==',token).limit(1).get().then(function(snap){
-    if(snap.empty){callback(null);return;}
-    callback(snap.docs[0].data());
-  }).catch(function(){callback(null);});
+  if(!firebaseReady||!db){var local=null;for(var i=0;i<state.students.length;i++)if(state.students[i].token===token){local=state.students[i];break;}callback(local);return;}
+  db.collection('students').where('token','==',token).limit(1).get().then(function(snap){if(snap.empty){callback(null);return;}callback(snap.docs[0].data());}).catch(function(){callback(null);});
 }
 
-/* ============================================================
-   Registration
-   ============================================================ */
+/* ============ Registration ============ */
 function openRegistrationModal(){
   var body='<div class="alert info">💡 أدخل بيانات مدرستك وسيتواصل معك فريقنا خلال 24 ساعة.</div>'+
     '<div class="field"><label>اسم المدرسة *</label><input id="reg_school" placeholder="مثال: مدرسة النور الخاصة"></div>'+
@@ -806,10 +813,7 @@ function openRegistrationModal(){
     '<div class="reg-price" style="margin-top:14px"><span class="amount">$10</span><span class="currency">USD</span><span class="per">/ شهرياً</span><span class="badge-save">عرض الإطلاق</span></div>'+
     '<div style="font-size:11.5px;color:var(--muted);text-align:center">يشمل كل الميزات — بدون حدود على عدد الطلاب</div>';
   openModal('📝 طلب تسجيل مدرسة',body,function(){
-    var school=$('reg_school').value.trim();
-    var city=$('reg_city').value.trim();
-    var manager=$('reg_manager').value.trim();
-    var phone=$('reg_phone').value.trim();
+    var school=$('reg_school').value.trim(),city=$('reg_city').value.trim(),manager=$('reg_manager').value.trim(),phone=$('reg_phone').value.trim();
     if(!school){alert('اسم المدرسة مطلوب');return false;}
     if(!city){alert('المدينة مطلوبة');return false;}
     if(!manager){alert('اسم المسؤول مطلوب');return false;}
@@ -817,9 +821,7 @@ function openRegistrationModal(){
     var req={id:uid('REQ'),schoolName:school,schoolType:$('reg_type').value,city:city,studentsCount:$('reg_count').value,managerName:manager,phone:phone,email:$('reg_email').value.trim(),notes:$('reg_notes').value.trim(),plan:'standard',price:10,currency:'USD',status:'pending',submittedAt:new Date().toISOString()};
     if(!state.registrationRequests)state.registrationRequests=[];
     state.registrationRequests.push(req);
-    if(firebaseReady&&db&&authReady){
-      db.collection('registrationRequests').add(req).then(function(){console.log('✅ طلب التسجيل مرسل');}).catch(function(e){console.warn('⚠️',e.message);});
-    }
+    if(firebaseReady&&db&&authReady){db.collection('registrationRequests').add(req).then(function(){console.log('✅ Req sent');}).catch(function(e){console.warn('⚠️',e.message);});}
     markMetaDirty();saveState();
     setTimeout(function(){
       var conf='<div style="text-align:center;padding:20px 10px"><div style="font-size:64px;margin-bottom:14px">🎉</div><h3 style="color:var(--primary);font-size:20px;margin-bottom:10px;font-weight:800">تم إرسال طلبك بنجاح!</h3><p style="color:var(--muted);font-size:13.5px;line-height:1.9;margin-bottom:18px">سيتواصل معك فريقنا خلال <b style="color:var(--primary)">24 ساعة</b><br>على الرقم: <b style="color:var(--primary)" dir="ltr">'+esc(phone)+'</b></p><div style="background:#f7f9fc;padding:14px;border-radius:12px;font-size:12px;color:var(--muted);margin-bottom:14px;text-align:right"><div style="margin-bottom:6px"><b style="color:var(--primary)">رقم الطلب:</b> '+esc(req.id)+'</div><div><b style="color:var(--primary)">الباقة:</b> $10/شهرياً — كل الميزات</div></div></div>';
@@ -838,8 +840,15 @@ function renderRequestsPage(){
   var pending=reqs.filter(function(r){return r.status==='pending';});
   var approved=reqs.filter(function(r){return r.status==='approved';});
   var rejected=reqs.filter(function(r){return r.status==='rejected';});
-  var kpis='<div class="grid-kpi"><div class="kpi warn"><div class="kpi-label">⏳ قيد المراجعة</div><div class="kpi-value">'+pending.length+'</div></div><div class="kpi success"><div class="kpi-label">✅ مقبولة</div><div class="kpi-value">'+approved.length+'</div></div><div class="kpi danger"><div class="kpi-label">❌ مرفوضة</div><div class="kpi-value">'+rejected.length+'</div></div><div class="kpi gold"><div class="kpi-label">💰 إيراد شهري متوقع</div><div class="kpi-value">$'+(approved.length*10)+'</div></div></div>';
-  if(!reqs.length)return kpis+'<div class="alert info">📭 لا توجد طلبات حتى الآن</div>';
+  var kpis='<div class="grid-kpi">'+
+    '<div class="kpi warn"><div class="kpi-label">⏳ قيد المراجعة</div><div class="kpi-value">'+pending.length+'</div></div>'+
+    '<div class="kpi success"><div class="kpi-label">✅ مقبولة</div><div class="kpi-value">'+approved.length+'</div></div>'+
+    '<div class="kpi danger"><div class="kpi-label">❌ مرفوضة</div><div class="kpi-value">'+rejected.length+'</div></div>'+
+    '<div class="kpi gold"><div class="kpi-label">💰 إيراد شهري</div><div class="kpi-value">$'+(approved.length*10)+'</div></div>'+
+  '</div>';
+  if(!reqs.length){
+    return kpis+'<div class="card" style="text-align:center;padding:48px 24px"><div style="font-size:72px;margin-bottom:14px;opacity:.35">📭</div><h3 style="font-size:18px;color:var(--primary);font-weight:800;margin-bottom:8px">لا توجد طلبات بعد</h3><p style="color:var(--muted);font-size:13px;line-height:1.9;max-width:480px;margin:0 auto 18px">عندما ترسل مدرسة جديدة طلب تسجيل من الصفحة الرئيسية، سيظهر هنا مباشرة. يمكنك قبول الطلب أو رفضه بضغطة واحدة.</p><div style="display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center"><span class="badge info">🔄 التحديث تلقائي</span><span class="badge gold">💎 $10/شهرياً</span><span class="badge ok">🎁 14 يوم تجريبي</span></div></div>';
+  }
   var rows='';
   reqs.slice().reverse().forEach(function(r){
     var date=new Date(r.submittedAt);var dateStr=date.toLocaleDateString('ar-EG')+' '+date.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
@@ -852,7 +861,6 @@ function renderRequestsPage(){
   });
   return kpis+'<div class="table-wrap"><table><thead><tr><th>المدرسة</th><th>المدينة</th><th>المسؤول</th><th>الهاتف</th><th>الطلاب</th><th>التاريخ</th><th>الحالة</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
-
 function approveRegistration(id){
   var req=null;for(var i=0;i<(state.registrationRequests||[]).length;i++)if(state.registrationRequests[i].id===id){req=state.registrationRequests[i];break;}
   if(!req)return;
@@ -881,13 +889,28 @@ function deleteRegistration(id){
   markMetaDirty();saveState();render();
 }
 
-/* ============================================================
-   Subscription page
-   ============================================================ */
+/* ============ Reset System ============ */
+function resetSystem(){
+  if(!confirm('⚠️ سيتم حذف كل البيانات من Firestore وإعادة الزرع. متابعة؟'))return;
+  if(!confirm('تأكيد نهائي؟'))return;
+  var btn=event.target;btn.textContent='⏳ جاري المسح...';btn.disabled=true;
+  db.collection('data').doc('main').delete().then(function(){
+    var promises=[];
+    FIRESTORE_COLLECTIONS.forEach(function(coll){
+      promises.push(db.collection(coll).get().then(function(snap){if(snap.empty)return;var batch=db.batch();snap.forEach(function(d){batch.delete(d.ref);});return batch.commit();}));
+    });
+    promises.push(db.collection('registrationRequests').get().then(function(snap){if(snap.empty)return;var batch=db.batch();snap.forEach(function(d){batch.delete(d.ref);});return batch.commit();}));
+    return Promise.all(promises);
+  }).then(function(){
+    alert('✅ تم مسح البيانات — سيتم إعادة الزرع');
+    localStorage.removeItem(LS_KEY);location.reload();
+  }).catch(function(e){alert('❌ خطأ: '+e.message);btn.disabled=false;btn.textContent='🔄 إعادة تعيين النظام';});
+}
+
+/* ============ Subscription ============ */
 function renderSubscription(){
   var s=currentSchool();if(!s)return '<div class="empty">—</div>';
-  var start=s.planStart?new Date(s.planStart):new Date();
-  var now=new Date();
+  var start=s.planStart?new Date(s.planStart):new Date();var now=new Date();
   var months=Math.floor((now-start)/(1000*60*60*24*30));
   var nextDue=new Date(start);nextDue.setMonth(nextDue.getMonth()+Math.max(1,months+1));
   var status=s.planStatus||'active';
@@ -906,57 +929,35 @@ function renderSubscription(){
     '<div class="reg-feat"><span class="check">✓</span><span class="txt">فواتير وأقساط ذكية</span></div>'+
     '<div class="reg-feat"><span class="check">✓</span><span class="txt">جدول دراسي أسبوعي</span></div>'+
     '<div class="reg-feat"><span class="check">✓</span><span class="txt">بطاقات QR لأولياء الأمور</span></div>'+
-    '<div class="reg-feat"><span class="check">✓</span><span class="txt">محاسبة كاملة (قيود، ميزان، ميزانية)</span></div>'+
+    '<div class="reg-feat"><span class="check">✓</span><span class="txt">محاسبة كاملة</span></div>'+
     '<div class="reg-feat"><span class="check">✓</span><span class="txt">حضور وسلوك وتقارير</span></div>'+
     '<div class="reg-feat"><span class="check">✓</span><span class="txt">تصدير Excel</span></div>'+
     '<div class="reg-feat"><span class="check">✓</span><span class="txt">دعم فني 24/7</span></div>'+
     '</div></div>'+
     '<div class="card"><div class="card-head"><h2>💳 الدفع</h2></div>'+
-    '<div class="alert info">📞 للتفعيل أو الاستفسار تواصل معنا:<br><b>admin@thiqa.sy</b><br>أو اضغط زر الدفع للإرسال عبر واتساب</div>'+
+    '<div class="alert info">📞 للتفعيل أو الاستفسار تواصل معنا:<br><b>admin@thiqa.sy</b></div>'+
     '<a href="https://wa.me/963900000000?text='+encodeURIComponent('أرغب بتفعيل باقة ثقة $10/شهرياً لمدرسة: '+s.name)+'" target="_blank" class="btn btn-gold" style="text-decoration:none;display:inline-flex;width:auto">💬 تواصل عبر واتساب</a>'+
     '</div>';
 }
-</script>
-<script>
-/* ============================================================
-   بقية دوال العرض — القسم الرئيسي
-   ============================================================ */
 
-function getStudent(id){for(var i=0;i<state.students.length;i++)if(state.students[i].id===id)return state.students[i];return null;}
-function exportPage(page){
-  var school=currentSchool();var scopeName=school?school.name:'كل المدارس';
-  if(page==='students'){var l=applyF(scoped(state.students),'students');exportExcel('students',['الرقم','الاسم','الصف','ولي الأمر','الهاتف','الرسوم'],l.map(function(s){return[s.id,s.name,s.grade,s.guardian,s.phone,s.fee];}),'الطلاب — '+scopeName);}
-  else if(page==='invoices'){var l2=applyF(scoped(state.invoices),'invoices');exportExcel('invoices',['الرقم','الطالب','المبلغ','المدفوع','المتبقي','التاريخ','الاستحقاق'],l2.map(function(i){return[i.id,i.studentName,i.amount,i.paid,i.amount-i.paid,i.date,i.due];}),'الفواتير — '+scopeName);}
-  else if(page==='installments'){var invs=scoped(state.invoices).filter(function(i){return i.type==='installment';});exportExcel('installments',['الطالب','الصف','القسط','الإجمالي','المبلغ','المدفوع','المتبقي','الاستحقاق'],invs.map(function(i){return[i.studentName,i.grade,i.installmentNumber||'',i.installmentTotal||'',i.amount,i.paid,i.amount-i.paid,i.due];}));}
-  else if(page==='payments'){var l3=applyF(scoped(state.payments),'payments');exportExcel('payments',['الرقم','الفاتورة','الطالب','المبلغ','الطريقة','التاريخ'],l3.map(function(p){return[p.id,p.invoiceId,p.studentName,p.amount,p.method,p.date];}),'المدفوعات');}
-  else if(page==='expenses'){var l4=applyF(scoped(state.expenses),'expenses');exportExcel('expenses',['الرقم','التصنيف','المبلغ','التاريخ'],l4.map(function(e){return[e.id,e.cat,e.amount,e.date];}),'المصروفات');}
-  else if(page==='schools'){exportExcel('schools',['الاسم','المدينة','المرحلة','المستخدم'],state.schools.map(function(s){return[s.name,s.city,s.stage,s.username];}),'المدارس');}
-}
-
+/* ============ Dashboard ============ */
 function renderDashboard(){if(isAdmin()&&state.context==='group')return renderGroupDash();return renderSchoolDash();}
-
 function computeKPIs(filter){var inv=state.invoices,exp=state.expenses;if(filter){inv=inv.filter(function(i){return i.schoolId===filter;});exp=exp.filter(function(e){return e.schoolId===filter;});}var tI=0,tC=0,tE=0;for(var i=0;i<inv.length;i++){tI+=inv[i].amount;tC+=inv[i].paid;}for(var j=0;j<exp.length;j++)tE+=exp[j].amount;return{invoiced:tI,collected:tC,expenses:tE,outstanding:tI-tC,rate:tI?Math.round(tC/tI*100):0,profit:tC-tE};}
-
 function renderGroupDash(){
-  var k=computeKPIs();
-  var reqs=state.registrationRequests||[];
+  var k=computeKPIs();var reqs=state.registrationRequests||[];
   var pendingReqs=reqs.filter(function(r){return r.status==='pending';});
   var reqAlert=pendingReqs.length?'<div class="banner-gold" style="cursor:pointer" onclick="navigate(\'requests\')"><span>🔔</span><span>لديك <b>'+pendingReqs.length+'</b> طلب تسجيل مدرسة بانتظار المراجعة</span><span class="back-btn" style="margin-inline-start:auto">عرض الطلبات</span></div>':'';
-  var bars='';
   var maxRev=1;for(var i=0;i<state.schools.length;i++){var r=0;for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].schoolId===state.schools[i].id)r+=state.invoices[j].paid;if(r>maxRev)maxRev=r;}
-  for(var s=0;s<state.schools.length;s++){var r2=0;for(var jj=0;jj<state.invoices.length;jj++)if(state.invoices[jj].schoolId===state.schools[s].id)r2+=state.invoices[jj].paid;var pct=Math.round(r2/maxRev*100);bars+='<div class="bar-row"><span class="bar-label">'+E(state.schools[s].name)+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><span class="bar-value">'+fmt(r2)+'</span></div>';}
+  var bars='';for(var s=0;s<state.schools.length;s++){var r2=0;for(var jj=0;jj<state.invoices.length;jj++)if(state.invoices[jj].schoolId===state.schools[s].id)r2+=state.invoices[jj].paid;var pct=Math.round(r2/maxRev*100);bars+='<div class="bar-row"><span class="bar-label">'+E(state.schools[s].name)+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><span class="bar-value">'+fmt(r2)+'</span></div>';}
   var donutColor=k.rate>=70?'#2e8b57':k.rate>=40?'#e67e22':'#c0392b';var rows='';
   for(var t=0;t<state.schools.length;t++){var sc=state.schools[t];var stCount=0,col=0,sp=0,due=0;for(var a=0;a<state.students.length;a++)if(state.students[a].schoolId===sc.id)stCount++;for(var b=0;b<state.invoices.length;b++)if(state.invoices[b].schoolId===sc.id){col+=state.invoices[b].paid;due+=state.invoices[b].amount-state.invoices[b].paid;}for(var c=0;c<state.expenses.length;c++)if(state.expenses[c].schoolId===sc.id)sp+=state.expenses[c].amount;rows+='<tr><td><b>'+E(sc.name)+'</b><div style="font-size:10.5px;color:var(--muted)">'+E(sc.city)+'</div></td><td class="num">'+stCount+'</td><td class="num">'+fmt(col)+'</td><td class="num">'+fmt(sp)+'</td><td class="num" style="color:'+(col-sp>=0?'var(--success)':'var(--danger)')+'">'+fmt(col-sp)+'</td><td class="num" style="color:'+(due>0?'var(--danger)':'var(--success)')+'">'+fmt(due)+'</td><td><button class="mini" onclick="enterSchool(\''+sc.id+'\')">↗</button></td></tr>';}
-  return reqAlert+'<div class="grid-kpi"><div class="kpi"><div class="kpi-label">🏫 المدارس</div><div class="kpi-value">'+state.schools.length+'</div></div><div class="kpi"><div class="kpi-label">💼 المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div><div class="kpi gold"><div class="kpi-label">⏳ المتأخرات</div><div class="kpi-value">'+money(k.outstanding)+'</div></div><div class="kpi info"><div class="kpi-label">👨‍🎓 الطلاب</div><div class="kpi-value">'+state.students.length+'</div></div></div><div class="grid-2"><div class="card"><div class="card-head"><h2>📈 إيرادات المدارس</h2></div><div class="bars">'+bars+'</div></div><div class="card"><div class="card-head"><h2>نسبة التحصيل</h2></div><div class="donut-wrap"><div class="donut" style="background:conic-gradient('+donutColor+' 0 '+k.rate+'%, #eef2f7 '+k.rate+'% 100%)"><div class="val"><b>'+k.rate+'%</b><span>محصّل</span></div></div></div></div></div><div class="table-wrap"><table><thead><tr><th>المدرسة</th><th>الطلاب</th><th>التحصيلات</th><th>المصروفات</th><th>الربح</th><th>المتأخرات</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  return reqAlert+'<div class="grid-kpi"><div class="kpi"><div class="kpi-label">🏫 المدارس</div><div class="kpi-value">'+state.schools.length+'</div></div><div class="kpi"><div class="kpi-label">💼 المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div><div class="kpi gold"><div class="kpi-label">⏳ المتأخرات</div><div class="kpi-value">'+money(k.outstanding)+'</div></div><div class="kpi info"><div class="kpi-label">👨‍🎓 الطلاب</div><div class="kpi-value">'+state.students.length+'</div></div></div><div class="grid-2"><div class="card"><div class="card-head"><h2>📈 إيرادات المدارس</h2></div><div class="bars">'+bars+'</div></div><div class="card"><div class="card-head"><h2>نسبة التحصيل</h2></div><div class="donut-wrap"><div class="donut" style="background:conic-gradient('+donutColor+' 0 '+k.rate+'%, #eef2f7 '+k.rate+'% 100%)"><div class="val"><b>'+k.rate+'%</b><span>محصّل</span></div></div></div></div></div><div class="table-wrap"><table><thead><tr><th>المدرسة</th><th>الطلاب</th><th>التحصيلات</th><th>المصروفات</th><th>الربح</th><th>المتأخرات</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div><div style="margin-top:20px;text-align:center"><button class="btn btn-danger" style="width:auto" onclick="resetSystem()">🔄 إعادة تعيين النظام</button></div>';
 }
-
 function renderSchoolDash(){
   var school=currentSchool();if(!school)return '<div class="empty">لا مدرسة</div>';
   var banner='';if(isAdmin()&&state.context==='school')banner='<div class="banner-gold"><span>🎯</span><span>داخل <b>'+E(school.name)+'</b></span><button class="back-btn" onclick="exitToGroup()">🔙 عودة</button></div>';
   else if(isStaff()&&state.currentStaff&&!isTeacher())banner='<div class="banner-blue">👋 <b>'+E(state.currentStaff.name)+'</b> — '+ROLES[state.currentStaff.role].name+'</div>';
   var k=computeKPIs(school.id);var studentCount=0;for(var i=0;i<state.students.length;i++)if(state.students[i].schoolId===school.id)studentCount++;
-  var donutColor=k.rate>=70?'#2e8b57':k.rate>=40?'#e67e22':'#c0392b';
-  var todayStr=today();var todayAtt=state.attendance.filter(function(a){return a.schoolId===school.id&&a.date===todayStr;});var present=todayAtt.filter(function(a){return a.status==='present';}).length;var attRate=todayAtt.length?Math.round(present/todayAtt.length*100):0;
   var qa='';
   if(can('students','create'))qa+='<div class="quick-btn" onclick="openAddStudent()"><span class="ic">👨‍🎓</span><span class="lbl">إضافة طالب</span></div>';
   if(can('installments','view'))qa+='<div class="quick-btn" onclick="navigate(\'installments\')"><span class="ic">💰</span><span class="lbl">الأقساط</span></div>';
@@ -964,23 +965,20 @@ function renderSchoolDash(){
   if(can('invoices','create'))qa+='<div class="quick-btn" onclick="openAddInvoice()"><span class="ic">🧾</span><span class="lbl">فاتورة</span></div>';
   if(can('payments','create'))qa+='<div class="quick-btn" onclick="openAddPayment()"><span class="ic">💵</span><span class="lbl">دفعة</span></div>';
   qa+='<div class="quick-btn" onclick="navigate(\'qr-cards\')"><span class="ic">🎫</span><span class="lbl">QR</span></div>';
-  return banner+'<div class="grid-kpi"><div class="kpi"><div class="kpi-label">💼 المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div><div class="kpi gold"><div class="kpi-label">⏳ المتأخرات</div><div class="kpi-value">'+money(k.outstanding)+'</div></div><div class="kpi info"><div class="kpi-label">👨‍🎓 الطلاب</div><div class="kpi-value">'+studentCount+'</div></div><div class="kpi purple"><div class="kpi-label">✅ الحضور</div><div class="kpi-value">'+attRate+'%</div></div></div><div class="quick-actions">'+qa+'</div>';
+  return banner+'<div class="grid-kpi"><div class="kpi"><div class="kpi-label">💼 المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div><div class="kpi gold"><div class="kpi-label">⏳ المتأخرات</div><div class="kpi-value">'+money(k.outstanding)+'</div></div><div class="kpi info"><div class="kpi-label">👨‍🎓 الطلاب</div><div class="kpi-value">'+studentCount+'</div></div></div><div class="quick-actions">'+qa+'</div>';
 }
 
-/* ================ Timetable ================ */
+/* ============ Timetable ============ */
 function getTimetable(){if(!state.timetable)state.timetable=[];return state.timetable;}
 function renderTimetable(){
   if(!can('timetable','view')&&!isManager()&&!isAdmin())return '<div class="alert warn">⛔ لا صلاحية</div>';
   var school=currentSchool();if(!school)return '<div class="empty">—</div>';
-  var grades=GRADE_LEVELS.slice(0,6);
-  var selectedGrade=state._ttGrade||grades[0];
+  var grades=GRADE_LEVELS.slice(0,6);var selectedGrade=state._ttGrade||grades[0];
   var tt=getTimetable().filter(function(t){return t.schoolId===school.id&&t.grade===selectedGrade;});
   var head='<tr><th style="width:90px">الوقت</th>'+TIMETABLE_DAYS.map(function(d){return '<th>'+E(d)+'</th>';}).join('')+'</tr>';
   var body='';
-  for(var pi=0;pi<TIMETABLE_PERIODS.length;pi++){
-    var period=TIMETABLE_PERIODS[pi];var cells='';
-    for(var di=0;di<TIMETABLE_DAYS.length;di++){
-      var day=TIMETABLE_DAYS[di];
+  for(var pi=0;pi<TIMETABLE_PERIODS.length;pi++){var period=TIMETABLE_PERIODS[pi];var cells='';
+    for(var di=0;di<TIMETABLE_DAYS.length;di++){var day=TIMETABLE_DAYS[di];
       if(period.isBreak){cells+='<td class="tt-cell break" style="text-align:center;color:var(--warning);font-weight:700">☕ استراحة</td>';continue;}
       var cell=tt.filter(function(t){return t.day===day&&t.period===period.key;})[0];
       if(cell){cells+='<td class="tt-cell" onclick="openTimetableCell(\''+selectedGrade+'\',\''+day+'\',\''+period.key+'\')" style="cursor:pointer"><div style="font-weight:800;color:var(--primary);font-size:12.5px">'+E(cell.subject)+'</div>'+(cell.teacherName?'<div style="font-size:10.5px;color:var(--muted);margin-top:2px">'+E(cell.teacherName)+'</div>':'')+'</td>';}
@@ -989,13 +987,12 @@ function renderTimetable(){
     body+='<tr><th style="width:90px;background:#f7f9fc"><div style="font-weight:800;color:var(--primary);font-size:12px">'+period.label+'</div><div style="font-size:10px;color:var(--muted)">'+period.time+'</div></th>'+cells+'</tr>';
   }
   var gradeOptions=grades.map(function(g){return '<option value="'+E(g)+'"'+(g===selectedGrade?' selected':'')+'>'+E(g)+'</option>';}).join('');
-  return '<div class="alert info">📅 <b>الجدول الأسبوعي</b> — اضغط أي خلية لإضافتها. الحصص: <b>'+tt.length+'</b></div><div class="toolbar"><select onchange="state._ttGrade=this.value;render()">'+gradeOptions+'</select><span class="grow"></span><button class="btn btn-danger btn-sm" onclick="clearGradeTimetable(\''+selectedGrade+'\')">🗑 مسح الجدول</button></div><div class="table-wrap" style="padding:12px;overflow-x:auto"><table class="tt-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
+  return '<div class="alert info">📅 <b>الجدول الأسبوعي</b> — اضغط أي خلية. الحصص: <b>'+tt.length+'</b></div><div class="toolbar"><select onchange="state._ttGrade=this.value;render()">'+gradeOptions+'</select><span class="grow"></span><button class="btn btn-danger btn-sm" onclick="clearGradeTimetable(\''+selectedGrade+'\')">🗑 مسح الجدول</button></div><div class="table-wrap" style="padding:12px;overflow-x:auto"><table class="tt-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
 }
 function openTimetableCell(grade,day,period){
   if(!can('timetable','create')&&!isManager()&&!isAdmin()){alert('لا صلاحية');return;}
   var school=currentSchool();if(!school)return;
-  var tt=getTimetable();
-  var existing=tt.filter(function(t){return t.schoolId===school.id&&t.grade===grade&&t.day===day&&t.period===period;})[0];
+  var tt=getTimetable();var existing=tt.filter(function(t){return t.schoolId===school.id&&t.grade===grade&&t.day===day&&t.period===period;})[0];
   var teachers=(school.staff||[]).filter(function(s){return s.role==='teacher';});
   var teacherOpts='<option value="">— بدون معلم —</option>'+teachers.map(function(t){var sel=(existing&&existing.teacherId===t.id)?' selected':'';return '<option value="'+E(t.id)+'" data-name="'+E(t.name)+'"'+sel+'>'+E(t.name)+'</option>';}).join('');
   var subjectOpts='<option value="">— اختر مادة —</option>'+SUBJECTS.map(function(s){var sel=(existing&&existing.subject===s)?' selected':'';return '<option value="'+E(s)+'"'+sel+'>'+E(s)+'</option>';}).join('');
@@ -1003,9 +1000,7 @@ function openTimetableCell(grade,day,period){
   var body='<div class="alert info">📅 <b>'+E(grade)+'</b> — <b>'+E(day)+'</b> — <b>'+(periodData?E(periodData.label+' ('+periodData.time+')'):E(period))+'</b></div><div class="field"><label>المادة *</label><select id="tt_subject">'+subjectOpts+'</select></div><div class="field"><label>المعلم</label><select id="tt_teacher">'+teacherOpts+'</select></div><div class="field"><label>القاعة</label><input id="tt_room" value="'+E(existing?existing.room||'':'')+'" placeholder="مثال: قاعة 101"></div>';
   openModal(existing?'📅 تعديل حصة':'📅 إضافة حصة',body,function(){
     var subject=$('tt_subject').value;if(!subject){alert('اختر المادة');return false;}
-    var teacherSel=$('tt_teacher');var teacherId=teacherSel.value;
-    var teacherName=teacherId?teacherSel.selectedOptions[0].dataset.name:'';
-    var room=$('tt_room').value.trim();
+    var teacherSel=$('tt_teacher');var teacherId=teacherSel.value;var teacherName=teacherId?teacherSel.selectedOptions[0].dataset.name:'';var room=$('tt_room').value.trim();
     if(existing){existing.subject=subject;existing.teacherId=teacherId;existing.teacherName=teacherName;existing.room=room;markRecordDirty('timetable',existing.id);}
     else{var cell={id:uid('TT'),schoolId:school.id,grade:grade,day:day,period:period,subject:subject,teacherId:teacherId,teacherName:teacherName,room:room};getTimetable().push(cell);markRecordDirty('timetable',cell.id);}
     logAct('حفظ حصة',grade+' — '+day);saveState();return true;
@@ -1026,10 +1021,8 @@ function renderTeacherTimetable(){
   if(!myClasses.length)return '<div class="alert info">📅 لا توجد حصص مسجّلة لك.</div>';
   var head='<tr><th style="width:90px">الوقت</th>'+TIMETABLE_DAYS.map(function(d){return '<th>'+E(d)+'</th>';}).join('')+'</tr>';
   var body='';
-  for(var pi=0;pi<TIMETABLE_PERIODS.length;pi++){
-    var period=TIMETABLE_PERIODS[pi];var cells='';
-    for(var di=0;di<TIMETABLE_DAYS.length;di++){
-      var day=TIMETABLE_DAYS[di];
+  for(var pi=0;pi<TIMETABLE_PERIODS.length;pi++){var period=TIMETABLE_PERIODS[pi];var cells='';
+    for(var di=0;di<TIMETABLE_DAYS.length;di++){var day=TIMETABLE_DAYS[di];
       if(period.isBreak){cells+='<td class="tt-cell break" style="text-align:center">☕</td>';continue;}
       var cell=myClasses.filter(function(c){return c.day===day&&c.period===period.key;})[0];
       if(cell){cells+='<td class="tt-cell" style="background:linear-gradient(135deg,#e3f5ea,#f4fbf7);border:2px solid var(--success)"><div style="font-weight:800;color:var(--success)">'+E(cell.subject)+'</div><div style="font-size:10.5px;color:var(--muted)">'+E(cell.grade)+'</div></td>';}
@@ -1046,10 +1039,8 @@ function renderStudentTimetable(){
   if(!classTT.length)return '<div class="alert info">📅 لم يُنشر جدول الصف '+E(s.grade)+' بعد.</div>';
   var head='<tr><th style="width:90px">الوقت</th>'+TIMETABLE_DAYS.map(function(d){return '<th>'+E(d)+'</th>';}).join('')+'</tr>';
   var body='';
-  for(var pi=0;pi<TIMETABLE_PERIODS.length;pi++){
-    var period=TIMETABLE_PERIODS[pi];var cells='';
-    for(var di=0;di<TIMETABLE_DAYS.length;di++){
-      var day=TIMETABLE_DAYS[di];
+  for(var pi=0;pi<TIMETABLE_PERIODS.length;pi++){var period=TIMETABLE_PERIODS[pi];var cells='';
+    for(var di=0;di<TIMETABLE_DAYS.length;di++){var day=TIMETABLE_DAYS[di];
       if(period.isBreak){cells+='<td class="tt-cell break">☕</td>';continue;}
       var cell=classTT.filter(function(c){return c.day===day&&c.period===period.key;})[0];
       if(cell){cells+='<td class="tt-cell" style="background:linear-gradient(135deg,#e3eef7,#eaf3fa);border:2px solid var(--primary-3)"><div style="font-weight:800;color:var(--primary)">'+E(cell.subject)+'</div>'+(cell.teacherName?'<div style="font-size:10.5px;color:var(--muted)">'+E(cell.teacherName)+'</div>':'')+'</td>';}
@@ -1060,12 +1051,12 @@ function renderStudentTimetable(){
   return '<div class="alert success">📅 <b>جدول الصف '+E(s.grade)+'</b></div><div class="table-wrap" style="padding:12px;overflow-x:auto"><table class="tt-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
 }
 
-/* ================ Students ================ */
+/* ============ Students ============ */
 function renderStudents(){
   if(!can('students','view'))return '<div class="alert warn">⛔</div>';
   var list=scoped(state.students);var isGroup=isAdmin()&&state.context==='group';
   var filtered=applyF(list,'students');var rows='';
-  for(var i=0;i<filtered.length;i++){var s=filtered[i];var due=0;for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].studentId===s.id)due+=state.invoices[j].amount-state.invoices[j].paid;var actions='<button class="mini" onclick="showStudentCred(\''+s.id+'\')" title="بيانات الدخول">🔑</button>';if(can('students','delete'))actions+='<button class="mini danger" onclick="deleteStudent(\''+s.id+'\')">🗑</button>';rows+='<tr><td><b>'+E(s.name)+'</b><div style="font-size:10.5px;color:var(--muted)">'+E(s.id)+'</div></td>'+(isGroup?'<td>'+E(schoolName(s.schoolId))+'</td>':'')+'<td>'+E(s.grade)+'</td><td>'+E(s.guardian)+'</td><td>'+E(s.phone)+'</td><td class="num">'+fmt(s.fee)+'</td><td class="num" style="color:'+(due>0?'var(--danger)':'var(--success)')+'">'+fmt(due)+'</td><td><div class="actions">'+actions+'</div></td></tr>';}
+  for(var i=0;i<filtered.length;i++){var s=filtered[i];var due=0;for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].studentId===s.id)due+=state.invoices[j].amount-state.invoices[j].paid;var actions='<button class="mini" onclick="showStudentCred(\''+s.id+'\')">🔑</button>';if(can('students','delete'))actions+='<button class="mini danger" onclick="deleteStudent(\''+s.id+'\')">🗑</button>';rows+='<tr><td><b>'+E(s.name)+'</b><div style="font-size:10.5px;color:var(--muted)">'+E(s.id)+'</div></td>'+(isGroup?'<td>'+E(schoolName(s.schoolId))+'</td>':'')+'<td>'+E(s.grade)+'</td><td>'+E(s.guardian)+'</td><td>'+E(s.phone)+'</td><td class="num">'+fmt(s.fee)+'</td><td class="num" style="color:'+(due>0?'var(--danger)':'var(--success)')+'">'+fmt(due)+'</td><td>'+actions+'</td></tr>';}
   var addBtn=can('students','create')?'<button class="btn btn-primary" style="width:auto" onclick="openAddStudent()">+ إضافة</button>':'';
   return filterBar('students',[{key:'search',label:'🔍',placeholder:'الاسم'},{key:'grade',label:'الصف',type:'select',options:GRADE_LEVELS}],'عرض '+filtered.length+' من '+list.length)+'<div class="toolbar">'+addBtn+exportBtn('students')+'</div><div class="table-wrap"><table><thead><tr><th>الطالب</th>'+(isGroup?'<th>المدرسة</th>':'')+'<th>الصف</th><th>ولي الأمر</th><th>الهاتف</th><th>الرسوم</th><th>المتأخر</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="8" class="empty">لا طلاب</td></tr>')+'</tbody></table></div>';
 }
@@ -1077,18 +1068,15 @@ function showStudentCred(id){
 function openAddStudent(){
   var body='<div class="field"><label>الاسم *</label><input id="ns_name"></div><div class="field"><label>الصف</label><select id="ns_grade">'+GRADE_LEVELS.map(function(g){return '<option>'+E(g)+'</option>';}).join('')+'</select></div><div class="field"><label>ولي الأمر</label><input id="ns_guardian"></div><div class="field"><label>الهاتف</label><input id="ns_phone"></div><div class="field"><label>الرسوم *</label><input id="ns_fee" type="number" min="0"></div>';
   openModal('➕ إضافة طالب',body,function(){
-    var name=$('ns_name').value.trim(),fee=$('ns_fee').value;
-    if(!name||!fee){alert('الاسم والرسوم مطلوبان');return false;}
+    var name=$('ns_name').value.trim(),fee=$('ns_fee').value;if(!name||!fee){alert('الاسم والرسوم مطلوبان');return false;}
     var shortId=state.currentSchool.slice(-3);var numOnly=String(Date.now()).slice(-3);
     var newSt={id:'ST-'+shortId+'-'+numOnly,schoolId:state.currentSchool,name:name,grade:$('ns_grade').value,guardian:$('ns_guardian').value||'—',phone:$('ns_phone').value||'—',fee:+fee,status:'active',token:genToken(),username:'std'+shortId+numOnly,password:genPassword()};
-    state.students.push(newSt);markRecordDirty('students',newSt.id);markMetaDirty();
-    logAct('إضافة طالب',name);saveState();return true;
+    state.students.push(newSt);markRecordDirty('students',newSt.id);logAct('إضافة طالب',name);saveState();return true;
   });
 }
 function deleteStudent(id){
   if(!confirm('حذف الطالب؟'))return;
-  var s=getStudent(id);
-  var invIds=[],payIds=[],attIds=[],grIds=[],bhIds=[];
+  var s=getStudent(id);var invIds=[],payIds=[],attIds=[],grIds=[],bhIds=[];
   state.invoices=state.invoices.filter(function(i){if(i.studentId===id){invIds.push(i.id);return false;}return true;});
   state.payments=state.payments.filter(function(p){if(p.studentId===id){payIds.push(p.id);return false;}return true;});
   state.attendance=state.attendance.filter(function(a){if(a.studentId===id){attIds.push(a.id);return false;}return true;});
@@ -1096,15 +1084,11 @@ function deleteStudent(id){
   state.behavior=state.behavior.filter(function(b){if(b.studentId===id){bhIds.push(b.id);return false;}return true;});
   state.students=state.students.filter(function(x){return x.id!==id;});
   markRecordDeleted('students',id);
-  invIds.forEach(function(x){markRecordDeleted('invoices',x);});
-  payIds.forEach(function(x){markRecordDeleted('payments',x);});
-  attIds.forEach(function(x){markRecordDeleted('attendance',x);});
-  grIds.forEach(function(x){markRecordDeleted('grades',x);});
-  bhIds.forEach(function(x){markRecordDeleted('behavior',x);});
+  invIds.forEach(function(x){markRecordDeleted('invoices',x);});payIds.forEach(function(x){markRecordDeleted('payments',x);});attIds.forEach(function(x){markRecordDeleted('attendance',x);});grIds.forEach(function(x){markRecordDeleted('grades',x);});bhIds.forEach(function(x){markRecordDeleted('behavior',x);});
   logAct('حذف طالب',s?s.name:id);saveState();render();
 }
 
-/* ================ Invoices ================ */
+/* ============ Invoices ============ */
 function renderInvoices(){
   if(!can('invoices','view'))return '<div class="alert warn">⛔</div>';
   var list=scoped(state.invoices);var isGroup=isAdmin()&&state.context==='group';
@@ -1114,60 +1098,33 @@ function renderInvoices(){
   return filterBar('invoices',[{key:'search',label:'🔍',placeholder:'الاسم'},{key:'status',label:'الحالة',type:'select',options:[{value:'paid',label:'مدفوع'},{value:'partial',label:'جزئي'},{value:'unpaid',label:'غير مدفوع'}]}],'عرض '+filtered.length)+'<div class="toolbar">'+addBtn+exportBtn('invoices')+'<span class="grow"></span><span class="badge ok">محصّل: '+fmt(tP)+'</span><span class="badge bad">متبقي: '+fmt(tI-tP)+'</span></div><div class="table-wrap"><table><thead><tr><th>الرقم</th><th>الطالب</th><th>المبلغ</th><th>المدفوع</th><th>المتبقي</th><th>الاستحقاق</th><th>الحالة</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="8" class="empty">لا فواتير</td></tr>')+'</tbody></table></div>';
 }
 function openAddInvoice(){
-  var students=scoped(state.students);
-  if(!students.length){alert('أضف طلاباً');return;}
+  var students=scoped(state.students);if(!students.length){alert('أضف طلاباً');return;}
   var opts=students.map(function(s){return '<option value="'+E(s.id)+'" data-fee="'+(s.fee||0)+'">'+E(s.name)+' — '+E(s.grade)+'</option>';}).join('');
-  var body='<div class="field"><label>الطالب</label><select id="ns_student" onchange="updateInvoiceCalc()">'+opts+'</select></div>'+
-    '<div class="field"><label>طريقة الدفع</label><select id="ns_type" onchange="updateInvoiceCalc()"><option value="single">دفعة واحدة</option><option value="installments">أقساط</option></select></div>'+
-    '<div id="singleFields"><div class="field"><label>المبلغ *</label><input id="ns_amount" type="number" min="1"></div><div class="field"><label>تاريخ الاستحقاق</label><input id="ns_due" type="date" value="'+today()+'"></div></div>'+
-    '<div id="installmentFields" class="hidden"><div class="field"><label>المبلغ الإجمالي *</label><input id="ns_total" type="number" min="1" onchange="updateInvoiceCalc()"></div><div class="field"><label>عدد الأقساط *</label><select id="ns_count" onchange="updateInvoiceCalc()"><option value="2">قسطان</option><option value="3">3 أقساط</option><option value="4" selected>4 أقساط</option><option value="5">5 أقساط</option><option value="6">6 أقساط</option><option value="8">8 أقساط</option><option value="10">10 أقساط</option><option value="12">12 قسط</option></select></div><div class="field"><label>تاريخ أول قسط</label><input id="ns_firstdate" type="date" value="'+today()+'" onchange="updateInvoiceCalc()"></div><div class="field"><label>المدة</label><select id="ns_interval" onchange="updateInvoiceCalc()"><option value="30">شهري (30 يوم)</option><option value="15">نصف شهري (15 يوم)</option><option value="7">أسبوعي</option></select></div><div id="installmentPreview" style="background:#f7f9fc;padding:12px;border-radius:10px;font-size:12.5px;margin-top:10px"></div></div>'+
-    '<div class="field"><label>تاريخ الإصدار</label><input id="ns_date" type="date" value="'+today()+'"></div>';
+  var body='<div class="field"><label>الطالب</label><select id="ns_student" onchange="updateInvoiceCalc()">'+opts+'</select></div><div class="field"><label>طريقة الدفع</label><select id="ns_type" onchange="updateInvoiceCalc()"><option value="single">دفعة واحدة</option><option value="installments">أقساط</option></select></div><div id="singleFields"><div class="field"><label>المبلغ *</label><input id="ns_amount" type="number" min="1"></div><div class="field"><label>تاريخ الاستحقاق</label><input id="ns_due" type="date" value="'+today()+'"></div></div><div id="installmentFields" class="hidden"><div class="field"><label>المبلغ الإجمالي *</label><input id="ns_total" type="number" min="1" onchange="updateInvoiceCalc()"></div><div class="field"><label>عدد الأقساط</label><select id="ns_count" onchange="updateInvoiceCalc()"><option value="2">قسطان</option><option value="3">3 أقساط</option><option value="4" selected>4 أقساط</option><option value="6">6 أقساط</option><option value="10">10 أقساط</option><option value="12">12 قسط</option></select></div><div class="field"><label>تاريخ أول قسط</label><input id="ns_firstdate" type="date" value="'+today()+'" onchange="updateInvoiceCalc()"></div><div class="field"><label>المدة</label><select id="ns_interval" onchange="updateInvoiceCalc()"><option value="30">شهري</option><option value="15">نصف شهري</option><option value="7">أسبوعي</option></select></div><div id="installmentPreview" style="background:#f7f9fc;padding:12px;border-radius:10px;font-size:12.5px;margin-top:10px"></div></div><div class="field"><label>تاريخ الإصدار</label><input id="ns_date" type="date" value="'+today()+'"></div>';
   setTimeout(function(){var sel=$('ns_student');if(sel&&students.length){var ff=students[0].fee;$('ns_amount').value=ff;$('ns_total').value=ff;updateInvoiceCalc();}},80);
   openModal('🧾 إصدار فاتورة',body,function(){
-    var sid=$('ns_student').value;if(!sid)return false;
-    var st=getStudent(sid);if(!st)return false;
+    var sid=$('ns_student').value;if(!sid)return false;var st=getStudent(sid);if(!st)return false;
     var type=$('ns_type').value;var issueDate=$('ns_date').value;
-    if(type==='single'){
-      var amt=$('ns_amount').value;if(!amt)return false;
-      var newInv={id:uid('INV'),schoolId:st.schoolId,studentId:st.id,studentName:st.name,grade:st.grade,amount:+amt,paid:0,date:issueDate,due:$('ns_due').value,status:'unpaid',type:'single'};
-      state.invoices.push(newInv);markRecordDirty('invoices',newInv.id);
-      logAct('فاتورة',st.name);
-    } else {
-      var total=+$('ns_total').value;var count=+$('ns_count').value;var firstDate=$('ns_firstdate').value;var interval=+$('ns_interval').value;
-      if(!total||!count||!firstDate){alert('أدخل البيانات');return false;}
-      var perInst=Math.round(total/count);var groupId=uid('INSTGRP');var baseDate=new Date(firstDate);
-      for(var i=0;i<count;i++){
-        var d=new Date(baseDate);d.setDate(d.getDate()+i*interval);
-        var dueDate=d.toISOString().slice(0,10);
-        var thisAmt=(i===count-1)?(total-perInst*(count-1)):perInst;
-        var nInv={id:uid('INV'),schoolId:st.schoolId,studentId:st.id,studentName:st.name,grade:st.grade,amount:thisAmt,paid:0,date:issueDate,due:dueDate,status:'unpaid',type:'installment',installmentGroup:groupId,installmentNumber:i+1,installmentTotal:count};
-        state.invoices.push(nInv);markRecordDirty('invoices',nInv.id);
-      }
-      logAct('أقساط',st.name+' — '+count+' قسط');
-    }
+    if(type==='single'){var amt=$('ns_amount').value;if(!amt)return false;var newInv={id:uid('INV'),schoolId:st.schoolId,studentId:st.id,studentName:st.name,grade:st.grade,amount:+amt,paid:0,date:issueDate,due:$('ns_due').value,status:'unpaid',type:'single'};state.invoices.push(newInv);markRecordDirty('invoices',newInv.id);logAct('فاتورة',st.name);}
+    else{var total=+$('ns_total').value;var count=+$('ns_count').value;var firstDate=$('ns_firstdate').value;var interval=+$('ns_interval').value;if(!total||!count||!firstDate){alert('أدخل البيانات');return false;}var perInst=Math.round(total/count);var groupId=uid('INSTGRP');var baseDate=new Date(firstDate);
+      for(var i=0;i<count;i++){var d=new Date(baseDate);d.setDate(d.getDate()+i*interval);var dueDate=d.toISOString().slice(0,10);var thisAmt=(i===count-1)?(total-perInst*(count-1)):perInst;var nInv={id:uid('INV'),schoolId:st.schoolId,studentId:st.id,studentName:st.name,grade:st.grade,amount:thisAmt,paid:0,date:issueDate,due:dueDate,status:'unpaid',type:'installment',installmentGroup:groupId,installmentNumber:i+1,installmentTotal:count};state.invoices.push(nInv);markRecordDirty('invoices',nInv.id);}
+      logAct('أقساط',st.name+' — '+count+' قسط');}
     saveState();return true;
   });
 }
 function updateInvoiceCalc(){
   var type=$('ns_type').value;var sDiv=$('singleFields'),iDiv=$('installmentFields');var sel=$('ns_student');
   if(type==='single'){sDiv.classList.remove('hidden');iDiv.classList.add('hidden');var st=getStudent(sel.value);if(st)$('ns_amount').value=st.fee;}
-  else{
-    sDiv.classList.add('hidden');iDiv.classList.remove('hidden');
-    var st2=getStudent(sel.value);if(st2&&!$('ns_total').value)$('ns_total').value=st2.fee;
-    var total=+$('ns_total').value;var count=+$('ns_count').value;var interval=+$('ns_interval').value;
-    var firstVal=$('ns_firstdate').value;var bd=new Date(firstVal);
+  else{sDiv.classList.add('hidden');iDiv.classList.remove('hidden');var st2=getStudent(sel.value);if(st2&&!$('ns_total').value)$('ns_total').value=st2.fee;var total=+$('ns_total').value;var count=+$('ns_count').value;var interval=+$('ns_interval').value;var firstVal=$('ns_firstdate').value;var bd=new Date(firstVal);
     if(!firstVal||isNaN(bd.getTime())){$('installmentPreview').innerHTML='<span style="color:var(--muted)">اختر تاريخ أول قسط</span>';return;}
     if(total&&count){var per=Math.round(total/count);var prev='<b style="color:var(--primary)">📋 جدول الأقساط:</b><br>';for(var i=0;i<count;i++){var d=new Date(bd);d.setDate(d.getDate()+i*interval);var a=(i===count-1)?(total-per*(count-1)):per;prev+='• القسط '+(i+1)+': <b>'+fmt(a)+'</b> — '+d.toISOString().slice(0,10)+'<br>';}$('installmentPreview').innerHTML=prev;}
-    else $('installmentPreview').innerHTML='<span style="color:var(--muted)">أدخل المبلغ والعدد</span>';
-  }
+    else $('installmentPreview').innerHTML='<span style="color:var(--muted)">أدخل المبلغ والعدد</span>';}
 }
 function deleteInvoice(id){
   if(!confirm('حذف الفاتورة؟'))return;
-  var payIds=[];
-  state.payments=state.payments.filter(function(p){if(p.invoiceId===id){payIds.push(p.id);return false;}return true;});
+  var payIds=[];state.payments=state.payments.filter(function(p){if(p.invoiceId===id){payIds.push(p.id);return false;}return true;});
   state.invoices=state.invoices.filter(function(i){return i.id!==id;});
-  markRecordDeleted('invoices',id);
-  payIds.forEach(function(x){markRecordDeleted('payments',x);});
+  markRecordDeleted('invoices',id);payIds.forEach(function(x){markRecordDeleted('payments',x);});
   logAct('حذف فاتورة',id);saveState();render();
 }
 function openPayForm(invId){
@@ -1175,16 +1132,14 @@ function openPayForm(invId){
   if(!inv)return;var rem=inv.amount-inv.paid;
   var body='<div class="field"><label>الطالب</label><input value="'+E(inv.studentName)+'" disabled></div><div class="field"><label>المتبقي</label><input value="'+E(fmt(rem)+' ل.س')+'" disabled></div><div class="field"><label>المبلغ *</label><input id="ns_amt" type="number" min="1" max="'+rem+'" value="'+rem+'"></div><div class="field"><label>الطريقة</label><select id="ns_m">'+PAY_METHODS.map(function(m){return '<option>'+E(m)+'</option>';}).join('')+'</select></div><div class="field"><label>التاريخ</label><input id="ns_dt" type="date" value="'+today()+'"></div>';
   openModal('💵 تحصيل '+E(inv.id),body,function(){
-    var amt=Math.min(+$('ns_amt').value,rem);if(amt<=0)return false;
-    inv.paid+=amt;inv.status=inv.paid>=inv.amount?'paid':'partial';
+    var amt=Math.min(+$('ns_amt').value,rem);if(amt<=0)return false;inv.paid+=amt;inv.status=inv.paid>=inv.amount?'paid':'partial';
     var payRec={id:uid('PAY'),schoolId:inv.schoolId,invoiceId:inv.id,studentName:inv.studentName,amount:amt,method:$('ns_m').value,date:$('ns_dt').value};
-    state.payments.push(payRec);
-    markRecordDirty('invoices',inv.id);markRecordDirty('payments',payRec.id);
+    state.payments.push(payRec);markRecordDirty('invoices',inv.id);markRecordDirty('payments',payRec.id);
     logAct('تحصيل',inv.studentName);saveState();return true;
   });
 }
 
-/* ================ Payments ================ */
+/* ============ Payments ============ */
 function renderPayments(){
   if(!can('payments','view'))return '<div class="alert warn">⛔</div>';
   var list=scoped(state.payments).slice().reverse();var rows='',total=0;
@@ -1199,12 +1154,10 @@ function openAddPayment(){
   openModal('💵 دفعة',body,function(){
     var invId=$('ns_inv').value,amt=+$('ns_amt').value;if(!invId||amt<=0)return false;
     var inv=null;for(var i=0;i<state.invoices.length;i++)if(state.invoices[i].id===invId){inv=state.invoices[i];break;}
-    if(!inv)return false;
-    var actual=Math.min(amt,inv.amount-inv.paid);
+    if(!inv)return false;var actual=Math.min(amt,inv.amount-inv.paid);
     inv.paid+=actual;inv.status=inv.paid>=inv.amount?'paid':'partial';
     var payRec={id:uid('PAY'),schoolId:inv.schoolId,invoiceId:inv.id,studentName:inv.studentName,amount:actual,method:$('ns_m').value,date:$('ns_dt').value};
-    state.payments.push(payRec);
-    markRecordDirty('invoices',inv.id);markRecordDirty('payments',payRec.id);
+    state.payments.push(payRec);markRecordDirty('invoices',inv.id);markRecordDirty('payments',payRec.id);
     logAct('دفعة',inv.studentName);saveState();return true;
   });
 }
@@ -1213,11 +1166,10 @@ function deletePayment(id){
   var p=null;for(var i=0;i<state.payments.length;i++)if(state.payments[i].id===id){p=state.payments[i];break;}
   if(p){for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].id===p.invoiceId){state.invoices[j].paid=Math.max(0,state.invoices[j].paid-p.amount);state.invoices[j].status=state.invoices[j].paid>=state.invoices[j].amount?'paid':(state.invoices[j].paid>0?'partial':'unpaid');markRecordDirty('invoices',state.invoices[j].id);break;}}
   state.payments=state.payments.filter(function(x){return x.id!==id;});
-  markRecordDeleted('payments',id);
-  logAct('حذف سند',id);saveState();render();
+  markRecordDeleted('payments',id);logAct('حذف سند',id);saveState();render();
 }
 
-/* ================ Expenses ================ */
+/* ============ Expenses ============ */
 function renderExpenses(){
   if(!can('expenses','view'))return '<div class="alert warn">⛔</div>';
   var list=scoped(state.expenses).slice().reverse();var rows='',total=0;var isGroup=isAdmin()&&state.context==='group';
@@ -1230,18 +1182,16 @@ function openAddExpense(){
   openModal('📉 مصروف',body,function(){
     var amt=+$('ns_amt').value;if(amt<=0){alert('المبلغ مطلوب');return false;}
     var newExp={id:uid('EXP'),schoolId:state.currentSchool,cat:$('ns_cat').value,amount:amt,date:$('ns_dt').value,note:$('ns_note').value||''};
-    state.expenses.push(newExp);markRecordDirty('expenses',newExp.id);
-    logAct('مصروف',newExp.cat);saveState();return true;
+    state.expenses.push(newExp);markRecordDirty('expenses',newExp.id);logAct('مصروف',newExp.cat);saveState();return true;
   });
 }
 function deleteExpense(id){
   if(!confirm('حذف المصروف؟'))return;
-  state.expenses=state.expenses.filter(function(x){return x.id!==id;});
-  markRecordDeleted('expenses',id);
+  state.expenses=state.expenses.filter(function(x){return x.id!==id;});markRecordDeleted('expenses',id);
   logAct('حذف مصروف',id);saveState();render();
 }
 
-/* ================ Grades & Behavior (school-wide) ================ */
+/* ============ Grades & Behavior ============ */
 function renderGrades(){
   if(!can('grades','view')&&!isManager()&&!isAdmin())return '<div class="alert warn">⛔</div>';
   var list=scoped(state.grades);var rows='';var byStudent={};
@@ -1256,7 +1206,7 @@ function renderBehavior(){
   return '<div class="alert info">⭐ تقييمات السلوك</div><div class="table-wrap"><table><thead><tr><th>الطالب</th><th>المعيار</th><th>الدرجة</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="4" class="empty">لا تقييمات</td></tr>')+'</tbody></table></div>';
 }
 
-/* ================ Attendance ================ */
+/* ============ Attendance ============ */
 function renderAttendance(){
   var students=scoped(state.students);var date=state._attDate||today();
   var att=state.attendance.filter(function(a){return a.date===date;});
@@ -1273,7 +1223,7 @@ function markAtt(studentId,date,status){
   saveState();scheduleRender();
 }
 
-/* ================ Staff ================ */
+/* ============ Staff ============ */
 function renderStaff(){
   if(!(isManager()||isAdmin()))return '<div class="alert warn">⛔</div>';
   var school=currentSchool();if(!school)return '<div class="empty">—</div>';
@@ -1292,17 +1242,9 @@ function openAddStaff(){
     var username=genUsername(name);var base=username,n=1,ex=true;
     while(ex){ex=false;for(var i=0;i<school.staff.length;i++)if(school.staff[i].username===username){ex=true;break;}if(ex)username=base+(n++);}
     var staff={id:uid('STF'),name:name,role:role,username:username,password:genPassword(),active:true,createdAt:today(),permissions:collectPerms()};
-    if(role==='teacher'){
-      var subs=[],grds=[];
-      var selS=$('st_subjects');for(var si=0;si<selS.options.length;si++)if(selS.options[si].selected)subs.push(selS.options[si].value);
-      var selG=$('st_grades');for(var gi=0;gi<selG.options.length;gi++)if(selG.options[gi].selected)grds.push(selG.options[gi].value);
-      if(!subs.length||!grds.length){alert('اختر مواداً وصفوفاً');return false;}
-      staff.subjects=subs;staff.grades=grds;
-    }
-    school.staff.push(staff);markMetaDirty();
-    logAct('إضافة موظف',name);saveState();
-    setTimeout(function(){showStaffCred(staff.id,true);},150);
-    return true;
+    if(role==='teacher'){var subs=[],grds=[];var selS=$('st_subjects');for(var si=0;si<selS.options.length;si++)if(selS.options[si].selected)subs.push(selS.options[si].value);var selG=$('st_grades');for(var gi=0;gi<selG.options.length;gi++)if(selG.options[gi].selected)grds.push(selG.options[gi].value);if(!subs.length||!grds.length){alert('اختر مواداً وصفوفاً');return false;}staff.subjects=subs;staff.grades=grds;}
+    school.staff.push(staff);markMetaDirty();logAct('إضافة موظف',name);saveState();
+    setTimeout(function(){showStaffCred(staff.id,true);},150);return true;
   },'حفظ');
 }
 function pickRole(el,role){
@@ -1349,14 +1291,14 @@ function editStaff(id){
 function toggleStaff(id){var school=currentSchool();for(var i=0;i<school.staff.length;i++)if(school.staff[i].id===id){school.staff[i].active=!school.staff[i].active;markMetaDirty();logAct(school.staff[i].active?'تفعيل':'إيقاف',school.staff[i].name);saveState();render();return;}}
 function deleteStaff(id){var school=currentSchool();var st=null;for(var i=0;i<school.staff.length;i++)if(school.staff[i].id===id){st=school.staff[i];break;}if(!st)return;if(!confirm('حذف "'+st.name+'"؟'))return;school.staff=school.staff.filter(function(x){return x.id!==id;});markMetaDirty();logAct('حذف موظف',st.name);saveState();render();}
 
-/* ================ Journals ================ */
+/* ============ Journals ============ */
 function renderJournal(){var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;var entries=generateJournalEntries(filter);if(!entries.length)return '<div class="alert info">📓 لا قيود</div>';entries.reverse();var html='';for(var i=0;i<entries.length;i++){var e=entries[i],lines='',td=0,tc=0;for(var j=0;j<e.lines.length;j++){var l=e.lines[j];td+=l.debit;tc+=l.credit;lines+='<tr><td style="padding:7px 14px;font-size:11.5px;color:var(--muted)">'+E(l.code)+'</td><td>'+E(accName(l.code))+'</td><td style="text-align:left" class="num">'+(l.debit?fmt(l.debit):'')+'</td><td style="text-align:left" class="num">'+(l.credit?fmt(l.credit):'')+'</td></tr>';}html+='<tr style="background:#f7f9fc"><td colspan="4" style="padding:10px 14px"><b>📓 '+E(e.id)+'</b> — '+E(e.date)+' — '+E(e.desc)+'</td></tr>'+lines+'<tr style="background:#f9fbfd"><td colspan="2" style="padding:7px 14px"><b>الإجمالي</b></td><td class="num"><b>'+fmt(td)+'</b></td><td class="num"><b>'+fmt(tc)+'</b></td></tr>';}return '<div class="alert info">📓 دفتر اليومية</div><div class="table-wrap"><table style="min-width:auto"><tbody>'+html+'</tbody></table></div>';}
 function renderTrialBalance(){var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;var result=computeBalances(filter);var bal=result.balances;var totalD=0,totalC=0;for(var c in bal){totalD+=bal[c].debit;totalC+=bal[c].credit;}var diff=totalD-totalC;if(Math.abs(diff)>0.01){if(!bal['3100'])bal['3100']={debit:0,credit:0};if(diff>0)bal['3100'].credit+=diff;else bal['3100'].debit+=-diff;}
 var rows='',tD=0,tC=0;var roots=['1000','2000','3000','4000','5000'];for(var r=0;r<roots.length;r++){var rootAcc=COA.filter(function(x){return x.code===roots[r];})[0];if(!rootAcc)continue;var children=COA.filter(function(x){return x.parent===roots[r];});var childRows='',rD=0,rC=0;for(var ci=0;ci<children.length;ci++){var ch=children[ci];var b=bal[ch.code]||{debit:0,credit:0};rD+=b.debit;rC+=b.credit;if(b.debit===0&&b.credit===0)continue;var net=b.debit-b.credit,ns,nc;if(ch.nature==='debit'){ns=net>=0?fmt(net)+' مدين':fmt(-net)+' دائن';nc=net>=0?'var(--primary)':'var(--danger)';}else{ns=net<=0?fmt(-net)+' دائن':fmt(net)+' مدين';nc=net<=0?'var(--success)':'var(--warning)';}childRows+='<tr><td style="padding-inline-start:30px">'+E(ch.code)+'</td><td>'+E(ch.name)+'</td><td class="num">'+(b.debit?fmt(b.debit):'—')+'</td><td class="num">'+(b.credit?fmt(b.credit):'—')+'</td><td class="num" style="color:'+nc+'">'+E(ns)+'</td></tr>';}if(!childRows)continue;rows+='<tr style="background:#f0f7fc;font-weight:800"><td><b>'+E(rootAcc.code)+'</b></td><td><b>'+E(rootAcc.name)+'</b></td><td class="num"><b>'+(rD?fmt(rD):'—')+'</b></td><td class="num"><b>'+(rC?fmt(rC):'—')+'</b></td><td></td></tr>'+childRows;tD+=rD;tC+=rC;}var isBal=Math.abs(tD-tC)<0.5;return '<div class="alert '+(isBal?'success':'warn')+'">'+(isBal?'✅ متوازن':'⚠️ غير متوازن')+'</div><div class="table-wrap"><table><thead><tr><th>الرمز</th><th>الحساب</th><th>مدين</th><th>دائن</th><th>الرصيد</th></tr></thead><tbody>'+rows+'<tr style="background:linear-gradient(135deg,#0d3b66,#2874a6);color:#fff"><td colspan="2"><b>الإجمالي</b></td><td class="num" style="color:#fff"><b>'+fmt(tD)+'</b></td><td class="num" style="color:#fff"><b>'+fmt(tC)+'</b></td><td style="text-align:center"><b>'+(isBal?'✅':'❌')+'</b></td></tr></tbody></table></div>';}
 function renderIncomeStatement(){var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;var result=computeBalances(filter);var bal=result.balances;var revRows='',expRows='',totalR=0,totalE=0;for(var i=0;i<COA.length;i++){if(COA[i].type==='revenue'&&COA[i].parent){var b=bal[COA[i].code]||{debit:0,credit:0};var amt=b.credit-b.debit;if(amt){totalR+=amt;revRows+='<tr><td>'+E(COA[i].name)+'</td><td class="num" style="color:var(--success)">'+fmt(amt)+'</td></tr>';}}}for(var j=0;j<COA.length;j++){if(COA[j].type==='expense'&&COA[j].parent){var b2=bal[COA[j].code]||{debit:0,credit:0};var amt2=b2.debit-b2.credit;if(amt2){totalE+=amt2;expRows+='<tr><td>'+E(COA[j].name)+'</td><td class="num" style="color:var(--danger)">('+fmt(amt2)+')</td></tr>';}}}var profit=totalR-totalE;return '<div class="grid-kpi"><div class="kpi success"><div class="kpi-label">💵 الإيرادات</div><div class="kpi-value">'+money(totalR)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(totalE)+'</div></div><div class="kpi '+(profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(profit)+'</div></div></div><div class="card"><div class="card-head"><h2>📄 قائمة الدخل</h2></div><table><tbody><tr style="background:#e3f5ea"><td>الإيرادات</td><td class="num">'+fmt(totalR)+'</td></tr>'+(revRows||'<tr><td colspan="2">لا إيرادات</td></tr>')+'<tr style="background:#fbe6e4"><td>المصروفات</td><td class="num">('+fmt(totalE)+')</td></tr>'+(expRows||'<tr><td colspan="2">لا مصروفات</td></tr>')+'<tr style="background:#0d3b66;color:#fff"><td><b>صافي الربح</b></td><td class="num"><b>'+fmt(profit)+'</b></td></tr></tbody></table></div>';}
 function renderBalanceSheet(){var filter=(isAdmin()&&state.context==='group')?null:state.currentSchool;var result=computeBalances(filter);var bal=result.balances;var aRows='',lRows='',eRows='',tA=0,tL=0,tE=0;for(var i=0;i<COA.length;i++){if(COA[i].type==='asset'&&COA[i].parent){var b=bal[COA[i].code]||{debit:0,credit:0};var amt=b.debit-b.credit;tA+=amt;if(amt)aRows+='<tr><td>'+E(COA[i].name)+'</td><td class="num">'+fmt(amt)+'</td></tr>';}}for(var j=0;j<COA.length;j++){if(COA[j].type==='liability'&&COA[j].parent){var b2=bal[COA[j].code]||{debit:0,credit:0};var amt2=b2.credit-b2.debit;tL+=amt2;if(amt2)lRows+='<tr><td>'+E(COA[j].name)+'</td><td class="num">'+fmt(amt2)+'</td></tr>';}if(COA[j].type==='equity'&&COA[j].parent){var b3=bal[COA[j].code]||{debit:0,credit:0};var amt3=b3.credit-b3.debit;tE+=amt3;if(amt3)eRows+='<tr><td>'+E(COA[j].name)+'</td><td class="num">'+fmt(amt3)+'</td></tr>';}}var rev=0,exp=0;for(var c in bal){if(accType(c)==='revenue')rev+=bal[c].credit-bal[c].debit;if(accType(c)==='expense')exp+=bal[c].debit-bal[c].credit;}var net=rev-exp;if(net){tE+=net;eRows+='<tr><td>صافي الربح</td><td class="num">'+fmt(net)+'</td></tr>';}var diff=tA-(tL+tE),isBal=Math.abs(diff)<0.5;return '<div class="alert '+(isBal?'success':'warn')+'">'+(isBal?'✅ متوازنة':'⚠️ فرق: '+money(diff))+'</div><div class="grid-2"><div class="card"><div class="card-head"><h2>🏛️ الأصول</h2></div><table><tbody>'+(aRows||'<tr><td colspan="2">لا أصول</td></tr>')+'<tr style="background:#0d3b66;color:#fff"><td>الإجمالي</td><td class="num">'+fmt(tA)+'</td></tr></tbody></table></div><div class="card"><div class="card-head"><h2>💰 الخصوم + الملكية</h2></div><table><tbody>'+(lRows||'<tr><td colspan="2">—</td></tr>')+(eRows||'<tr><td colspan="2">—</td></tr>')+'<tr style="background:#0d3b66;color:#fff"><td>الإجمالي</td><td class="num">'+fmt(tL+tE)+'</td></tr></tbody></table></div></div>';}
 
-/* ================ Teacher views ================ */
+/* ============ Teacher views ============ */
 function myStudents(){var s=state.currentStaff;if(!s||!s.grades)return[];return state.students.filter(function(st){return st.schoolId===state.currentSchool&&s.grades.indexOf(st.grade)>=0;});}
 function renderTeacherDashboard(){var t=state.currentStaff;var students=myStudents();var ts=today();var ta=state.attendance.filter(function(a){return a.date===ts&&students.some(function(s){return s.id===a.studentId;});});var present=ta.filter(function(a){return a.status==='present';}).length;var absent=ta.filter(function(a){return a.status==='absent';}).length;var late=ta.filter(function(a){return a.status==='late';}).length;var myTT=getTimetable().filter(function(x){return x.schoolId===state.currentSchool&&x.teacherId===t.id;}).length;return '<div class="banner-green">👋 <b>'+E(t.name)+'</b></div><div class="grid-kpi"><div class="kpi info"><div class="kpi-label">👨‍🎓 طلابي</div><div class="kpi-value">'+students.length+'</div></div><div class="kpi success"><div class="kpi-label">✅ حاضر</div><div class="kpi-value">'+present+'</div></div><div class="kpi warn"><div class="kpi-label">⏰ متأخر</div><div class="kpi-value">'+late+'</div></div><div class="kpi danger"><div class="kpi-label">❌ غائب</div><div class="kpi-value">'+absent+'</div></div><div class="kpi gold"><div class="kpi-label">📅 حصصي</div><div class="kpi-value">'+myTT+'</div></div></div><div class="quick-actions"><div class="quick-btn" onclick="navigate(\'t-timetable\')"><span class="ic">📅</span><span class="lbl">جدولي</span></div><div class="quick-btn" onclick="navigate(\'t-attendance\')"><span class="ic">✅</span><span class="lbl">الحضور</span></div><div class="quick-btn" onclick="navigate(\'t-grades\')"><span class="ic">📝</span><span class="lbl">الدرجات</span></div><div class="quick-btn" onclick="navigate(\'t-behavior\')"><span class="ic">⭐</span><span class="lbl">السلوك</span></div><div class="quick-btn" onclick="navigate(\'t-students\')"><span class="ic">👨‍🎓</span><span class="lbl">طلابي</span></div></div>';}
 function renderTeacherAttendance(){var students=myStudents();var date=state._attDate||today();var att=state.attendance.filter(function(a){return a.date===date&&students.some(function(s){return s.id===a.studentId;});});var cards='';for(var i=0;i<students.length;i++){var s=students[i];var rec=att.filter(function(a){return a.studentId===s.id;})[0];var status=rec?rec.status:'';cards+='<div class="qr-card" style="text-align:right;padding:14px"><div style="font-weight:800;color:var(--primary);margin-bottom:3px">'+E(s.name)+'</div><div style="font-size:11px;color:var(--muted);margin-bottom:10px">'+E(s.grade)+'</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"><button class="btn btn-sm" style="background:'+(status==='present'?'var(--success)':'#f2f5f9')+';color:'+(status==='present'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+E(s.id)+'\',\''+date+'\',\'present\')">✅</button><button class="btn btn-sm" style="background:'+(status==='late'?'var(--warning)':'#f2f5f9')+';color:'+(status==='late'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+E(s.id)+'\',\''+date+'\',\'late\')">⏰</button><button class="btn btn-sm" style="background:'+(status==='absent'?'var(--danger)':'#f2f5f9')+';color:'+(status==='absent'?'#fff':'var(--text)')+';padding:7px" onclick="markAtt(\''+E(s.id)+'\',\''+date+'\',\'absent\')">❌</button></div></div>';}return '<div class="alert info">✅ سجّل حضور طلابك</div><div class="toolbar"><input type="date" value="'+date+'" onchange="state._attDate=this.value;render()"><span class="grow"></span><button class="btn btn-success btn-sm" onclick="markAllPresent(\''+date+'\')">✅ الكل حاضر</button></div><div class="qr-grid">'+(cards||'<div class="empty">لا طلاب</div>')+'</div>';}
@@ -1365,29 +1307,24 @@ function renderTeacherGrades(){var t=state.currentStaff;var students=myStudents(
 function saveSubjectGrades(subject){var inputs=document.querySelectorAll('[data-grade-subject="'+subject+'"]');var count=0;for(var i=0;i<inputs.length;i++){var inp=inputs[i],val=inp.value.trim();if(val==='')continue;var sid=inp.getAttribute('data-grade-student'),term=+inp.getAttribute('data-grade-term'),score=+val;var st=getStudent(sid);if(!st)continue;var existing=null;for(var j=0;j<state.grades.length;j++){var g=state.grades[j];if(g.studentId===sid&&g.subject===subject&&g.term===term){existing=g;break;}}if(existing){existing.score=score;existing.updatedAt=new Date().toISOString();markRecordDirty('grades',existing.id);}else{var nG={id:uid('GR'),studentId:sid,schoolId:st.schoolId,subject:subject,term:term,score:score,updatedAt:new Date().toISOString()};state.grades.push(nG);markRecordDirty('grades',nG.id);}count++;}logAct('حفظ درجات',subject);saveState();alert('✅ تم حفظ '+count+' درجة');render();}
 function renderTeacherBehavior(){var students=myStudents();var html='';for(var i=0;i<students.length;i++){var s=students[i];var b=state.behavior.filter(function(x){return x.studentId===s.id;});html+='<div class="card"><div class="card-head"><h2>⭐ '+E(s.name)+'</h2><button class="btn btn-primary btn-sm" onclick="openBehaviorForm(\''+E(s.id)+'\')">+ تقييم</button></div>';if(!b.length)html+='<div class="empty">لا تقييمات</div>';else{for(var k=0;k<BEHAVIOR_CATS.length;k++){var cat=BEHAVIOR_CATS[k];var rec=b.filter(function(x){return x.category===cat.key;})[0];if(rec){var n=Math.round(rec.score/20);if(n>5)n=5;if(n<1)n=1;var stars='';for(var st=0;st<5;st++)stars+=(st<n)?'⭐':'☆';html+='<div class="behavior-row"><div class="behavior-head"><span class="behavior-cat">'+E(cat.name)+'</span><span>'+stars+' '+rec.score+'</span></div></div>';}}}html+='</div>';}return '<div class="alert info">⭐ قيّم سلوك طلابك</div>'+(html||'<div class="empty">لا طلاب</div>');}
 function openBehaviorForm(studentId){
-  var s=getStudent(studentId);if(!s)return;
-  var html='<div class="alert info">🎓 '+E(s.name)+'</div>';
+  var s=getStudent(studentId);if(!s)return;var html='<div class="alert info">🎓 '+E(s.name)+'</div>';
   for(var i=0;i<BEHAVIOR_CATS.length;i++){var cat=BEHAVIOR_CATS[i];var existing=null;for(var j=0;j<state.behavior.length;j++){var b=state.behavior[j];if(b.studentId===studentId&&b.category===cat.key){existing=b;break;}}var cs=existing?existing.score:80;html+='<div class="field" style="margin-bottom:14px"><label style="color:var(--primary);font-weight:800;font-size:13px">'+E(cat.name)+'</label><div class="stars-input" data-stars-for="'+E(cat.key)+'">';for(var st=1;st<=5;st++){var filled=st*20<=cs;html+='<button type="button" onclick="setStar(\''+E(cat.key)+'\','+(st*20)+')" data-score="'+(st*20)+'">'+(filled?'⭐':'☆')+'</button>';}html+='</div><input type="hidden" id="score_'+E(cat.key)+'" value="'+cs+'"><input type="text" id="note_'+E(cat.key)+'" placeholder="ملاحظة" value="'+E(existing?existing.note:'')+'" style="margin-top:7px;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:12.5px;width:100%"></div>';}
-  openModal('⭐ تقييم — '+E(s.name),html,function(){
-    for(var i=0;i<BEHAVIOR_CATS.length;i++){var key=BEHAVIOR_CATS[i].key;var score=+$('score_'+key).value,note=$('note_'+key).value.trim();var existing=null;for(var j=0;j<state.behavior.length;j++){var b=state.behavior[j];if(b.studentId===studentId&&b.category===key){existing=b;break;}}if(existing){existing.score=score;existing.note=note;existing.date=today();markRecordDirty('behavior',existing.id);}else{var nR={id:uid('BH'),studentId:studentId,schoolId:s.schoolId,category:key,score:score,note:note,date:today()};state.behavior.push(nR);markRecordDirty('behavior',nR.id);}}
-    logAct('تقييم سلوك',s.name);saveState();return true;
-  });
+  openModal('⭐ تقييم — '+E(s.name),html,function(){for(var i=0;i<BEHAVIOR_CATS.length;i++){var key=BEHAVIOR_CATS[i].key;var score=+$('score_'+key).value,note=$('note_'+key).value.trim();var existing=null;for(var j=0;j<state.behavior.length;j++){var b=state.behavior[j];if(b.studentId===studentId&&b.category===key){existing=b;break;}}if(existing){existing.score=score;existing.note=note;existing.date=today();markRecordDirty('behavior',existing.id);}else{var nR={id:uid('BH'),studentId:studentId,schoolId:s.schoolId,category:key,score:score,note:note,date:today()};state.behavior.push(nR);markRecordDirty('behavior',nR.id);}}logAct('تقييم سلوك',s.name);saveState();return true;});
 }
 function setStar(catKey,score){var h=$('score_'+catKey);if(h)h.value=score;var c=document.querySelector('[data-stars-for="'+catKey+'"]');if(!c)return;var btns=c.querySelectorAll('button');for(var i=0;i<btns.length;i++){var bs=+btns[i].getAttribute('data-score');btns[i].textContent=bs<=score?'⭐':'☆';}}
 function renderTeacherStudents(){var students=myStudents();var rows='';for(var i=0;i<students.length;i++){var s=students[i];var gs=0,gc=0;for(var j=0;j<state.grades.length;j++)if(state.grades[j].studentId===s.id){gs+=state.grades[j].score;gc++;}var avg=gc?Math.round(gs/gc):0;rows+='<tr><td><b>'+E(s.name)+'</b></td><td>'+E(s.grade)+'</td><td class="num">'+avg+'</td><td><button class="mini" onclick="openBehaviorForm(\''+E(s.id)+'\')">⭐</button></td></tr>';}return '<div class="alert info">👨‍🎓 طلابي</div><div class="table-wrap"><table><thead><tr><th>الطالب</th><th>الصف</th><th>المعدل</th><th></th></tr></thead><tbody>'+(rows||'<tr><td colspan="4" class="empty">لا طلاب</td></tr>')+'</tbody></table></div>';}
 function renderTeacherProfile(){var t=state.currentStaff,school=currentSchool();return '<div class="card" style="max-width:600px"><div class="card-head"><h2>👤 ملفي</h2></div><div style="display:flex;align-items:center;gap:15px;margin-bottom:18px"><div class="avatar" style="width:64px;height:64px;font-size:24px">'+E(t.name.charAt(0))+'</div><div><div style="font-size:18px;font-weight:800;color:var(--primary)">'+E(t.name)+'</div><div style="font-size:12.5px;color:var(--muted)">معلم — '+E(school?school.name:'')+'</div></div></div><div class="field"><label>المواد</label><input value="'+E((t.subjects||[]).join('، '))+'" disabled></div><div class="field"><label>الصفوف</label><input value="'+E((t.grades||[]).join('، '))+'" disabled></div></div>';}
 
-/* ================ Student views ================ */
+/* ============ Student views ============ */
 function renderStudentDashboard(){var s=state.currentStudent;if(!s)return '<div class="alert warn">—</div>';var grades=state.grades.filter(function(g){return g.studentId===s.id;});var avg=0;if(grades.length){var sum=0;for(var i=0;i<grades.length;i++)sum+=grades[i].score;avg=Math.round(sum/grades.length);}var att=state.attendance.filter(function(a){return a.studentId===s.id;});var present=att.filter(function(a){return a.status==='present';}).length;var late=att.filter(function(a){return a.status==='late';}).length;var attRate=att.length?Math.round((present+late*0.5)/att.length*100):0;var inv=state.invoices.filter(function(x){return x.studentId===s.id;});var totalFees=0,paidFees=0;for(var j=0;j<inv.length;j++){totalFees+=inv[j].amount;paidFees+=inv[j].paid;}var due=totalFees-paidFees;return '<div class="banner-green">👋 أهلاً <b>'+E(s.name)+'</b></div><div class="grid-kpi"><div class="kpi success"><div class="kpi-label">📝 معدلي</div><div class="kpi-value">'+avg+'</div></div><div class="kpi info"><div class="kpi-label">✅ حضوري</div><div class="kpi-value">'+attRate+'%</div></div><div class="kpi '+(due>0?'danger':'success')+'"><div class="kpi-label">💵 المتبقي</div><div class="kpi-value">'+money(due)+'</div></div></div><div class="quick-actions"><div class="quick-btn" onclick="navigate(\'s-timetable\')"><span class="ic">📅</span><span class="lbl">جدولي</span></div><div class="quick-btn" onclick="navigate(\'s-grades\')"><span class="ic">📝</span><span class="lbl">درجاتي</span></div><div class="quick-btn" onclick="navigate(\'s-attendance\')"><span class="ic">✅</span><span class="lbl">حضوري</span></div><div class="quick-btn" onclick="navigate(\'s-behavior\')"><span class="ic">⭐</span><span class="lbl">سلوكي</span></div><div class="quick-btn" onclick="navigate(\'s-fees\')"><span class="ic">💵</span><span class="lbl">رسومي</span></div></div>';}
 function renderStudentGrades(){var s=state.currentStudent;var grades=state.grades.filter(function(g){return g.studentId===s.id;});if(!grades.length)return '<div class="empty">لا درجات</div>';var rows='';for(var i=0;i<grades.length;i++){var g=grades[i];var cls=g.score>=85?'excellent':g.score>=60?'good':'poor';rows+='<tr><td><b>'+E(g.subject)+'</b></td><td>الفصل '+(g.term===1?'الأول':'الثاني')+'</td><td><span class="public-score '+cls+'">'+g.score+'</span></td></tr>';}return '<div class="table-wrap"><table><thead><tr><th>المادة</th><th>الفصل</th><th>الدرجة</th></tr></thead><tbody>'+rows+'</tbody></table></div>';}
 function renderStudentAttendance(){var s=state.currentStudent;var att=state.attendance.filter(function(a){return a.studentId===s.id;});att.sort(function(a,b){return b.date.localeCompare(a.date);});var rows='';for(var i=0;i<att.length;i++){var a=att[i];var st=a.status==='present'?'ok':a.status==='late'?'warn':'bad';var txt=a.status==='present'?'حاضر ✅':a.status==='late'?'متأخر ⏰':'غائب ❌';rows+='<tr><td>'+E(a.date)+'</td><td><span class="badge '+st+'">'+txt+'</span></td></tr>';}return '<div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الحالة</th></tr></thead><tbody>'+(rows||'<tr><td colspan="2" class="empty">لا سجلات</td></tr>')+'</tbody></table></div>';}
 function renderStudentBehavior(){var s=state.currentStudent;var behav=state.behavior.filter(function(b){return b.studentId===s.id;});if(!behav.length)return '<div class="empty">لا تقييمات</div>';var html='',total=0;for(var i=0;i<BEHAVIOR_CATS.length;i++){var cat=BEHAVIOR_CATS[i];var rec=behav.filter(function(x){return x.category===cat.key;})[0];if(rec){total+=rec.score;var n=Math.round(rec.score/20);if(n>5)n=5;if(n<1)n=1;var stars='';for(var st=0;st<5;st++)stars+=(st<n)?'⭐':'☆';html+='<div class="behavior-row"><div class="behavior-head"><span class="behavior-cat">'+E(cat.name)+'</span><span>'+stars+' '+rec.score+'</span></div></div>';}}var avg=Math.round(total/BEHAVIOR_CATS.length);return '<div class="alert success">⭐ تقييمك: <b>'+avg+'</b>/100</div>'+html;}
 function renderStudentFees(){var s=state.currentStudent;var inv=state.invoices.filter(function(x){return x.studentId===s.id;});var total=0,paid=0;for(var i=0;i<inv.length;i++){total+=inv[i].amount;paid+=inv[i].paid;}var due=total-paid;var rows='';for(var j=0;j<inv.length;j++){var x=inv[j];var typeTag=x.type==='installment'?' <span class="badge purple" style="font-size:9px">قسط '+(x.installmentNumber||'')+'</span>':'';rows+='<tr><td><b>'+E(x.id)+'</b>'+typeTag+'</td><td>'+E(x.due)+'</td><td class="num">'+fmt(x.amount)+'</td><td class="num" style="color:var(--success)">'+fmt(x.paid)+'</td><td class="num">'+fmt(x.amount-x.paid)+'</td></tr>';}return '<div class="grid-kpi"><div class="kpi"><div class="kpi-label">💵 الإجمالي</div><div class="kpi-value">'+money(total)+'</div></div><div class="kpi success"><div class="kpi-label">✅ المسدّد</div><div class="kpi-value">'+money(paid)+'</div></div><div class="kpi '+(due>0?'danger':'success')+'"><div class="kpi-label">⏳ المتبقي</div><div class="kpi-value">'+money(due)+'</div></div></div><div class="table-wrap"><table><thead><tr><th>الفاتورة</th><th>الاستحقاق</th><th>المبلغ</th><th>المدفوع</th><th>المتبقي</th></tr></thead><tbody>'+(rows||'<tr><td colspan="5" class="empty">لا فواتير</td></tr>')+'</tbody></table></div>';}
 
-/* ================ Utility ================ */
 function statusBadge(s){if(s==='paid')return '<span class="badge ok">مدفوع</span>';if(s==='partial')return '<span class="badge warn">جزئي</span>';return '<span class="badge bad">غير مدفوع</span>';}
 
-/* ================ Schools ================ */
+/* ============ Schools ============ */
 function renderSchools(){
   var cards='';for(var i=0;i<state.schools.length;i++){var s=state.schools[i];var stCount=0,col=0,due=0;for(var j=0;j<state.students.length;j++)if(state.students[j].schoolId===s.id)stCount++;for(var k=0;k<state.invoices.length;k++)if(state.invoices[k].schoolId===s.id){col+=state.invoices[k].paid;due+=state.invoices[k].amount-state.invoices[k].paid;}cards+='<div class="school-card"><div class="school-card-head"><div class="school-card-logo">'+E(s.name.charAt(0))+'</div><div style="flex:1;min-width:0"><div class="school-card-title">'+E(s.name)+'</div><div class="school-card-meta">'+E(s.city)+' • '+E(s.stage)+'</div></div></div><div style="display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap"><span class="badge ok">نشطة</span><span class="badge info">@'+E(s.username)+'</span><span class="badge gold">$'+(s.planPrice||10)+'/شهر</span></div><div class="school-card-stats"><div class="school-stat"><div class="lbl">الطلاب</div><div class="val">'+stCount+'</div></div><div class="school-stat"><div class="lbl">التحصيلات</div><div class="val">'+fmt(col)+'</div></div><div class="school-stat"><div class="lbl">المتأخرات</div><div class="val">'+fmt(due)+'</div></div><div class="school-stat"><div class="lbl">الموظفون</div><div class="val">'+(s.staff?s.staff.length:0)+'</div></div></div><div class="school-card-actions"><button class="btn btn-primary" onclick="enterSchool(\''+E(s.id)+'\')">↗ دخول</button><button class="btn btn-ghost" onclick="showSchoolCred(\''+E(s.id)+'\')">🔑</button><button class="btn btn-danger" onclick="deleteSchool(\''+E(s.id)+'\')">🗑</button></div></div>';}
   return '<div class="alert info">💡 كل مدرسة مستقلة</div><div class="toolbar" style="margin-bottom:16px"><button class="btn btn-primary" style="width:auto" onclick="openAddSchool()">+ إضافة مدرسة</button>'+exportBtn('schools')+'</div><div class="schools-grid">'+cards+'<div class="add-card" onclick="openAddSchool()"><div class="plus">+</div><div class="txt">إضافة مدرسة</div></div></div>';
@@ -1400,10 +1337,8 @@ function openAddSchool(){
     var username=genUsername(name);var base=username,n=1,ex=true;
     while(ex){ex=false;for(var i=0;i<state.schools.length;i++)if(state.schools[i].username===username){ex=true;break;}if(ex)username=base+(n++);}
     var newS={id:'THQ-'+num,name:name,stage:$('ns_stage').value||'جميع المراحل',city:$('ns_city').value||'—',phone:$('ns_phone').value||'',status:'active',username:username,password:genPassword(),createdAt:today(),staff:[],plan:'standard',planPrice:10,planCurrency:'USD',planStart:today(),planStatus:'active'};
-    state.schools.push(newS);markMetaDirty();
-    logAct('إضافة مدرسة',name);saveState();
-    setTimeout(function(){showSchoolCred(newS.id,true);},150);
-    return true;
+    state.schools.push(newS);markMetaDirty();logAct('إضافة مدرسة',name);saveState();
+    setTimeout(function(){showSchoolCred(newS.id,true);},150);return true;
   },'حفظ');
 }
 function deleteSchool(id){
@@ -1417,40 +1352,33 @@ function deleteSchool(id){
   logAct('حذف مدرسة',s.name);saveState();render();
 }
 
-/* ================ QR ================ */
+/* ============ QR ============ */
 function renderQRPage(){var students=scoped(state.students);if(!students.length)return '<div class="empty">لا طلاب</div>';var cards='';for(var i=0;i<students.length;i++){var s=students[i];if(!s.token)s.token=genToken();var url=getPublicURL(s.token);var qrImg=getQRImageURL(url,300);cards+='<div class="qr-card"><div class="qr-card-canvas"><img src="'+qrImg+'"></div><div class="qr-card-name">'+E(s.name)+'</div><div class="qr-card-info">'+E(s.grade)+'</div><div class="qr-card-id">'+E(s.token)+'</div><div class="qr-card-actions"><button class="btn btn-primary btn-sm" onclick="printQR(\''+E(s.id)+'\')">🖨️</button><button class="btn btn-ghost btn-sm" onclick="copyLink(\''+E(s.id)+'\')">📋</button></div></div>';}return '<div class="alert info">🎫 QR لكل طالب</div><div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="printAllQR()">🖨️ طباعة الكل</button></div><div class="qr-grid">'+cards+'</div>';}
 function getPublicURL(token){return window.location.origin+window.location.pathname+'#/s/'+token;}
 function getQRImageURL(text,size){return 'https://api.qrserver.com/v1/create-qr-code/?size='+size+'x'+size+'&data='+encodeURIComponent(text)+'&color=0d3b66&bgcolor=ffffff&margin=8&format=png&ecc=M';}
 function copyLink(id){var s=getStudent(id);if(!s)return;copyText(getPublicURL(s.token));}
 function printQR(id){var s=getStudent(id);if(!s)return;var school=currentSchool();var qrImg=getQRImageURL(getPublicURL(s.token),400);$('printArea').innerHTML='<div class="qr-print-card"><div class="qr-print-head">🏫 '+E(school?school.name:'')+'</div><div class="qr-print-sub">'+E(school?school.city:'')+'</div><div class="qr-print-qr"><img src="'+qrImg+'" width="200" height="200"></div><div class="qr-print-name">'+E(s.name)+'</div><div class="qr-print-grade">'+E(s.grade)+'</div><div class="qr-print-id">'+E(s.token)+'</div><div class="qr-print-hint">📱 امسح الرمز</div><div class="qr-print-footer">ثقة 💙</div></div>';setTimeout(function(){window.print();},800);}
 function printAllQR(){var students=scoped(state.students);var school=currentSchool();var html='';for(var i=0;i<students.length;i++){var s=students[i];var qrImg=getQRImageURL(getPublicURL(s.token),400);html+='<div class="qr-print-card" style="margin-bottom:20px"><div class="qr-print-head">🏫 '+E(school?school.name:'')+'</div><div class="qr-print-sub">'+E(school?school.city:'')+'</div><div class="qr-print-qr"><img src="'+qrImg+'" width="200" height="200"></div><div class="qr-print-name">'+E(s.name)+'</div><div class="qr-print-grade">'+E(s.grade)+'</div><div class="qr-print-id">'+E(s.token)+'</div></div>';}$('printArea').innerHTML=html;setTimeout(function(){window.print();},2500);}
-
 function renderPublicProfileData(student,school,grades,att,inv){
-  att.sort(function(a,b){return(b.date||'').localeCompare(a.date||'');});
-  var recent=att.slice(0,10);
-  var present=att.filter(function(a){return a.status==='present';}).length;
-  var absent=att.filter(function(a){return a.status==='absent';}).length;
-  var rate=att.length?Math.round(present/att.length*100):0;
-  var avg=0;if(grades.length){var sum=0;for(var k=0;k<grades.length;k++)sum+=(grades[k].score||0);avg=Math.round(sum/grades.length);}
-  var total=0,paid=0;for(var m=0;m<inv.length;m++){total+=inv[m].amount||0;paid+=inv[m].paid||0;}
-  var due=total-paid;
-  var gradesHTML='',bySub={};
-  for(var g=0;g<grades.length;g++){var gr=grades[g];if(!bySub[gr.subject])bySub[gr.subject]={};bySub[gr.subject][gr.term]=gr.score;}
+  att.sort(function(a,b){return(b.date||'').localeCompare(a.date||'');});var recent=att.slice(0,10);
+  var present=att.filter(function(a){return a.status==='present';}).length;var absent=att.filter(function(a){return a.status==='absent';}).length;
+  var rate=att.length?Math.round(present/att.length*100):0;var avg=0;if(grades.length){var sum=0;for(var k=0;k<grades.length;k++)sum+=(grades[k].score||0);avg=Math.round(sum/grades.length);}
+  var total=0,paid=0;for(var m=0;m<inv.length;m++){total+=inv[m].amount||0;paid+=inv[m].paid||0;}var due=total-paid;
+  var gradesHTML='',bySub={};for(var g=0;g<grades.length;g++){var gr=grades[g];if(!bySub[gr.subject])bySub[gr.subject]={};bySub[gr.subject][gr.term]=gr.score;}
   for(var subj in bySub){var t1=bySub[subj][1]!==undefined?bySub[subj][1]:'—';var t2=bySub[subj][2]!==undefined?bySub[subj][2]:'—';var sc=(t1!=='—'&&t2!=='—')?Math.round((t1+t2)/2):(t1!=='—'?t1:t2);var cls=sc>=85?'excellent':sc>=60?'good':'poor';gradesHTML+='<div class="public-row"><span class="name">'+E(subj)+'</span><span class="public-score '+cls+'">'+E(sc)+'</span></div>';}
   if(!gradesHTML)gradesHTML='<div class="empty">لا درجات</div>';
-  var attHTML='';
-  for(var a=0;a<recent.length;a++){var at=recent[a];var badge=at.status==='present'?'ok':at.status==='late'?'warn':'bad';var txt=at.status==='present'?'حاضر ✅':at.status==='late'?'متأخر ⏰':'غائب ❌';attHTML+='<div class="public-row"><span class="name">'+E(at.date)+'</span><span class="badge '+badge+'">'+txt+'</span></div>';}
+  var attHTML='';for(var a=0;a<recent.length;a++){var at=recent[a];var badge=at.status==='present'?'ok':at.status==='late'?'warn':'bad';var txt=at.status==='present'?'حاضر ✅':at.status==='late'?'متأخر ⏰':'غائب ❌';attHTML+='<div class="public-row"><span class="name">'+E(at.date)+'</span><span class="badge '+badge+'">'+txt+'</span></div>';}
   if(!attHTML)attHTML='<div class="empty">لا سجلات</div>';
   return '<div class="public-container"><div class="public-header"><div class="school-logo">'+E(school?school.name.charAt(0):'ث')+'</div><h1>'+E(school?school.name:'—')+'</h1><p>'+E(school?school.city:'')+'</p></div><div class="public-card"><h2>👨‍🎓 '+E(student.name)+'</h2><div class="public-info-row"><div class="public-info-box"><div class="lbl">الصف</div><div class="val">'+E(student.grade)+'</div></div><div class="public-info-box"><div class="lbl">ولي الأمر</div><div class="val">'+E(student.guardian)+'</div></div></div></div><div class="public-card"><h2>📊 الملخص</h2><div class="public-stats"><div class="public-stat green"><div class="n">'+rate+'%</div><div class="l">حضور</div></div><div class="public-stat blue"><div class="n">'+avg+'</div><div class="l">معدل</div></div><div class="public-stat red"><div class="n">'+absent+'</div><div class="l">غياب</div></div></div></div><div class="public-card"><h2>📝 الدرجات</h2>'+gradesHTML+'</div><div class="public-card"><h2>✅ آخر أيام الحضور</h2>'+attHTML+'</div><div class="public-card"><h2>💵 الرسوم</h2><div class="public-info-row"><div class="public-info-box"><div class="lbl">الإجمالي</div><div class="val">'+fmt(total)+'</div></div><div class="public-info-box"><div class="lbl">المسدَّد</div><div class="val">'+fmt(paid)+'</div></div><div class="public-info-box"><div class="lbl">المتبقي</div><div class="val">'+fmt(due)+'</div></div></div></div><div class="public-footnote">🔒 صفحة آمنة — ثقة 💙</div></div>';
 }
 
-/* ================ Reports & activity ================ */
+/* ============ Reports & activity ============ */
 function renderReports(){if(!can('reports','view'))return '<div class="alert warn">⛔</div>';var inv=scoped(state.invoices),exp=scoped(state.expenses);var tI=0,tC=0,tE=0;for(var i=0;i<inv.length;i++){tI+=inv[i].amount;tC+=inv[i].paid;}for(var j=0;j<exp.length;j++)tE+=exp[j].amount;var profit=tC-tE;return '<div class="grid-kpi"><div class="kpi"><div class="kpi-label">📄 المفوتر</div><div class="kpi-value">'+money(tI)+'</div></div><div class="kpi success"><div class="kpi-label">💵 المحصّل</div><div class="kpi-value">'+money(tC)+'</div></div><div class="kpi danger"><div class="kpi-label">📉 المصروفات</div><div class="kpi-value">'+money(tE)+'</div></div><div class="kpi '+(profit>=0?'success':'danger')+'"><div class="kpi-label">📈 الربح</div><div class="kpi-value">'+money(profit)+'</div></div></div>';}
 function renderActivity(){var log=[];for(var i=0;i<state.activityLog.length;i++){if(isAdmin()&&state.context==='group')log.push(state.activityLog[i]);else if(state.activityLog[i].schoolId===state.currentSchool)log.push(state.activityLog[i]);}var rows='';for(var j=0;j<log.length;j++){var l=log[j];var d=new Date(l.at);var dt=d.toLocaleDateString('ar-EG')+' '+d.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});rows+='<tr><td style="font-size:11px;color:var(--muted)">'+E(dt)+'</td><td><b>'+E(l.userName)+'</b></td><td><span class="badge info">'+E(l.action)+'</span></td><td style="font-size:11.5px">'+E(l.detail||'—')+'</td></tr>';}return '<div class="alert info">📋 سجل النشاط</div><div class="table-wrap"><table><thead><tr><th>الوقت</th><th>المستخدم</th><th>الإجراء</th><th>التفاصيل</th></tr></thead><tbody>'+(rows||'<tr><td colspan="4" class="empty">لا عمليات</td></tr>')+'</tbody></table></div>';}
 function renderSchoolInfo(){var s=currentSchool();if(!s)return '<div class="empty">—</div>';return '<div class="card" style="max-width:600px"><div class="card-head"><h2>⚙️ بيانات المدرسة</h2></div><div class="field"><label>الاسم</label><input value="'+E(s.name)+'" disabled></div><div class="field"><label>المرحلة</label><input value="'+E(s.stage)+'" disabled></div><div class="field"><label>المدينة</label><input value="'+E(s.city)+'" disabled></div></div>';}
 function renderAllReports(){var k=computeKPIs();var rows='';for(var i=0;i<state.schools.length;i++){var sc=state.schools[i];var col=0,sp=0,due=0,tot=0;for(var j=0;j<state.invoices.length;j++)if(state.invoices[j].schoolId===sc.id){col+=state.invoices[j].paid;tot+=state.invoices[j].amount;due+=state.invoices[j].amount-state.invoices[j].paid;}for(var m=0;m<state.expenses.length;m++)if(state.expenses[m].schoolId===sc.id)sp+=state.expenses[m].amount;var rate=tot?Math.round(col/tot*100):0;rows+='<tr><td><b>'+E(sc.name)+'</b></td><td class="num">'+fmt(col)+'</td><td class="num">'+fmt(sp)+'</td><td class="num">'+fmt(col-sp)+'</td><td class="num">'+fmt(due)+'</td><td class="num">'+rate+'%</td></tr>';}return '<div class="grid-kpi"><div class="kpi success"><div class="kpi-label">المحصّل</div><div class="kpi-value">'+money(k.collected)+'</div></div><div class="kpi danger"><div class="kpi-label">المصروفات</div><div class="kpi-value">'+money(k.expenses)+'</div></div><div class="kpi '+(k.profit>=0?'success':'danger')+'"><div class="kpi-label">الربح</div><div class="kpi-value">'+money(k.profit)+'</div></div></div><div class="table-wrap"><table><thead><tr><th>المدرسة</th><th>التحصيلات</th><th>المصروفات</th><th>الربح</th><th>المتأخرات</th><th>النسبة</th></tr></thead><tbody>'+rows+'</tbody></table></div>';}
 
-/* ================ Login ================ */
+/* ============ Login ============ */
 function switchTab(tab){
   var tabs=document.querySelectorAll('.login-tab');for(var i=0;i<tabs.length;i++)tabs[i].classList.toggle('active',tabs[i].getAttribute('data-tab')===tab);
   $('adminLogin').classList.add('hidden');$('schoolLogin').classList.add('hidden');$('teacherLogin').classList.add('hidden');$('studentLogin').classList.add('hidden');
@@ -1466,76 +1394,51 @@ function login(type){
   else if(type==='teacher'){username=$('teacherUser').value.trim();password=$('teacherPass').value;}
   else if(type==='student'){username=$('studentUser').value.trim();password=$('studentPass').value.trim();}
   if(!username){alert('أدخل اسم المستخدم');return;}
-  if(type==='admin'){
-    if(username!=='admin'||password!=='1234'){alert('بيانات غير صحيحة');return;}
-    state.user='admin';state.userType='admin';state.context='group';state.currentSchool=null;state.currentStaff=null;state.currentStudent=null;state.page='dashboard';
-    registerUserDoc('admin',null,'مدير عام');
-    logAct('دخول','مدير عام');saveState();render();return;
-  }
+  if(type==='admin'){if(username!=='admin'||password!=='1234'){alert('بيانات غير صحيحة');return;}state.user='admin';state.userType='admin';state.context='group';state.currentSchool=null;state.currentStaff=null;state.currentStudent=null;state.page='dashboard';registerUserDoc('admin',null,'مدير عام');logAct('دخول','مدير عام');saveState();render();return;}
   if(type==='school'){
-    for(var i=0;i<state.schools.length;i++){var sch=state.schools[i];if(sch.username===username&&sch.password===password){
-      state.user=sch.id;state.userType='manager';state.context='school';state.currentSchool=sch.id;state.currentStaff=null;state.currentStudent=null;state.page='dashboard';
-      registerUserDoc('manager',sch.id,sch.name);logAct('دخول','مدير');saveState();render();return;
-    }}
-    for(var j=0;j<state.schools.length;j++){var sch2=state.schools[j];if(!sch2.staff)continue;for(var k=0;k<sch2.staff.length;k++){var st=sch2.staff[k];if(st.username===username&&st.password===password){
-      if(!st.active){alert('الحساب موقوف');return;}
-      state.user=st.username;state.userType='staff';state.context='school';state.currentSchool=sch2.id;state.currentStaff=st;state.currentStudent=null;state.page=(st.role==='teacher')?'t-dashboard':'dashboard';
-      registerUserDoc('staff',sch2.id,st.name);logAct('دخول',ROLES[st.role].name);saveState();render();return;
-    }}}
+    for(var i=0;i<state.schools.length;i++){var sch=state.schools[i];if(sch.username===username&&sch.password===password){state.user=sch.id;state.userType='manager';state.context='school';state.currentSchool=sch.id;state.currentStaff=null;state.currentStudent=null;state.page='dashboard';registerUserDoc('manager',sch.id,sch.name);logAct('دخول','مدير');saveState();render();return;}}
+    for(var j=0;j<state.schools.length;j++){var sch2=state.schools[j];if(!sch2.staff)continue;for(var k=0;k<sch2.staff.length;k++){var st=sch2.staff[k];if(st.username===username&&st.password===password){if(!st.active){alert('الحساب موقوف');return;}state.user=st.username;state.userType='staff';state.context='school';state.currentSchool=sch2.id;state.currentStaff=st;state.currentStudent=null;state.page=(st.role==='teacher')?'t-dashboard':'dashboard';registerUserDoc('staff',sch2.id,st.name);logAct('دخول',ROLES[st.role].name);saveState();render();return;}}}
     alert('بيانات غير صحيحة');return;
   }
   if(type==='teacher'){
-    for(var si=0;si<state.schools.length;si++){var sc=state.schools[si];if(!sc.staff)continue;for(var ti=0;ti<sc.staff.length;ti++){var t=sc.staff[ti];if(t.username===username&&t.password===password&&t.role==='teacher'){
-      if(!t.active){alert('الحساب موقوف');return;}
-      state.user=t.username;state.userType='staff';state.context='school';state.currentSchool=sc.id;state.currentStaff=t;state.currentStudent=null;state.page='t-dashboard';
-      registerUserDoc('staff',sc.id,t.name);logAct('دخول','معلم');saveState();render();return;
-    }}}
+    for(var si=0;si<state.schools.length;si++){var sc=state.schools[si];if(!sc.staff)continue;for(var ti=0;ti<sc.staff.length;ti++){var t=sc.staff[ti];if(t.username===username&&t.password===password&&t.role==='teacher'){if(!t.active){alert('الحساب موقوف');return;}state.user=t.username;state.userType='staff';state.context='school';state.currentSchool=sc.id;state.currentStaff=t;state.currentStudent=null;state.page='t-dashboard';registerUserDoc('staff',sc.id,t.name);logAct('دخول','معلم');saveState();render();return;}}}
     alert('بيانات غير صحيحة');return;
   }
   if(type==='student'){
-    var student=null;
-    for(var m=0;m<state.students.length;m++){var s=state.students[m];var ip=s.id.split('-');var ln=ip[ip.length-1];if(s.id===username||(s.username&&s.username===username)||ln===username){student=s;break;}}
+    var student=null;for(var m=0;m<state.students.length;m++){var s=state.students[m];var ip=s.id.split('-');var ln=ip[ip.length-1];if(s.id===username||(s.username&&s.username===username)||ln===username){student=s;break;}}
     if(!student){alert('لم يتم العثور على الطالب');return;}
     if(!password){alert('أدخل كلمة المرور');return;}
-    var ip2=student.id.split('-');var ln2=ip2[ip2.length-1];
-    var valid=(password===ln2)||(password===student.password);
+    var ip2=student.id.split('-');var ln2=ip2[ip2.length-1];var valid=(password===ln2)||(password===student.password);
     if(!valid){alert('كلمة المرور غير صحيحة');return;}
-    state.user=student.username||student.id;state.userType='student';state.context='school';state.currentSchool=student.schoolId;state.currentStudent=student;state.currentStaff=null;state.page='s-dashboard';
-    registerUserDoc('student',student.schoolId,student.name);logAct('دخول','طالب');saveState();render();return;
+    state.user=student.username||student.id;state.userType='student';state.context='school';state.currentSchool=student.schoolId;state.currentStudent=student;state.currentStaff=null;state.page='s-dashboard';registerUserDoc('student',student.schoolId,student.name);logAct('دخول','طالب');saveState();render();return;
   }
 }
 function logout(){
-  state.user=null;state.userType=null;state.context='group';state.currentSchool=null;state.currentStaff=null;state.currentStudent=null;
-  saveState();
+  state.user=null;state.userType=null;state.context='group';state.currentSchool=null;state.currentStaff=null;state.currentStudent=null;saveState();
   $('schoolUser').value='';$('schoolPass').value='';$('teacherUser').value='';$('teacherPass').value='';$('studentUser').value='';$('studentPass').value='';
-  if(window.location.hash)window.location.hash='';
-  render();
+  if(window.location.hash)window.location.hash='';render();
 }
 function enterSchool(id){if(!isAdmin())return;state.context='school';state.currentSchool=id;state.page='dashboard';saveState();render();}
 function exitToGroup(){if(!isAdmin())return;state.context='group';state.currentSchool=null;state.page='dashboard';saveState();render();}
 
-/* ================ Modal ================ */
+/* ============ Modal ============ */
 function openModal(title,body,onSave,saveBtnText){
   var ov=document.createElement('div');ov.className='modal-overlay';
-  var isLg=body.indexOf('perm-grid')>=0?' modal-lg':'';
-  var isCloseOnly=(saveBtnText==='إغلاق');
+  var isLg=body.indexOf('perm-grid')>=0?' modal-lg':'';var isCloseOnly=(saveBtnText==='إغلاق');
   ov.innerHTML='<div class="modal'+isLg+'"><div class="modal-head"><h3>'+E(title)+'</h3><button class="mini" data-close>✕</button></div><div class="modal-body">'+body+'</div><div class="modal-foot">'+(isCloseOnly?'<button class="btn btn-primary" data-close style="width:auto">إغلاق</button>':'<button class="btn btn-primary" id="modalSaveBtn" style="width:auto">'+E(saveBtnText||'حفظ')+'</button><button class="btn btn-ghost" data-close>إغلاق</button>')+'</div></div>';
   document.body.appendChild(ov);
   function close(){ov.remove();}
   ov.querySelectorAll('[data-close]').forEach(function(b){b.onclick=close;});
   ov.addEventListener('click',function(e){if(e.target===ov)close();});
-  if(!isCloseOnly){
-    $('modalSaveBtn').onclick=function(){try{var res=onSave();if(res!==false){close();render();}}catch(err){alert('خطأ: '+err.message);}};
-  }
+  if(!isCloseOnly){$('modalSaveBtn').onclick=function(){try{var res=onSave();if(res!==false){close();render();}}catch(err){alert('خطأ: '+err.message);}};}
 }
 
-/* ================ Init ================ */
+/* ============ Init ============ */
 document.addEventListener('DOMContentLoaded',function(){
   var tabs=document.querySelectorAll('.login-tab');
   for(var i=0;i<tabs.length;i++)tabs[i].addEventListener('click',function(){switchTab(this.getAttribute('data-tab'));});
   window.addEventListener('hashchange',render);
   window.addEventListener('beforeunload',function(){syncUnsubscribers.forEach(function(u){try{u();}catch(e){}});});
-  // نسخ عام لأزرار data-copy
   document.addEventListener('click',function(e){var t=e.target.closest('[data-copy]');if(t){copyText(t.getAttribute('data-copy'));}});
   updateCloudStatus();
   render();
