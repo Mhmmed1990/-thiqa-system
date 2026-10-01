@@ -1142,6 +1142,55 @@ function deleteStudent(id){
 }
 
 /* ============ Invoices ============ */
+
+/* ============ Installments ============ */
+function renderInstallments(){
+  var allInv=scoped(state.invoices);
+  var installments=allInv.filter(function(i){return i.type==='installment';});
+  if(!installments.length)return '<div class="alert info">💰 لا توجد أقساط بعد.</div><div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openAddInvoice()">+ إصدار فاتورة أقساط</button></div>';
+  var groups={};
+  for(var i=0;i<installments.length;i++){
+    var inv=installments[i];
+    var gid=inv.installmentGroup||inv.id;
+    if(!groups[gid]){groups[gid]={groupId:gid,studentId:inv.studentId,studentName:inv.studentName,grade:inv.grade,schoolId:inv.schoolId,items:[],total:0,paid:0};}
+    groups[gid].items.push(inv);
+    groups[gid].total+=inv.amount;
+    groups[gid].paid+=inv.paid;
+  }
+  var groupsArr=[];
+  for(var g in groups){
+    var grp=groups[g];
+    grp.items.sort(function(a,b){return (a.installmentNumber||0)-(b.installmentNumber||0);});
+    groupsArr.push(grp);
+  }
+  var totalAll=0,paidAll=0,dueAll=0,overdueAll=0;
+  for(var k=0;k<groupsArr.length;k++){
+    totalAll+=groupsArr[k].total;
+    paidAll+=groupsArr[k].paid;
+    dueAll+=groupsArr[k].total-groupsArr[k].paid;
+    for(var m=0;m<groupsArr[k].items.length;m++){
+      var it=groupsArr[k].items[m];
+      if(it.paid<it.amount&&new Date(it.due)<new Date()){overdueAll+=it.amount-it.paid;}
+    }
+  }
+  var cards='';
+  for(var x=0;x<groupsArr.length;x++){
+    var grp2=groupsArr[x];
+    var due=grp2.total-grp2.paid;
+    var progress=grp2.total?Math.round(grp2.paid/grp2.total*100):0;
+    var rows='';
+    for(var y=0;y<grp2.items.length;y++){
+      var it2=grp2.items[y];
+      var isOverdue=(it2.paid<it2.amount)&&(new Date(it2.due)<new Date());
+      var st=it2.status==='paid'?'ok':(it2.status==='partial'?'warn':(isOverdue?'bad':'info'));
+      var stTxt=it2.status==='paid'?'مدفوع ✅':(it2.status==='partial'?'جزئي':(isOverdue?'متأخر ⚠️':'قادم'));
+      rows+='<tr><td><b>القسط '+(it2.installmentNumber||'?')+'/'+(it2.installmentTotal||'?')+'</b></td><td>'+E(it2.due)+'</td><td class="num">'+fmt(it2.amount)+'</td><td class="num" style="color:var(--success)">'+fmt(it2.paid)+'</td><td class="num" style="color:'+((it2.amount-it2.paid)>0?'var(--danger)':'var(--success)')+'">'+fmt(it2.amount-it2.paid)+'</td><td><span class="badge '+st+'">'+stTxt+'</span></td><td>'+(it2.paid<it2.amount?'<button class="mini" onclick="openPayForm(\''+it2.id+'\')">💵</button>':'')+'</td></tr>';
+    }
+    cards+='<div class="card" style="padding:16px"><div class="card-head" style="margin-bottom:10px"><h2 style="font-size:14.5px">👨‍🎓 '+E(grp2.studentName)+' — '+E(grp2.grade)+'</h2><span class="badge '+(due>0?'warn':'ok')+'">'+(due>0?'متبقي: '+fmt(due):'مكتمل ✅')+'</span></div><div class="bar-track" style="margin-bottom:12px"><div class="bar-fill" style="width:'+progress+'%;background:linear-gradient(90deg,#2e8b57,#48b878)"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">تم دفع '+progress+'% — '+fmt(grp2.paid)+' من '+fmt(grp2.total)+'</div><div class="table-wrap" style="margin:0"><table style="min-width:auto"><thead><tr><th>القسط</th><th>الاستحقاق</th><th>المبلغ</th><th>المدفوع</th><th>المتبقي</th><th>الحالة</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  }
+  return '<div class="grid-kpi"><div class="kpi"><div class="kpi-label">📋 الأقساط</div><div class="kpi-value">'+installments.length+'</div></div><div class="kpi"><div class="kpi-label">💰 الإجمالي</div><div class="kpi-value">'+money(totalAll)+'</div></div><div class="kpi success"><div class="kpi-label">✅ المسدّد</div><div class="kpi-value">'+money(paidAll)+'</div></div><div class="kpi '+(dueAll>0?'danger':'success')+'"><div class="kpi-label">⏳ المتبقي</div><div class="kpi-value">'+money(dueAll)+'</div></div><div class="kpi warn"><div class="kpi-label">⚠️ متأخرة</div><div class="kpi-value">'+money(overdueAll)+'</div></div></div><div class="toolbar"><button class="btn btn-primary" style="width:auto" onclick="openAddInvoice()">+ فاتورة أقساط جديدة</button>'+exportBtn('installments')+'</div>'+cards;
+}
+  
 function renderInvoices(){
   if(!can('invoices','view'))return '<div class="alert warn">⛔</div>';
   var list=scoped(state.invoices);var isGroup=isAdmin()&&state.context==='group';
